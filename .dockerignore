@@ -1,0 +1,24 @@
+# Exclure les fichiers inutiles à l'image Node (build plus rapide et léger)
+node_modules
+.git
+.gitignore
+*.log
+logs
+
+# Médias lourds (non nécessaires à l'admin/API)
+images
+videos
+uploads
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# Fichiers du site PHP (l'admin Node n'en a pas besoin)
+css/vendor
+fonts
+composer.phar
+
+# Divers
+*.md
+*.txt
