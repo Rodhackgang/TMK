@@ -1,8 +1,27 @@
 <?php
 require './utils/header.php';
-// require_once __DIR__ . '/config/database.php';
+require_once './utils/api-config.php';
 
-// Configuration des albums statiques basés sur les domaines du menu "À propos"
+// Albums administrables (admin Node -> photos-content.json / API)
+$photosContent = getContentFromJsonOrApi(__DIR__ . '/Backend/photos-content.json', '/api/content/photos');
+$adminAlbums = is_array($photosContent) ? ($photosContent['albums'] ?? []) : [];
+$albums = [];
+foreach ($adminAlbums as $i => $a) {
+    if (empty($a['title'])) { continue; }
+    $albums[] = [
+        'id' => $i + 1,
+        'title' => $a['title'] ?? '',
+        'description' => $a['description'] ?? '',
+        'main_image' => $a['mainImage'] ?? '',
+        'album_type' => $a['albumType'] ?? '',
+        'year' => $a['year'] ?? '',
+        'photos_count' => $a['photosCount'] ?? 0,
+        'link' => $a['link'] ?? '#'
+    ];
+}
+
+// Repli : albums par défaut si l'administrateur n'a encore rien défini
+if (empty($albums)) {
 $albums = [
     [
         'id' => 1,
@@ -55,6 +74,7 @@ $albums = [
         'link' => 'projets-humanitaires.php'
     ]
 ];
+}
 
 $dbError = false;
 ?>

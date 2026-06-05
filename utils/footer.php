@@ -1,3 +1,12 @@
+<?php
+// Contenu administrable du pied de page (admin Node -> footer-content.json / API)
+require_once __DIR__ . '/api-config.php';
+$footerC = getContentFromJsonOrApi(__DIR__ . '/../Backend/footer-content.json', '/api/content/footer');
+if (!is_array($footerC)) { $footerC = []; }
+$fSocial  = $footerC['social'] ?? [];
+$fContact = $footerC['contact'] ?? [];
+$telHref = function ($num) { return 'tel:' . preg_replace('/[^0-9+]/', '', $num); };
+?>
 <!-- Wave divider between main content and footer -->
 <div class="relative w-full -mt-1" aria-hidden="true">
     <svg class="block w-full h-16 text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"
@@ -114,47 +123,46 @@
                             class="object-contain w-12 h-12 drop-shadow-md">
                     </div>
                     <div>
-                        <h2 class="text-xl font-semibold tracking-wide text-white">TMK Foundation</h2>
+                        <h2 class="text-xl font-semibold tracking-wide text-white"><?= htmlspecialchars($footerC['brandName'] ?? 'TMK Foundation') ?></h2>
                         <p class="text-xs font-semibold tracking-[0.25em] text-tmkAccent uppercase">
-                            The Miracle Kingdom
+                            <?= htmlspecialchars($footerC['brandTagline'] ?? 'The Miracle Kingdom') ?>
                         </p>
                     </div>
                 </div>
                 <p class="mb-3 text-sm leading-relaxed text-gray-300">
-                    TMK Foundation est une organisation à but non lucratif engagée à transformer durablement des vies
-                    par l’éducation, la solidarité sociale et le développement communautaire.
+                    <?= htmlspecialchars($footerC['about1'] ?? "TMK Foundation est une organisation à but non lucratif engagée à transformer durablement des vies par l’éducation, la solidarité sociale et le développement communautaire.") ?>
                 </p>
                 <p class="mb-6 text-sm leading-relaxed text-gray-400">
-                    Nous œuvrons chaque jour pour bâtir des communautés plus justes, inclusives et résilientes.
+                    <?= htmlspecialchars($footerC['about2'] ?? "Nous œuvrons chaque jour pour bâtir des communautés plus justes, inclusives et résilientes.") ?>
                 </p>
 
                 <div class="footer-social-icons flex items-center space-x-3">
-                    <a href="https://www.facebook.com/tmkfoundation" target="_blank" rel="noopener"
+                    <a href="<?= htmlspecialchars($fSocial['facebook'] ?? 'https://www.facebook.com/tmkfoundation') ?>" target="_blank" rel="noopener"
                         aria-label="TMK Foundation sur Facebook"
                         class="footer-social-link footer-social-facebook flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-gray-200 transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black">
                         <i class="fab fa-facebook-f text-sm"></i>
                     </a>
-                    <a href="https://twitter.com/tmkfoundation" target="_blank" rel="noopener"
+                    <a href="<?= htmlspecialchars($fSocial['twitter'] ?? 'https://twitter.com/tmkfoundation') ?>" target="_blank" rel="noopener"
                         aria-label="TMK Foundation sur X (Twitter)"
                         class="footer-social-link footer-social-twitter flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-gray-200 transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black">
                         <i class="fab fa-twitter text-sm"></i>
                     </a>
-                    <a href="https://www.linkedin.com/company/tmkfoundation" target="_blank" rel="noopener"
+                    <a href="<?= htmlspecialchars($fSocial['linkedin'] ?? 'https://www.linkedin.com/company/tmkfoundation') ?>" target="_blank" rel="noopener"
                         aria-label="TMK Foundation sur LinkedIn"
                         class="footer-social-link footer-social-linkedin flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-gray-200 transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black">
                         <i class="fab fa-linkedin-in text-sm"></i>
                     </a>
-                    <a href="https://www.instagram.com/tmkfoundation" target="_blank" rel="noopener"
+                    <a href="<?= htmlspecialchars($fSocial['instagram'] ?? 'https://www.instagram.com/tmkfoundation') ?>" target="_blank" rel="noopener"
                         aria-label="TMK Foundation sur Instagram"
                         class="footer-social-link footer-social-instagram flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-gray-200 transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black">
                         <i class="fab fa-instagram text-sm"></i>
                     </a>
-                    <a href="https://wa.me/+243978219845" target="_blank" rel="noopener"
+                    <a href="<?= htmlspecialchars($fSocial['whatsapp'] ?? 'https://wa.me/+243978219845') ?>" target="_blank" rel="noopener"
                         aria-label="Contacter TMK Foundation sur WhatsApp"
                         class="footer-social-link footer-social-whatsapp flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-gray-200 transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black">
                         <i class="fab fa-whatsapp text-sm"></i>
                     </a>
-                    <a href="https://www.youtube.com/@tmkfoundation" target="_blank" rel="noopener"
+                    <a href="<?= htmlspecialchars($fSocial['youtube'] ?? 'https://www.youtube.com/@tmkfoundation') ?>" target="_blank" rel="noopener"
                         aria-label="Chaîne YouTube TMK Foundation"
                         class="footer-social-link footer-social-youtube flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-gray-200 transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black">
                         <i class="fab fa-youtube text-sm"></i>
@@ -231,8 +239,8 @@
                             <i class="fas fa-map-marker-alt"></i>
                         </span>
                         <p>
-                            TMK Foundation<br>
-                            Kinshasa, République Démocratique du Congo
+                            <?= htmlspecialchars($fContact['orgName'] ?? 'TMK Foundation') ?><br>
+                            <?= htmlspecialchars($fContact['address'] ?? 'Kinshasa, République Démocratique du Congo') ?>
                         </p>
                     </div>
                     <div class="flex items-start space-x-3">
@@ -240,14 +248,19 @@
                             <i class="fas fa-phone-alt"></i>
                         </span>
                         <p>
-                            <a href="tel:+243978219845"
+                            <?php $fp1 = $fContact['phone1'] ?? '+243 978 219 845'; $fp2 = $fContact['phone2'] ?? '+243 974 555 964'; ?>
+                            <?php if (!empty($fp1)): ?>
+                            <a href="<?= htmlspecialchars($telHref($fp1)) ?>"
                                 class="text-white transition-colors duration-200 hover:text-tmkAccent hover:underline underline-offset-4">
-                                +243 978 219 845
+                                <?= htmlspecialchars($fp1) ?>
                             </a><br>
-                            <a href="tel:+243974555964"
+                            <?php endif; ?>
+                            <?php if (!empty($fp2)): ?>
+                            <a href="<?= htmlspecialchars($telHref($fp2)) ?>"
                                 class="text-white transition-colors duration-200 hover:text-tmkAccent hover:underline underline-offset-4">
-                                +243 974 555 964
+                                <?= htmlspecialchars($fp2) ?>
                             </a>
+                            <?php endif; ?>
                         </p>
                     </div>
                     <div class="flex items-start space-x-3">
@@ -255,9 +268,10 @@
                             <i class="fas fa-envelope"></i>
                         </span>
                         <p>
-                            <a href="mailto:contact@tmkfoundation.org"
+                            <?php $fEmail = $fContact['email'] ?? 'contact@tmkfoundation.org'; ?>
+                            <a href="mailto:<?= htmlspecialchars($fEmail) ?>"
                                 class="text-white transition-colors duration-200 hover:text-tmkAccent hover:underline underline-offset-4">
-                                contact@tmkfoundation.org
+                                <?= htmlspecialchars($fEmail) ?>
                             </a>
                         </p>
                     </div>
@@ -266,15 +280,15 @@
                             <i class="fas fa-clock"></i>
                         </span>
                         <p>
-                            Lundi - Vendredi : 8h00 - 17h00<br>
-                            Samedi : 9h00 - 13h00
+                            <?= htmlspecialchars($fContact['hours1'] ?? 'Lundi - Vendredi : 8h00 - 17h00') ?><br>
+                            <?= htmlspecialchars($fContact['hours2'] ?? 'Samedi : 9h00 - 13h00') ?>
                         </p>
                     </div>
                 </div>
 
                 <div class="mt-5">
                     <!-- Fallback si adresse introuvable : https://www.google.com/maps/search/?api=1&query=-4.3317,15.3139 -->
-                    <a href="https://www.google.com/maps/search/?api=1&query=Avenue+Dimba+boma+203+Quartier+Lumumba+Commune+Bandungwa+Kinshasa+RDC" target="_blank" rel="noopener noreferrer"
+                    <a href="<?= htmlspecialchars($fContact['mapsUrl'] ?? 'https://www.google.com/maps/search/?api=1&query=Avenue+Dimba+boma+203+Quartier+Lumumba+Commune+Bandungwa+Kinshasa+RDC') ?>" target="_blank" rel="noopener noreferrer"
                         class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-wide text-[#1a1a2e] rounded-full shadow-md hover:bg-[#5a6a9e] hover:text-yellow-400 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#6B7DB3] focus-visible:ring-offset-black"
                         style="background-color: #6B7DB3;">
                         <i class="mr-2 text-sm fas fa-location-arrow"></i>
@@ -286,10 +300,10 @@
             <!-- Column 4 - Newsletter Subscription -->
             <div class="md:border-l md:border-white/10 md:pl-6">
                 <h3 class="text-sm font-semibold tracking-wide text-white uppercase">
-                    Restez connectés
+                    <?= htmlspecialchars($footerC['newsletterTitle'] ?? 'Restez connectés') ?>
                 </h3>
                 <p class="mt-4 text-sm text-gray-300">
-                    Recevez les dernières nouvelles sur nos projets, nos événements et l’impact de vos dons.
+                    <?= htmlspecialchars($footerC['newsletterText'] ?? "Recevez les dernières nouvelles sur nos projets, nos événements et l’impact de vos dons.") ?>
                 </p>
 
                 <form class="mt-4 space-y-3" action="#" method="post" novalidate>
@@ -334,7 +348,7 @@
             <div
                 class="flex flex-col items-center justify-between gap-4 text-xs text-gray-400 sm:flex-row sm:text-sm">
                 <p class="text-center sm:text-left">
-                    &copy; 2025 TMK Foundation. Tous droits réservés.
+                    <?= htmlspecialchars($footerC['copyright'] ?? '© 2025 TMK Foundation. Tous droits réservés.') ?>
                 </p>
 
                 <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">

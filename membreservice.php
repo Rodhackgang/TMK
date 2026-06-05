@@ -1,5 +1,23 @@
 <?php
-require './utils/header.php'
+require './utils/header.php';
+require_once './utils/api-config.php';
+
+// Membres administrables (admin Node -> members-content.json / API)
+$membersContent = getContentFromJsonOrApi(__DIR__ . '/Backend/members-content.json', '/api/content/members');
+$membersList = is_array($membersContent) ? ($membersContent['members'] ?? []) : [];
+$membersTitle = (is_array($membersContent) ? ($membersContent['sectionTitle'] ?? '') : '') ?: 'Nos Membres';
+
+// Repli : membres par défaut si l'administrateur n'a encore rien défini
+if (empty($membersList)) {
+    $membersList = [
+        ['name' => 'Membre 1', 'poste' => '', 'photo' => 'images/member1.jpg'],
+        ['name' => 'Membre 2', 'poste' => '', 'photo' => 'images/member2.jpg'],
+        ['name' => 'Membre 3', 'poste' => '', 'photo' => 'images/member3.jpg'],
+        ['name' => 'Membre 4', 'poste' => '', 'photo' => 'images/member4.jpg'],
+        ['name' => 'Membre 5', 'poste' => '', 'photo' => 'images/member5.jpg'],
+        ['name' => 'Membre 6', 'poste' => '', 'photo' => 'images/member6.jpg'],
+    ];
+}
 ?>
 
 <!-- Page Header : logo TMK (The Miracle Kingdom) – image en fond plein écran -->
@@ -14,35 +32,18 @@ require './utils/header.php'
     <div class="container">
         <div class="row">
             <div class="title-box text-center">
-                <h2 class="title">Nos Membres</h2>
+                <h2 class="title"><?= htmlspecialchars($membersTitle) ?></h2>
             </div>
         </div>
-        <!-- Members -->                    
+        <!-- Members -->
         <div class="members-items">
+            <?php foreach ($membersList as $m): ?>
             <div class="item">
-                <img src="images/member1.jpg" alt="Membre 1" />
-                <h4>Membre 1</h4>
+                <img src="<?= htmlspecialchars($m['photo'] ?? 'images/member1.jpg') ?>" alt="<?= htmlspecialchars($m['name'] ?? 'Membre') ?>" />
+                <h4><?= htmlspecialchars($m['name'] ?? '') ?></h4>
+                <?php if (!empty($m['poste'])): ?><p class="member-poste"><?= htmlspecialchars($m['poste']) ?></p><?php endif; ?>
             </div>
-            <div class="item">
-                <img src="images/member2.jpg" alt="Membre 2" />
-                <h4>Membre 2</h4>
-            </div>
-            <div class="item">
-                <img src="images/member3.jpg" alt="Membre 3" />
-                <h4>Membre 3</h4>
-            </div>
-            <div class="item">
-                <img src="images/member4.jpg" alt="Membre 4" />
-                <h4>Membre 4</h4>
-            </div>
-            <div class="item">
-                <img src="images/member5.jpg" alt="Membre 5" />
-                <h4>Membre 5</h4>
-            </div>
-            <div class="item">
-                <img src="images/member6.jpg" alt="Membre 6" />
-                <h4>Membre 6</h4>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div> <!-- /.container-->
 </section>
@@ -70,6 +71,16 @@ container {
     margin-top: 10px;
     font-size: 18px;
     color: #333;
+    margin-bottom: 2px;
+}
+.members-items .item .member-poste {
+    margin: 0;
+    font-size: 14px;
+    color: #5B8FD9;
+    font-weight: 600;
+}
+.members-items .item img {
+    object-fit: cover;
 }
 .members-items .item:hover {
     transform: scale(1.05);

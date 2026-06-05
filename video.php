@@ -1,6 +1,10 @@
 <?php
 require './utils/header.php';
-require_once __DIR__ . '/config/database.php';
+require_once __DIR__ . '/utils/api-config.php';
+// Base de données optionnelle (peut être absente en local)
+if (file_exists(__DIR__ . '/config/database.php')) {
+    require_once __DIR__ . '/config/database.php';
+}
 
 $videoId = (int) ($_GET['video_id'] ?? 0);
 $videoPath = '';
@@ -93,7 +97,25 @@ $allowed_videos = [
     ]
 ];
 
-if (!array_key_exists($videoPath, $allowed_videos) || !file_exists($videoPath)) {
+// Autoriser aussi les vidéos ajoutées via l'admin (videos-content.json / API)
+$adminVideoPaths = [];
+$adminVideosContent = getContentFromJsonOrApi(__DIR__ . '/Backend/videos-content.json', '/api/content/videos');
+if (is_array($adminVideosContent)) {
+    foreach (($adminVideosContent['videos'] ?? []) as $av) {
+        if (!empty($av['videoPath'])) {
+            $adminVideoPaths[$av['videoPath']] = true;
+            $allowed_videos[$av['videoPath']] = [
+                'title' => $av['title'] ?? 'Vidéo',
+                'description' => $av['description'] ?? '',
+                'duration' => '--:--',
+                'category' => $av['category'] ?? 'Vidéo'
+            ];
+        }
+    }
+}
+$isAdminVideo = isset($adminVideoPaths[$videoPath]);
+
+if (!array_key_exists($videoPath, $allowed_videos) || (!$isAdminVideo && !file_exists($videoPath))) {
     die("<h2 style='text-align:center; color:#d4202c; margin-top:100px;'>Vidéo non trouvée ou inaccessible.</h2>");
 }
 

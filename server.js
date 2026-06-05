@@ -27,7 +27,7 @@ app.use('/js', express.static(path.join(__dirname, '..', 'js')));
 app.use('/fonts', express.static(path.join(__dirname, '..', 'fonts')));
 
 // Importer les fonctions d'export
-const { exportLinksToJSON, exportContentToJSON, exportAboutToJSON, exportHistoryToJSON, exportTeamToJSON, exportContactToJSON, exportJuridicalToJSON } = require('./utils/exportLinks');
+const { exportLinksToJSON, exportContentToJSON, exportAboutToJSON, exportHistoryToJSON, exportTeamToJSON, exportContactToJSON, exportJuridicalToJSON, exportFooterToJSON, exportPhotosToJSON, exportVideosToJSON, exportMembersToJSON } = require('./utils/exportLinks');
 const NavLink = require('./models/NavLink');
 const HomeContent = require('./models/HomeContent');
 const AboutContent = require('./models/AboutContent');
@@ -35,6 +35,10 @@ const HistoryContent = require('./models/HistoryContent');
 const TeamContent = require('./models/TeamContent');
 const ContactContent = require('./models/ContactContent');
 const JuridicalContent = require('./models/JuridicalContent');
+const FooterContent = require('./models/FooterContent');
+const AlbumContent = require('./models/AlbumContent');
+const VideoContent = require('./models/VideoContent');
+const ServiceMemberContent = require('./models/ServiceMemberContent');
 
 // Routes d'authentification
 const { router: authRoutes, initializeDefaultAdmin } = require('./routes/auth');
@@ -87,6 +91,13 @@ mongoose.connect(config.MONGODB_URI, {
   // Exporter le contenu de la page Juridique
   console.log('📝 Export du contenu vers juridical-content.json...');
   await exportJuridicalToJSON(JuridicalContent);
+
+  // Exporter les nouveaux contenus (pied de page, photos, vidéos, membres)
+  console.log('📝 Export footer / photos / videos / membres...');
+  await exportFooterToJSON(FooterContent);
+  await exportPhotosToJSON(AlbumContent);
+  await exportVideosToJSON(VideoContent);
+  await exportMembersToJSON(ServiceMemberContent);
 })
 .catch((error) => {
   console.error('❌ Erreur de connexion à MongoDB:', error);
@@ -140,6 +151,26 @@ app.get('/admin/juridical', (req, res) => {
 // Route pour la page admin (utilisateurs)
 app.get('/admin/users', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'users-admin.html'));
+});
+
+// Route pour la page admin (pied de page)
+app.get('/admin/footer', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'footer-admin.html'));
+});
+
+// Route pour la page admin (photos / albums)
+app.get('/admin/photos', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'photos-admin.html'));
+});
+
+// Route pour la page admin (vidéos)
+app.get('/admin/videos', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'videos-admin.html'));
+});
+
+// Route pour la page admin (membres)
+app.get('/admin/members', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'members-admin.html'));
 });
 
 // Route de test

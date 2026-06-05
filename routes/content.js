@@ -6,7 +6,11 @@ const HistoryContent = require('../models/HistoryContent');
 const TeamContent = require('../models/TeamContent');
 const ContactContent = require('../models/ContactContent');
 const JuridicalContent = require('../models/JuridicalContent');
-const { exportContentToJSON, exportAboutToJSON, exportHistoryToJSON, exportTeamToJSON, exportContactToJSON, exportJuridicalToJSON } = require('../utils/exportLinks');
+const FooterContent = require('../models/FooterContent');
+const AlbumContent = require('../models/AlbumContent');
+const VideoContent = require('../models/VideoContent');
+const ServiceMemberContent = require('../models/ServiceMemberContent');
+const { exportContentToJSON, exportAboutToJSON, exportHistoryToJSON, exportTeamToJSON, exportContactToJSON, exportJuridicalToJSON, exportFooterToJSON, exportPhotosToJSON, exportVideosToJSON, exportMembersToJSON } = require('../utils/exportLinks');
 
 // Récupérer le contenu de la page d'accueil
 router.get('/home', async (req, res) => {
@@ -906,6 +910,90 @@ router.put('/juridical/reorder', async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+});
+
+// ============================================
+// ROUTES PIED DE PAGE (FOOTER)
+// ============================================
+router.get('/footer', async (req, res) => {
+  try {
+    let content = await FooterContent.findOne();
+    if (!content) { content = new FooterContent({}); await content.save(); await exportFooterToJSON(FooterContent); }
+    res.json(content);
+  } catch (error) { res.status(500).json({ error: error.message }); }
+});
+
+router.put('/footer', async (req, res) => {
+  try {
+    let content = await FooterContent.findOne();
+    if (!content) { content = new FooterContent(req.body); } else { Object.assign(content, req.body); }
+    await content.save();
+    await exportFooterToJSON(FooterContent);
+    res.json(content);
+  } catch (error) { res.status(400).json({ error: error.message }); }
+});
+
+// ============================================
+// ROUTES PHOTOS / ALBUMS
+// ============================================
+router.get('/photos', async (req, res) => {
+  try {
+    let content = await AlbumContent.findOne();
+    if (!content) { content = new AlbumContent({ albums: [] }); await content.save(); await exportPhotosToJSON(AlbumContent); }
+    res.json(content);
+  } catch (error) { res.status(500).json({ error: error.message }); }
+});
+
+router.put('/photos', async (req, res) => {
+  try {
+    let content = await AlbumContent.findOne();
+    if (!content) { content = new AlbumContent(req.body); } else { Object.assign(content, req.body); }
+    await content.save();
+    await exportPhotosToJSON(AlbumContent);
+    res.json(content);
+  } catch (error) { res.status(400).json({ error: error.message }); }
+});
+
+// ============================================
+// ROUTES VIDÉOS
+// ============================================
+router.get('/videos', async (req, res) => {
+  try {
+    let content = await VideoContent.findOne();
+    if (!content) { content = new VideoContent({ videos: [] }); await content.save(); await exportVideosToJSON(VideoContent); }
+    res.json(content);
+  } catch (error) { res.status(500).json({ error: error.message }); }
+});
+
+router.put('/videos', async (req, res) => {
+  try {
+    let content = await VideoContent.findOne();
+    if (!content) { content = new VideoContent(req.body); } else { Object.assign(content, req.body); }
+    await content.save();
+    await exportVideosToJSON(VideoContent);
+    res.json(content);
+  } catch (error) { res.status(400).json({ error: error.message }); }
+});
+
+// ============================================
+// ROUTES MEMBRES (SERVICE)
+// ============================================
+router.get('/members', async (req, res) => {
+  try {
+    let content = await ServiceMemberContent.findOne();
+    if (!content) { content = new ServiceMemberContent({ members: [] }); await content.save(); await exportMembersToJSON(ServiceMemberContent); }
+    res.json(content);
+  } catch (error) { res.status(500).json({ error: error.message }); }
+});
+
+router.put('/members', async (req, res) => {
+  try {
+    let content = await ServiceMemberContent.findOne();
+    if (!content) { content = new ServiceMemberContent(req.body); } else { Object.assign(content, req.body); }
+    await content.save();
+    await exportMembersToJSON(ServiceMemberContent);
+    res.json(content);
+  } catch (error) { res.status(400).json({ error: error.message }); }
 });
 
 module.exports = router;

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMK Admin · Photos / Albums</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI', system-ui, sans-serif; background:#0a0a0f; color:#e7e9f2; display:flex; min-height:100vh; }
+    a { text-decoration:none; }
+    .sidebar { width:265px; background:#11141f; border-right:1px solid #1e2233; position:fixed; top:0; bottom:0; left:0; display:flex; flex-direction:column; }
+    .brand { padding:22px 20px; border-bottom:1px solid #1e2233; }
+    .brand h1 { font-size:20px; color:#fff; } .brand h1 span { color:#22c55e; }
+    .brand p { font-size:11px; color:#8b8b9e; letter-spacing:1px; text-transform:uppercase; }
+    .nav { padding:14px 12px; overflow-y:auto; flex:1; }
+    .nav-section { font-size:11px; color:#5c6178; text-transform:uppercase; letter-spacing:1px; margin:14px 12px 6px; }
+    .nav-item { display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:9px; color:#aeb4cc; font-size:14px; margin-bottom:3px; }
+    .nav-item i { width:18px; text-align:center; }
+    .nav-item:hover { background:#1a1f30; color:#fff; }
+    .nav-item.active { background:rgba(34,197,94,.14); color:#22c55e; }
+    .main { margin-left:265px; flex:1; padding:26px 34px 70px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:26px; flex-wrap:wrap; gap:12px; }
+    .topbar h2 { font-size:23px; color:#fff; }
+    .card { background:#11141f; border:1px solid #1e2233; border-radius:16px; padding:24px; margin-bottom:22px; }
+    label { display:block; font-size:13px; color:#aeb4cc; margin:0 0 6px; font-weight:600; }
+    input, textarea, select { width:100%; background:#0a0a0f; border:1px solid #262b40; border-radius:10px; padding:10px 12px; color:#e7e9f2; font-size:14px; font-family:inherit; margin-bottom:12px; }
+    input:focus, textarea:focus { outline:none; border-color:#22c55e; }
+    textarea { resize:vertical; min-height:60px; }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+    .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0 16px; }
+    .btn { padding:11px 20px; border:none; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+    .btn-primary { background:#22c55e; color:#04220f; } .btn-primary:hover { background:#16a34a; color:#fff; }
+    .btn-add { background:#1e293b; color:#93c5fd; } .btn-add:hover { background:#243049; }
+    .btn-del { background:#3b1d1d; color:#f87171; padding:8px 12px; border-radius:8px; }
+    .item { border:1px solid #262b40; border-radius:12px; padding:16px; margin-bottom:14px; background:#0d101a; display:flex; gap:16px; }
+    .item .left { width:150px; flex-shrink:0; text-align:center; }
+    .item .left img { width:100%; max-height:100px; object-fit:cover; border-radius:8px; border:1px solid #262b40; background:#000; margin-bottom:8px; }
+    .item .right { flex:1; }
+    .row-head { display:flex; justify-content:flex-end; margin-bottom:8px; }
+    .toast { position:fixed; top:20px; right:20px; padding:14px 20px; border-radius:10px; color:#fff; font-weight:600; display:none; z-index:999; }
+    .toast.ok { background:#16a34a; } .toast.err { background:#dc2626; }
+    @media (max-width:860px){ .sidebar{ transform:translateX(-100%);} .main{ margin-left:0;} .grid2,.grid3{ grid-template-columns:1fr;} .item{ flex-direction:column;} .item .left{ width:100%;} }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><h1>TMK <span>Admin</span></h1><p>Panneau d'administration</p></div>
+    <nav class="nav">
+      <div class="nav-section">Navigation</div>
+      <a href="/admin" class="nav-item"><i class="fas fa-link"></i> Liens du menu</a>
+      <div class="nav-section">Contenu</div>
+      <a href="/admin/content" class="nav-item"><i class="fas fa-home"></i> Page d'accueil</a>
+      <a href="/admin/home-sections" class="nav-item"><i class="fas fa-newspaper"></i> Mission &amp; Actualités</a>
+      <a href="/admin/about" class="nav-item"><i class="fas fa-info-circle"></i> Page À Propos</a>
+      <a href="/admin/history" class="nav-item"><i class="fas fa-history"></i> Page Histoire</a>
+      <a href="/admin/team" class="nav-item"><i class="fas fa-users"></i> Page Équipe</a>
+      <a href="/admin/contact" class="nav-item"><i class="fas fa-envelope"></i> Page Contact</a>
+      <a href="/admin/juridical" class="nav-item"><i class="fas fa-balance-scale"></i> Page Juridique</a>
+      <a href="/admin/photos" class="nav-item active"><i class="fas fa-images"></i> Photos / Albums</a>
+      <a href="/admin/videos" class="nav-item"><i class="fas fa-video"></i> Vidéos</a>
+      <a href="/admin/members" class="nav-item"><i class="fas fa-id-badge"></i> Membres</a>
+      <a href="/admin/footer" class="nav-item"><i class="fas fa-shoe-prints"></i> Pied de page</a>
+      <div class="nav-section">Administration</div>
+      <a href="/admin/users" class="nav-item"><i class="fas fa-user-shield"></i> Utilisateurs</a>
+      <div class="nav-section">Site</div>
+      <a href="/" class="nav-item" target="_blank"><i class="fas fa-external-link-alt"></i> Voir le site</a>
+      <a href="#" class="nav-item" onclick="logoutUser();return false;" style="color:#ef4444"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h2><i class="fas fa-images" style="color:#22c55e"></i> Photos / Albums</h2>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-add" onclick="addAlbum()"><i class="fas fa-plus"></i> Ajouter un album</button>
+        <button class="btn btn-primary" onclick="saveAll()"><i class="fas fa-floppy-disk"></i> Enregistrer</button>
+      </div>
+    </div>
+    <div class="card"><div id="list"></div></div>
+    <button class="btn btn-primary" onclick="saveAll()"><i class="fas fa-floppy-disk"></i> Enregistrer toutes les modifications</button>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script>
+    const API_URL = '/api/content';
+    function toast(m,ok=true){ const t=document.getElementById('toast'); t.textContent=m; t.className='toast '+(ok?'ok':'err'); t.style.display='block'; setTimeout(()=>t.style.display='none',3000); }
+    function logoutUser(){ localStorage.clear(); window.location.href='/admin/login'; }
+    function esc(s){ return (s||'').replace(/"/g,'&quot;'); }
+
+    function albumRow(a={}){
+      const div=document.createElement('div'); div.className='item';
+      div.innerHTML = `
+        <div class="left">
+          <img class="a-prev" src="${esc(a.mainImage)||''}" onerror="this.style.opacity=.2">
+          <input type="hidden" class="a-image" value="${esc(a.mainImage)}">
+          <input type="file" accept="image/*" onchange="uploadImg(this)">
+        </div>
+        <div class="right">
+          <div class="row-head"><button class="btn btn-del" onclick="this.closest('.item').remove()"><i class="fas fa-trash"></i></button></div>
+          <div class="grid2">
+            <div><label>Titre</label><input class="a-title" type="text" value="${esc(a.title)}"></div>
+            <div><label>Catégorie</label><input class="a-type" type="text" value="${esc(a.albumType)}" placeholder="Social, Santé..."></div>
+          </div>
+          <label>Description</label><textarea class="a-desc">${(a.description||'').replace(/</g,'&lt;')}</textarea>
+          <div class="grid3">
+            <div><label>Année</label><input class="a-year" type="text" value="${esc(a.year)}"></div>
+            <div><label>Nb. photos</label><input class="a-count" type="number" value="${a.photosCount||0}"></div>
+            <div><label>Lien</label><input class="a-link" type="text" value="${esc(a.link||'#')}"></div>
+          </div>
+        </div>`;
+      document.getElementById('list').appendChild(div);
+    }
+    function addAlbum(){ albumRow({}); }
+
+    async function uploadImg(input){
+      const f=input.files[0]; if(!f) return;
+      const fd=new FormData(); fd.append('file', f);
+      toast('Téléversement…');
+      try {
+        const d = await (await fetch('/api/upload/single',{method:'POST',body:fd})).json();
+        if(d.path){ const item=input.closest('.item'); item.querySelector('.a-image').value=d.path; item.querySelector('.a-prev').src=d.path; item.querySelector('.a-prev').style.opacity=1; toast('✅ Image téléversée'); }
+        else toast('Échec du téléversement', false);
+      } catch(e){ toast('Erreur de téléversement', false); }
+    }
+
+    async function load(){
+      try {
+        const c = await (await fetch(`${API_URL}/photos`)).json();
+        document.getElementById('list').innerHTML='';
+        (c.albums||[]).forEach(albumRow);
+      } catch(e){ toast('Erreur de chargement', false); }
+    }
+    async function saveAll(){
+      const albums = [...document.querySelectorAll('#list .item')].map(el => ({
+        title: el.querySelector('.a-title').value.trim(),
+        albumType: el.querySelector('.a-type').value.trim(),
+        description: el.querySelector('.a-desc').value.trim(),
+        mainImage: el.querySelector('.a-image').value.trim(),
+        year: el.querySelector('.a-year').value.trim(),
+        photosCount: parseInt(el.querySelector('.a-count').value)||0,
+        link: el.querySelector('.a-link').value.trim()||'#'
+      })).filter(a => a.title);
+      try {
+        const r = await fetch(`${API_URL}/photos`,{ method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify({albums}) });
+        if(!r.ok) throw new Error(); toast('✅ Enregistré avec succès');
+      } catch(e){ toast('Erreur lors de l\'enregistrement', false); }
+    }
+    (async function(){
+      const token = localStorage.getItem('authToken');
+      if(!token){ window.location.href='/admin/login'; return; }
+      try { const r=await fetch('/api/auth/me',{headers:{'Authorization':`Bearer ${token}`}}); if(!r.ok){ localStorage.clear(); window.location.href='/admin/login'; return; } }
+      catch(e){ window.location.href='/admin/login'; return; }
+      load();
+    })();
+  </script>
+</body>
+</html>

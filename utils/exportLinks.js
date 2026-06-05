@@ -9,6 +9,10 @@ const HISTORY_FILE_PATH = path.join(__dirname, '..', 'history-content.json');
 const TEAM_FILE_PATH = path.join(__dirname, '..', 'team-content.json');
 const CONTACT_FILE_PATH = path.join(__dirname, '..', 'contact-content.json');
 const JURIDICAL_FILE_PATH = path.join(__dirname, '..', 'juridical-content.json');
+const FOOTER_FILE_PATH = path.join(__dirname, '..', 'footer-content.json');
+const PHOTOS_FILE_PATH = path.join(__dirname, '..', 'photos-content.json');
+const VIDEOS_FILE_PATH = path.join(__dirname, '..', 'videos-content.json');
+const MEMBERS_FILE_PATH = path.join(__dirname, '..', 'members-content.json');
 
 // Fonction pour exporter les liens vers un fichier JSON
 async function exportLinksToJSON(NavLink) {
@@ -122,19 +126,47 @@ async function exportJuridicalToJSON(JuridicalContent) {
   }
 }
 
-module.exports = { 
-  exportLinksToJSON, 
-  exportContentToJSON, 
+// Export générique d'un document unique vers un fichier JSON
+async function exportSingleDoc(Model, filePath, label) {
+  try {
+    const content = await Model.findOne().lean();
+    if (content) {
+      fs.writeFileSync(filePath, JSON.stringify(content, null, 2), 'utf8');
+      console.log('✅ Fichier ' + label + ' mis à jour');
+    }
+    return true;
+  } catch (error) {
+    console.error('❌ Erreur lors de l\'export ' + label + ':', error);
+    return false;
+  }
+}
+
+const exportFooterToJSON = (FooterContent) => exportSingleDoc(FooterContent, FOOTER_FILE_PATH, 'footer-content.json');
+const exportPhotosToJSON = (AlbumContent) => exportSingleDoc(AlbumContent, PHOTOS_FILE_PATH, 'photos-content.json');
+const exportVideosToJSON = (VideoContent) => exportSingleDoc(VideoContent, VIDEOS_FILE_PATH, 'videos-content.json');
+const exportMembersToJSON = (ServiceMemberContent) => exportSingleDoc(ServiceMemberContent, MEMBERS_FILE_PATH, 'members-content.json');
+
+module.exports = {
+  exportLinksToJSON,
+  exportContentToJSON,
   exportAboutToJSON,
   exportHistoryToJSON,
   exportTeamToJSON,
   exportContactToJSON,
   exportJuridicalToJSON,
-  JSON_FILE_PATH, 
+  exportFooterToJSON,
+  exportPhotosToJSON,
+  exportVideosToJSON,
+  exportMembersToJSON,
+  JSON_FILE_PATH,
   CONTENT_FILE_PATH,
   ABOUT_FILE_PATH,
   HISTORY_FILE_PATH,
   TEAM_FILE_PATH,
   CONTACT_FILE_PATH,
-  JURIDICAL_FILE_PATH
+  JURIDICAL_FILE_PATH,
+  FOOTER_FILE_PATH,
+  PHOTOS_FILE_PATH,
+  VIDEOS_FILE_PATH,
+  MEMBERS_FILE_PATH
 };
