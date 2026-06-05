@@ -1,10 +1,6 @@
 <?php
 require './utils/header.php';
-require_once __DIR__ . '/utils/content-store.php';
-// Base de données optionnelle (peut être absente en local)
-if (file_exists(__DIR__ . '/config/database.php')) {
-    require_once __DIR__ . '/config/database.php';
-}
+require_once __DIR__ . '/config/database.php';
 
 $videoId = (int) ($_GET['video_id'] ?? 0);
 $videoPath = '';
@@ -96,19 +92,6 @@ $allowed_videos = [
         'category' => 'Projets Humanitaires'
     ]
 ];
-
-// Autoriser également les vidéos ajoutées depuis l'administration (/content/videos.json)
-$adminVideos = tmk_content('videos', tmk_defaults('videos'))['videos'] ?? [];
-foreach ($adminVideos as $av) {
-    if (!empty($av['video_path'])) {
-        $allowed_videos[$av['video_path']] = [
-            'title' => $av['title'] ?? 'Vidéo',
-            'description' => $av['description'] ?? '',
-            'duration' => '--:--',
-            'category' => $av['category'] ?? 'Vidéo',
-        ];
-    }
-}
 
 if (!array_key_exists($videoPath, $allowed_videos) || !file_exists($videoPath)) {
     die("<h2 style='text-align:center; color:#d4202c; margin-top:100px;'>Vidéo non trouvée ou inaccessible.</h2>");

@@ -1,12 +1,57 @@
 <?php
 require './utils/header.php';
-require_once './utils/content-store.php';
+require_once __DIR__ . '/config/database.php';
 
-// Vidéos administrables (/content/videos.json)
-$videosContent = tmk_content('videos', tmk_defaults('videos'));
-$videos = $videosContent['videos'] ?? [];
-
+$videos = [];
 $dbError = false;
+
+try {
+    $videos = db_query(
+        'SELECT * FROM videos WHERE is_published = 1 ORDER BY display_order DESC, created_at DESC'
+    )->fetchAll();
+} catch (Throwable $e) {
+    $dbError = true;
+}
+
+$staticVideos = [
+    [
+        'id' => null,
+        'video_path' => 'Teaser TMK.mp4',
+        'preview_image' => '',
+        'title' => 'Teaser TMK',
+        'description' => 'Découvrez le teaser TMK.',
+        'category' => 'Vidéo'
+    ],
+    [
+        'id' => null,
+        'video_path' => 'Teaser The Miracle Kingdom.mp4',
+        'preview_image' => '',
+        'title' => 'Teaser The Miracle Kingdom',
+        'description' => 'Découvrez le teaser de The Miracle Kingdom.',
+        'category' => 'Vidéo'
+    ],
+    [
+        'id' => null,
+        'video_path' => '1.mp4',
+        'preview_image' => '',
+        'title' => 'Réalisation Vidéo 1',
+        'description' => 'Découvrez cette réalisation vidéo',
+        'category' => 'Vidéo'
+    ],
+    [
+        'id' => null,
+        'video_path' => '2.mp4',
+        'preview_image' => '',
+        'title' => 'Réalisation Vidéo 2',
+        'description' => 'Découvrez cette réalisation vidéo',
+        'category' => 'Vidéo'
+    ]
+];
+
+if (!is_array($videos)) {
+    $videos = [];
+}
+$videos = array_merge($staticVideos, $videos);
 ?>
 
 <!-- Page Header : logo TMK (The Miracle Kingdom) – image en fond plein écran -->

@@ -1,10 +1,60 @@
 <?php
 require './utils/header.php';
-require_once './utils/content-store.php';
+// require_once __DIR__ . '/config/database.php';
 
-// Albums administrables (/content/photos.json)
-$photosContent = tmk_content('photos', tmk_defaults('photos'));
-$albums = $photosContent['albums'] ?? [];
+// Configuration des albums statiques basés sur les domaines du menu "À propos"
+$albums = [
+    [
+        'id' => 1,
+        'title' => 'Aide humanitaire',
+        'description' => 'Actions humanitaires menées au cœur des zones vulnérables pour répondre aux besoins alimentaires urgents des populations les plus démunis.',
+        'main_image' => 'images/orphelinat_coc_2021/img-0.png',
+        'album_type' => 'Social',
+        'year' => '2021',
+        'photos_count' => 5,
+        'link' => 'aide-humanitaire.php'
+    ],
+    [
+        'id' => 2,
+        'title' => 'Éducation pour tous',
+        'description' => 'Programmes éducatifs innovantes pour les enfants et jeunes des communautés défavorisées, avec un focus sur l\'alphabétisation.',
+        'main_image' => 'images/complexe_scolaire_elohim_2024/1.jpg',
+        'album_type' => 'Éducation',
+        'year' => '2024',
+        'photos_count' => 4,
+        'link' => 'education.php'
+    ],
+    [
+        'id' => 3,
+        'title' => 'Services de Santé',
+        'description' => 'Accès aux soins primaires et campagnes de prévention dans les zones reculées pour améliorer la santé communautaire.',
+        'main_image' => 'images/hopital_mabanga_yolo_2023/1.jpg',
+        'album_type' => 'Santé',
+        'year' => '2023',
+        'photos_count' => 4,
+        'link' => 'sante.php'
+    ],
+    [
+        'id' => 4,
+        'title' => 'Projets humanitaires',
+        'description' => 'Soutien spécialisé pour les réfugiés, déplacés internes et autres groupes vulnérables avec programmes de réinsertion.',
+        'main_image' => 'images/orphelinat_marie_2024/1.jpg',
+        'album_type' => 'Humanitaire',
+        'year' => '2024',
+        'photos_count' => 4,
+        'link' => 'projets-humanitaires.php'
+    ],
+    [
+        'id' => 5,
+        'title' => 'Camp Militaire Lieutenant KOKOLO',
+        'description' => 'Descente au Camp Militaire Lieutenant KOKOLO pour soutenir les veuves de militaires avec des dons de vivres et autres nécessités.',
+        'main_image' => 'images/aide-marginalises/groupe-soutenons-les-veuves.png',
+        'album_type' => 'Humanitaire',
+        'year' => '2025',
+        'photos_count' => 8,
+        'link' => 'projets-humanitaires.php'
+    ]
+];
 
 $dbError = false;
 ?>

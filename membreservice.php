@@ -1,11 +1,5 @@
 <?php
-require './utils/header.php';
-require_once './utils/content-store.php';
-
-// Membres administrables (/content/members.json)
-$membersContent = tmk_content('members', tmk_defaults('members'));
-$membersList = $membersContent['members'] ?? [];
-$membersTitle = $membersContent['sectionTitle'] ?? 'Nos Membres';
+require './utils/header.php'
 ?>
 
 <!-- Page Header : logo TMK (The Miracle Kingdom) – image en fond plein écran -->
@@ -20,20 +14,35 @@ $membersTitle = $membersContent['sectionTitle'] ?? 'Nos Membres';
     <div class="container">
         <div class="row">
             <div class="title-box text-center">
-                <h2 class="title"><?= htmlspecialchars($membersTitle) ?></h2>
+                <h2 class="title">Nos Membres</h2>
             </div>
         </div>
-        <!-- Members -->
+        <!-- Members -->                    
         <div class="members-items">
-            <?php foreach ($membersList as $m): ?>
             <div class="item">
-                <img src="<?= htmlspecialchars($m['image'] ?? 'images/member1.jpg') ?>" alt="<?= htmlspecialchars($m['name'] ?? 'Membre') ?>" />
-                <h4><?= htmlspecialchars($m['name'] ?? '') ?></h4>
-                <?php if (!empty($m['poste'])): ?>
-                <p class="member-poste"><?= htmlspecialchars($m['poste']) ?></p>
-                <?php endif; ?>
+                <img src="images/member1.jpg" alt="Membre 1" />
+                <h4>Membre 1</h4>
             </div>
-            <?php endforeach; ?>
+            <div class="item">
+                <img src="images/member2.jpg" alt="Membre 2" />
+                <h4>Membre 2</h4>
+            </div>
+            <div class="item">
+                <img src="images/member3.jpg" alt="Membre 3" />
+                <h4>Membre 3</h4>
+            </div>
+            <div class="item">
+                <img src="images/member4.jpg" alt="Membre 4" />
+                <h4>Membre 4</h4>
+            </div>
+            <div class="item">
+                <img src="images/member5.jpg" alt="Membre 5" />
+                <h4>Membre 5</h4>
+            </div>
+            <div class="item">
+                <img src="images/member6.jpg" alt="Membre 6" />
+                <h4>Membre 6</h4>
+            </div>
         </div>
     </div> <!-- /.container-->
 </section>
@@ -61,16 +70,6 @@ container {
     margin-top: 10px;
     font-size: 18px;
     color: #333;
-    margin-bottom: 2px;
-}
-.members-items .item .member-poste {
-    margin: 0;
-    font-size: 14px;
-    color: #5B8FD9;
-    font-weight: 600;
-}
-.members-items .item img {
-    object-fit: cover;
 }
 .members-items .item:hover {
     transform: scale(1.05);

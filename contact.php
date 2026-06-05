@@ -1,25 +1,40 @@
 <?php
 require './utils/header.php';
-require_once './utils/content-store.php';
+require_once './utils/api-config.php';
 
-// Contenu administrable (/content/contact.json)
-$contactContent = tmk_content('contact', tmk_defaults('contact'));
+// Lire le contenu depuis le fichier JSON ou l'API
+$jsonFile = __DIR__ . '/Backend/contact-content.json';
+$contactContent = getContentFromJsonOrApi($jsonFile, '/api/content/contact');
 
-$pageTitle      = 'Contactez-nous';
-$sectionTitle   = $contactContent['sectionTitle'] ?? 'Contactez TMK';
-$infoTitle      = $contactContent['infoTitle'] ?? 'Informations de Contact';
-$phoneLabel     = $contactContent['phoneLabel'] ?? 'Téléphone';
-$phoneNumber    = $contactContent['phoneNumber'] ?? '+243 900 000 000';
-$emailLabel     = $contactContent['emailLabel'] ?? 'Email';
-$emailAddress   = $contactContent['emailAddress'] ?? 'contact@tmkfoundation.org';
-$addressLabel   = $contactContent['addressLabel'] ?? 'Adresse';
-$addressLine1   = $contactContent['addressLine1'] ?? '';
-$addressLine2   = $contactContent['addressLine2'] ?? '';
-$socialTitle    = $contactContent['socialTitle'] ?? 'Suivez-nous';
-$socialLinks    = $contactContent['socialLinks'] ?? [];
-$formTitle      = $contactContent['formTitle'] ?? 'Envoyez-nous un Message';
-$formDescription = $contactContent['formDescription'] ?? '';
-$submitButtonText = $contactContent['submitButtonText'] ?? 'Envoyer le Message';
+// Valeurs par défaut
+$pageTitle = $contactContent['pageTitle'] ?? 'Contactez-nous';
+$sectionTitle = $contactContent['sectionTitle'] ?? 'Contactez TMK';
+
+// Contact Info
+$contactInfo = $contactContent['contactInfo'] ?? [];
+$infoTitle = $contactInfo['title'] ?? 'Informations de Contact';
+$phoneLabel = $contactInfo['phone']['label'] ?? 'Téléphone';
+$phoneNumber = $contactInfo['phone']['number'] ?? '+243 900 000 000';
+$emailLabel = $contactInfo['email']['label'] ?? 'Email';
+$emailAddress = $contactInfo['email']['address'] ?? 'contact@tmkfoundation.org';
+$addressLabel = $contactInfo['address']['label'] ?? 'Adresse';
+$addressLine1 = $contactInfo['address']['line1'] ?? 'A108 Rue Adam';
+$addressLine2 = $contactInfo['address']['line2'] ?? 'Kinshasa, RDC';
+
+// Social
+$socialTitle = $contactContent['socialTitle'] ?? 'Suivez-nous';
+$socialLinks = $contactContent['socialLinks'] ?? [
+    ['platform' => 'Facebook', 'icon' => 'fab fa-facebook-f', 'url' => '#'],
+    ['platform' => 'Twitter', 'icon' => 'fab fa-twitter', 'url' => '#'],
+    ['platform' => 'Instagram', 'icon' => 'fab fa-instagram', 'url' => '#'],
+    ['platform' => 'LinkedIn', 'icon' => 'fab fa-linkedin-in', 'url' => '#']
+];
+
+// Form
+$formSection = $contactContent['formSection'] ?? [];
+$formTitle = $formSection['title'] ?? 'Envoyez-nous un Message';
+$formDescription = $formSection['description'] ?? 'Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.';
+$submitButtonText = $formSection['submitButtonText'] ?? 'Envoyer le Message';
 ?>
 
 <!-- Page Header : bannière TMK -->

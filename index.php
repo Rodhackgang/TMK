@@ -6,12 +6,18 @@
     $contentFile = __DIR__ . '/Backend/home-content.json';
     $content = getContentFromJsonOrApi($contentFile, '/api/content/home');
     
-    // Contenu administrable (en-tête, mission/vision, actualités) depuis /content/home.json
-    require_once __DIR__ . '/utils/content-store.php';
-    $home = tmk_content('home', tmk_defaults('home'));
-    $hero = $home['hero'];
-    $missionVision = $home['missionVision'];
-    $news = $home['news'];
+    // Valeurs par défaut si le contenu n'est pas disponible
+    $hero = $content['hero'] ?? [
+        'videoUrl' => 'images/1.mp4',
+        'title' => 'Un avenir meilleur pour tous',
+        'subtitle' => 'Agissons ensemble pour un changement durable',
+        'donateButtonText' => 'Faire un don',
+        'videoButtonText' => 'Voir notre vidéo',
+        'uiuxButtonText' => 'Si vous avez besoin d\'avoir votre propre Site web cliquez sur ce bouton',
+        'uiuxWhatsappLink' => 'https://wa.me/243974555964'
+    ];
+    // Forcer le texte du bouton site web (prioritaire sur l'API)
+    $hero['uiuxButtonText'] = 'Si vous avez besoin d\'avoir votre propre Site web cliquez sur ce bouton';
 
     $videoSection = $content['videoSection'] ?? [
         'title' => 'Notre Mission en Action',
@@ -897,18 +903,22 @@
     <!-- Section Mission & Vision -->
     <section class="mission-vision-section">
         <div class="container">
-            <h2 class="section-title"><?= htmlspecialchars($missionVision['sectionTitle']) ?></h2>
+            <h2 class="section-title">Notre mission &amp; notre vision</h2>
             <div class="mission-vision-grid">
                 <div class="mission-vision-block">
-                    <h3 class="mission-vision-title"><?= htmlspecialchars($missionVision['missionTitle']) ?></h3>
+                    <h3 class="mission-vision-title">Notre mission</h3>
                     <p class="mission-vision-text">
-                        <?= nl2br(htmlspecialchars($missionVision['missionText'])) ?>
+                        La mission de la fondation THE MIRACLE KINGDOM est de mettre en œuvre des actions d’intérêt général visant à
+                        soutenir les personnes démunies et vulnérables, et à aider les populations à devenir actrices de leur propre
+                        développement, grâce à des interventions adaptées, structurées et à fort impact social.
                     </p>
                 </div>
                 <div class="mission-vision-block">
-                    <h3 class="mission-vision-title"><?= htmlspecialchars($missionVision['visionTitle']) ?></h3>
+                    <h3 class="mission-vision-title">Notre vision</h3>
                     <p class="mission-vision-text">
-                        <?= nl2br(htmlspecialchars($missionVision['visionText'])) ?>
+                        Par sa vision, The Miracle Kingdom œuvre à la construction de sociétés plus justes, solidaires et résilientes,
+                        où chacun, en particulier les plus défavorisés, peut accéder à des conditions de vie dignes et à de réelles
+                        opportunités d’avenir.
                     </p>
                 </div>
             </div>
@@ -918,31 +928,66 @@
     <!-- Section Actualités -->
     <section class="news-section">
         <div class="news-container">
-            <h2 class="section-title"><?= htmlspecialchars($news['sectionTitle']) ?></h2>
+            <h2 class="section-title">Actualités</h2>
             <p class="section-subtitle">
-                <?= htmlspecialchars($news['subtitle']) ?>
+                Découvrez les dernières actions et événements de la fondation THE MIRACLE KINGDOM sur le terrain.
             </p>
             <div class="news-scroll-wrapper">
                 <div class="news-grid">
-                <?php
-                $newsItems = $news['items'] ?? [];
-                // Les cartes sont dupliquées pour l'effet de défilement continu (animation CSS)
-                $loops = count($newsItems) > 0 ? 2 : 0;
-                for ($pass = 0; $pass < $loops; $pass++):
-                    foreach ($newsItems as $item):
-                ?>
                 <article class="news-card">
-                    <?php if (!empty($item['meta'])): ?><span class="news-meta"><?= htmlspecialchars($item['meta']) ?></span><?php endif; ?>
-                    <h3 class="news-title"><?= htmlspecialchars($item['title'] ?? '') ?></h3>
+                    <span class="news-meta">Dernière action</span>
+                    <h3 class="news-title">Distribution de kits alimentaires aux familles vulnérables</h3>
                     <p class="news-text">
-                        <?= htmlspecialchars($item['text'] ?? '') ?>
+                        La fondation a organisé une campagne de solidarité pour soutenir les ménages les plus touchés par l’insécurité
+                        alimentaire, en partenariat avec des acteurs locaux engagés.
                     </p>
-                    <a href="<?= htmlspecialchars($item['link'] ?? '#') ?>" class="news-link"><?= htmlspecialchars($item['linkText'] ?? 'En savoir plus') ?></a>
+                    <a href="#" class="news-link">En savoir plus</a>
                 </article>
-                <?php
-                    endforeach;
-                endfor;
-                ?>
+                <article class="news-card">
+                    <span class="news-meta">Éducation</span>
+                    <h3 class="news-title">Lancement d’un programme de soutien scolaire pour les enfants défavorisés</h3>
+                    <p class="news-text">
+                        Des séances d’appui scolaire et d’accompagnement psychologique ont été mises en place afin d’offrir aux enfants
+                        un cadre propice à la réussite et à l’épanouissement.
+                    </p>
+                    <a href="#" class="news-link">Découvrir le programme</a>
+                </article>
+                <article class="news-card">
+                    <span class="news-meta">Santé &amp; bien-être</span>
+                    <h3 class="news-title">Campagne de sensibilisation et de prévention en milieu rural</h3>
+                    <p class="news-text">
+                        Des activités de prévention et de sensibilisation ont été menées pour promouvoir la santé, l’hygiène et le
+                        bien-être des communautés les plus isolées.
+                    </p>
+                    <a href="#" class="news-link">Voir les résultats</a>
+                </article>
+                <article class="news-card">
+                    <span class="news-meta">Dernière action</span>
+                    <h3 class="news-title">Distribution de kits alimentaires aux familles vulnérables</h3>
+                    <p class="news-text">
+                        La fondation a organisé une campagne de solidarité pour soutenir les ménages les plus touchés par l'insécurité
+                        alimentaire, en partenariat avec des acteurs locaux engagés.
+                    </p>
+                    <a href="#" class="news-link">En savoir plus</a>
+                </article>
+                <article class="news-card">
+                    <span class="news-meta">Éducation</span>
+                    <h3 class="news-title">Lancement d'un programme de soutien scolaire pour les enfants défavorisés</h3>
+                    <p class="news-text">
+                        Des séances d'appui scolaire et d'accompagnement psychologique ont été mises en place afin d'offrir aux enfants
+                        un cadre propice à la réussite et à l'épanouissement.
+                    </p>
+                    <a href="#" class="news-link">Découvrir le programme</a>
+                </article>
+                <article class="news-card">
+                    <span class="news-meta">Santé &amp; bien-être</span>
+                    <h3 class="news-title">Campagne de sensibilisation et de prévention en milieu rural</h3>
+                    <p class="news-text">
+                        Des activités de prévention et de sensibilisation ont été menées pour promouvoir la santé, l'hygiène et le
+                        bien-être des communautés les plus isolées.
+                    </p>
+                    <a href="#" class="news-link">Voir les résultats</a>
+                </article>
                 </div>
             </div>
         </div>
