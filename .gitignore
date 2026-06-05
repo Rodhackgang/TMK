@@ -26,3 +26,7 @@ config-stripe.php
 logs/
 .DS_Store
 Thumbs.db
+
+# Medias (gardes sur le disque, pas dans le depot)
+images/
+videos/
