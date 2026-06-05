@@ -17,7 +17,7 @@ if (!defined('API_MODE')) {
 
 // Activer les logs (true pour debug, false en production)
 if (!defined('API_DEBUG')) {
-    define('API_DEBUG', true);
+    define('API_DEBUG', false);
 }
 
 // Fichier de log
@@ -29,12 +29,14 @@ define('API_LOG_FILE', __DIR__ . '/../logs/api-debug.log');
 function apiLog($message, $data = null) {
     if (!API_DEBUG) return;
     
-    // Créer le dossier logs s'il n'existe pas
+    // Créer le dossier logs s'il n'existe pas (silencieux : pas de warning si interdit en écriture)
     $logDir = dirname(API_LOG_FILE);
     if (!is_dir($logDir)) {
-        mkdir($logDir, 0755, true);
+        if (!@mkdir($logDir, 0755, true) && !is_dir($logDir)) {
+            return; // dossier de logs non créable (ex: système de fichiers en lecture seule) -> on abandonne
+        }
     }
-    
+
     $timestamp = date('Y-m-d H:i:s');
     $logMessage = "[$timestamp] $message";
     
@@ -47,8 +49,8 @@ function apiLog($message, $data = null) {
     }
     
     $logMessage .= "\n" . str_repeat('-', 80) . "\n";
-    
-    file_put_contents(API_LOG_FILE, $logMessage, FILE_APPEND | LOCK_EX);
+
+    @file_put_contents(API_LOG_FILE, $logMessage, FILE_APPEND | LOCK_EX);
 }
 
 /**
