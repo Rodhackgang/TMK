@@ -48,7 +48,29 @@ const homeContentSchema = new mongoose.Schema({
     buttonText: { type: String, default: 'Nous contacter' },
     whatsappLink: { type: String, default: 'https://wa.me/+243974555964?text=Bonjour,%20je%20suis%20intéressé%20par%20la%20conception%20d\'un%20site%20internet.' }
   },
-  
+
+  // Section Mission & Vision (page d'accueil)
+  missionVision: {
+    sectionTitle: { type: String, default: 'Notre mission & notre vision' },
+    missionTitle: { type: String, default: 'Notre mission' },
+    missionText: { type: String, default: "La mission de la fondation THE MIRACLE KINGDOM est de mettre en œuvre des actions d’intérêt général visant à soutenir les personnes démunies et vulnérables, et à aider les populations à devenir actrices de leur propre développement, grâce à des interventions adaptées, structurées et à fort impact social." },
+    visionTitle: { type: String, default: 'Notre vision' },
+    visionText: { type: String, default: "Par sa vision, The Miracle Kingdom œuvre à la construction de sociétés plus justes, solidaires et résilientes, où chacun, en particulier les plus défavorisés, peut accéder à des conditions de vie dignes et à de réelles opportunités d’avenir." }
+  },
+
+  // Section Actualités (page d'accueil)
+  news: {
+    sectionTitle: { type: String, default: 'Actualités' },
+    subtitle: { type: String, default: "Découvrez les dernières actions et événements de la fondation THE MIRACLE KINGDOM sur le terrain." },
+    items: [{
+      meta: { type: String, default: '' },
+      title: { type: String, default: '' },
+      text: { type: String, default: '' },
+      linkText: { type: String, default: 'En savoir plus' },
+      link: { type: String, default: '#' }
+    }]
+  },
+
   updatedAt: {
     type: Date,
     default: Date.now

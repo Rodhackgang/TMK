@@ -900,94 +900,77 @@
 
     </section>
 
+    <?php
+    // Section Mission & Vision (administrable via l'admin -> Accueil)
+    $mv = $content['missionVision'] ?? [];
+    $mvSectionTitle = $mv['sectionTitle'] ?? 'Notre mission & notre vision';
+    $mvMissionTitle = $mv['missionTitle'] ?? 'Notre mission';
+    $mvMissionText  = $mv['missionText'] ?? "La mission de la fondation THE MIRACLE KINGDOM est de mettre en œuvre des actions d’intérêt général visant à soutenir les personnes démunies et vulnérables, et à aider les populations à devenir actrices de leur propre développement, grâce à des interventions adaptées, structurées et à fort impact social.";
+    $mvVisionTitle  = $mv['visionTitle'] ?? 'Notre vision';
+    $mvVisionText   = $mv['visionText'] ?? "Par sa vision, The Miracle Kingdom œuvre à la construction de sociétés plus justes, solidaires et résilientes, où chacun, en particulier les plus défavorisés, peut accéder à des conditions de vie dignes et à de réelles opportunités d’avenir.";
+    ?>
     <!-- Section Mission & Vision -->
     <section class="mission-vision-section">
         <div class="container">
-            <h2 class="section-title">Notre mission &amp; notre vision</h2>
+            <h2 class="section-title"><?= htmlspecialchars($mvSectionTitle) ?></h2>
             <div class="mission-vision-grid">
                 <div class="mission-vision-block">
-                    <h3 class="mission-vision-title">Notre mission</h3>
+                    <h3 class="mission-vision-title"><?= htmlspecialchars($mvMissionTitle) ?></h3>
                     <p class="mission-vision-text">
-                        La mission de la fondation THE MIRACLE KINGDOM est de mettre en œuvre des actions d’intérêt général visant à
-                        soutenir les personnes démunies et vulnérables, et à aider les populations à devenir actrices de leur propre
-                        développement, grâce à des interventions adaptées, structurées et à fort impact social.
+                        <?= nl2br(htmlspecialchars($mvMissionText)) ?>
                     </p>
                 </div>
                 <div class="mission-vision-block">
-                    <h3 class="mission-vision-title">Notre vision</h3>
+                    <h3 class="mission-vision-title"><?= htmlspecialchars($mvVisionTitle) ?></h3>
                     <p class="mission-vision-text">
-                        Par sa vision, The Miracle Kingdom œuvre à la construction de sociétés plus justes, solidaires et résilientes,
-                        où chacun, en particulier les plus défavorisés, peut accéder à des conditions de vie dignes et à de réelles
-                        opportunités d’avenir.
+                        <?= nl2br(htmlspecialchars($mvVisionText)) ?>
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
+    <?php
+    // Section Actualités (administrable via l'admin -> Accueil)
+    $newsC = $content['news'] ?? [];
+    $newsTitle = $newsC['sectionTitle'] ?? 'Actualités';
+    $newsSubtitle = $newsC['subtitle'] ?? "Découvrez les dernières actions et événements de la fondation THE MIRACLE KINGDOM sur le terrain.";
+    $newsItems = $newsC['items'] ?? [];
+    // Si l'admin n'a pas encore défini d'actualités, afficher les actualités par défaut
+    if (empty($newsItems)) {
+        $newsItems = [
+            ['meta' => 'Dernière action', 'title' => 'Distribution de kits alimentaires aux familles vulnérables', 'text' => "La fondation a organisé une campagne de solidarité pour soutenir les ménages les plus touchés par l’insécurité alimentaire, en partenariat avec des acteurs locaux engagés.", 'linkText' => 'En savoir plus', 'link' => '#'],
+            ['meta' => 'Éducation', 'title' => 'Lancement d’un programme de soutien scolaire pour les enfants défavorisés', 'text' => "Des séances d’appui scolaire et d’accompagnement psychologique ont été mises en place afin d’offrir aux enfants un cadre propice à la réussite et à l’épanouissement.", 'linkText' => 'Découvrir le programme', 'link' => '#'],
+            ['meta' => 'Santé & bien-être', 'title' => 'Campagne de sensibilisation et de prévention en milieu rural', 'text' => "Des activités de prévention et de sensibilisation ont été menées pour promouvoir la santé, l’hygiène et le bien-être des communautés les plus isolées.", 'linkText' => 'Voir les résultats', 'link' => '#'],
+        ];
+    }
+    ?>
     <!-- Section Actualités -->
     <section class="news-section">
         <div class="news-container">
-            <h2 class="section-title">Actualités</h2>
+            <h2 class="section-title"><?= htmlspecialchars($newsTitle) ?></h2>
             <p class="section-subtitle">
-                Découvrez les dernières actions et événements de la fondation THE MIRACLE KINGDOM sur le terrain.
+                <?= htmlspecialchars($newsSubtitle) ?>
             </p>
             <div class="news-scroll-wrapper">
                 <div class="news-grid">
+                <?php
+                // Les cartes sont dupliquées pour l'effet de défilement continu (animation CSS)
+                for ($pass = 0; $pass < 2; $pass++):
+                    foreach ($newsItems as $item):
+                ?>
                 <article class="news-card">
-                    <span class="news-meta">Dernière action</span>
-                    <h3 class="news-title">Distribution de kits alimentaires aux familles vulnérables</h3>
+                    <?php if (!empty($item['meta'])): ?><span class="news-meta"><?= htmlspecialchars($item['meta']) ?></span><?php endif; ?>
+                    <h3 class="news-title"><?= htmlspecialchars($item['title'] ?? '') ?></h3>
                     <p class="news-text">
-                        La fondation a organisé une campagne de solidarité pour soutenir les ménages les plus touchés par l’insécurité
-                        alimentaire, en partenariat avec des acteurs locaux engagés.
+                        <?= htmlspecialchars($item['text'] ?? '') ?>
                     </p>
-                    <a href="#" class="news-link">En savoir plus</a>
+                    <a href="<?= htmlspecialchars($item['link'] ?? '#') ?>" class="news-link"><?= htmlspecialchars($item['linkText'] ?? 'En savoir plus') ?></a>
                 </article>
-                <article class="news-card">
-                    <span class="news-meta">Éducation</span>
-                    <h3 class="news-title">Lancement d’un programme de soutien scolaire pour les enfants défavorisés</h3>
-                    <p class="news-text">
-                        Des séances d’appui scolaire et d’accompagnement psychologique ont été mises en place afin d’offrir aux enfants
-                        un cadre propice à la réussite et à l’épanouissement.
-                    </p>
-                    <a href="#" class="news-link">Découvrir le programme</a>
-                </article>
-                <article class="news-card">
-                    <span class="news-meta">Santé &amp; bien-être</span>
-                    <h3 class="news-title">Campagne de sensibilisation et de prévention en milieu rural</h3>
-                    <p class="news-text">
-                        Des activités de prévention et de sensibilisation ont été menées pour promouvoir la santé, l’hygiène et le
-                        bien-être des communautés les plus isolées.
-                    </p>
-                    <a href="#" class="news-link">Voir les résultats</a>
-                </article>
-                <article class="news-card">
-                    <span class="news-meta">Dernière action</span>
-                    <h3 class="news-title">Distribution de kits alimentaires aux familles vulnérables</h3>
-                    <p class="news-text">
-                        La fondation a organisé une campagne de solidarité pour soutenir les ménages les plus touchés par l'insécurité
-                        alimentaire, en partenariat avec des acteurs locaux engagés.
-                    </p>
-                    <a href="#" class="news-link">En savoir plus</a>
-                </article>
-                <article class="news-card">
-                    <span class="news-meta">Éducation</span>
-                    <h3 class="news-title">Lancement d'un programme de soutien scolaire pour les enfants défavorisés</h3>
-                    <p class="news-text">
-                        Des séances d'appui scolaire et d'accompagnement psychologique ont été mises en place afin d'offrir aux enfants
-                        un cadre propice à la réussite et à l'épanouissement.
-                    </p>
-                    <a href="#" class="news-link">Découvrir le programme</a>
-                </article>
-                <article class="news-card">
-                    <span class="news-meta">Santé &amp; bien-être</span>
-                    <h3 class="news-title">Campagne de sensibilisation et de prévention en milieu rural</h3>
-                    <p class="news-text">
-                        Des activités de prévention et de sensibilisation ont été menées pour promouvoir la santé, l'hygiène et le
-                        bien-être des communautés les plus isolées.
-                    </p>
-                    <a href="#" class="news-link">Voir les résultats</a>
-                </article>
+                <?php
+                    endforeach;
+                endfor;
+                ?>
                 </div>
             </div>
         </div>

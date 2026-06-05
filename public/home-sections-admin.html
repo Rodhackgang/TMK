@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMK Admin · Accueil — Mission & Actualités</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Segoe UI', system-ui, sans-serif; background:#0a0a0f; color:#e7e9f2; display:flex; min-height:100vh; }
+    a { text-decoration:none; }
+    /* Sidebar */
+    .sidebar { width:265px; background:#11141f; border-right:1px solid #1e2233; position:fixed; top:0; bottom:0; left:0; display:flex; flex-direction:column; }
+    .brand { padding:22px 20px; border-bottom:1px solid #1e2233; }
+    .brand h1 { font-size:20px; color:#fff; } .brand h1 span { color:#22c55e; }
+    .brand p { font-size:11px; color:#8b8b9e; letter-spacing:1px; text-transform:uppercase; }
+    .nav { padding:14px 12px; overflow-y:auto; flex:1; }
+    .nav-section { font-size:11px; color:#5c6178; text-transform:uppercase; letter-spacing:1px; margin:14px 12px 6px; }
+    .nav-item { display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:9px; color:#aeb4cc; font-size:14px; margin-bottom:3px; }
+    .nav-item i { width:18px; text-align:center; }
+    .nav-item:hover { background:#1a1f30; color:#fff; }
+    .nav-item.active { background:rgba(34,197,94,.14); color:#22c55e; }
+    /* Main */
+    .main { margin-left:265px; flex:1; padding:26px 34px 70px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:26px; flex-wrap:wrap; gap:12px; }
+    .topbar h2 { font-size:23px; color:#fff; }
+    .card { background:#11141f; border:1px solid #1e2233; border-radius:16px; padding:24px; margin-bottom:22px; }
+    .card h3 { font-size:16px; color:#fff; margin-bottom:18px; display:flex; align-items:center; gap:10px; }
+    .card h3 i { color:#22c55e; }
+    label { display:block; font-size:13px; color:#aeb4cc; margin:0 0 6px; font-weight:600; }
+    input, textarea { width:100%; background:#0a0a0f; border:1px solid #262b40; border-radius:10px; padding:11px 13px; color:#e7e9f2; font-size:14px; font-family:inherit; margin-bottom:16px; }
+    input:focus, textarea:focus { outline:none; border-color:#22c55e; }
+    textarea { resize:vertical; min-height:90px; }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:0 18px; }
+    .btn { padding:11px 20px; border:none; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+    .btn-primary { background:#22c55e; color:#04220f; }
+    .btn-primary:hover { background:#16a34a; color:#fff; }
+    .btn-add { background:#1e293b; color:#93c5fd; }
+    .btn-add:hover { background:#243049; }
+    .btn-del { background:#3b1d1d; color:#f87171; padding:8px 12px; border-radius:8px; }
+    .news-item { border:1px solid #262b40; border-radius:12px; padding:16px; margin-bottom:14px; position:relative; background:#0d101a; }
+    .news-item .del-row { position:absolute; top:12px; right:12px; }
+    .toast { position:fixed; top:20px; right:20px; padding:14px 20px; border-radius:10px; color:#fff; font-weight:600; display:none; z-index:999; }
+    .toast.ok { background:#16a34a; } .toast.err { background:#dc2626; }
+    @media (max-width:860px){ .sidebar{ transform:translateX(-100%);} .main{ margin-left:0;} .grid2{ grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><h1>TMK <span>Admin</span></h1><p>Panneau d'administration</p></div>
+    <nav class="nav">
+      <div class="nav-section">Navigation</div>
+      <a href="/admin" class="nav-item"><i class="fas fa-link"></i> Liens du menu</a>
+      <div class="nav-section">Contenu</div>
+      <a href="/admin/content" class="nav-item"><i class="fas fa-home"></i> Page d'accueil</a>
+      <a href="/admin/home-sections" class="nav-item active"><i class="fas fa-newspaper"></i> Mission &amp; Actualités</a>
+      <a href="/admin/about" class="nav-item"><i class="fas fa-info-circle"></i> Page À Propos</a>
+      <a href="/admin/history" class="nav-item"><i class="fas fa-history"></i> Page Histoire</a>
+      <a href="/admin/team" class="nav-item"><i class="fas fa-users"></i> Page Équipe</a>
+      <a href="/admin/contact" class="nav-item"><i class="fas fa-envelope"></i> Page Contact</a>
+      <a href="/admin/juridical" class="nav-item"><i class="fas fa-balance-scale"></i> Page Juridique</a>
+      <div class="nav-section">Administration</div>
+      <a href="/admin/users" class="nav-item"><i class="fas fa-user-shield"></i> Utilisateurs</a>
+      <div class="nav-section">Site</div>
+      <a href="/" class="nav-item" target="_blank"><i class="fas fa-external-link-alt"></i> Voir le site</a>
+      <a href="#" class="nav-item" onclick="logoutUser();return false;" style="color:#ef4444"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h2><i class="fas fa-newspaper" style="color:#22c55e"></i> Accueil — Mission &amp; Actualités</h2>
+      <button class="btn btn-primary" onclick="saveAll()"><i class="fas fa-floppy-disk"></i> Enregistrer</button>
+    </div>
+
+    <!-- Mission & Vision -->
+    <div class="card">
+      <h3><i class="fas fa-bullseye"></i> Notre mission &amp; notre vision</h3>
+      <label>Titre de la section</label>
+      <input id="mv_sectionTitle" type="text">
+      <div class="grid2">
+        <div>
+          <label>Titre « Mission »</label>
+          <input id="mv_missionTitle" type="text">
+          <label>Texte de la mission</label>
+          <textarea id="mv_missionText"></textarea>
+        </div>
+        <div>
+          <label>Titre « Vision »</label>
+          <input id="mv_visionTitle" type="text">
+          <label>Texte de la vision</label>
+          <textarea id="mv_visionText"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actualités -->
+    <div class="card">
+      <h3><i class="fas fa-bullhorn"></i> Actualités</h3>
+      <div class="grid2">
+        <div><label>Titre de la section</label><input id="news_sectionTitle" type="text"></div>
+        <div><label>Sous-titre</label><input id="news_subtitle" type="text"></div>
+      </div>
+      <div id="newsList"></div>
+      <button class="btn btn-add" onclick="addNews()"><i class="fas fa-plus"></i> Ajouter une actualité</button>
+    </div>
+
+    <button class="btn btn-primary" onclick="saveAll()"><i class="fas fa-floppy-disk"></i> Enregistrer toutes les modifications</button>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const API_URL = '/api/content';
+    let current = {};
+
+    function toast(msg, ok=true){ const t=document.getElementById('toast'); t.textContent=msg; t.className='toast '+(ok?'ok':'err'); t.style.display='block'; setTimeout(()=>t.style.display='none',3000); }
+    function logoutUser(){ localStorage.clear(); window.location.href='/admin/login'; }
+    function esc(s){ return (s||'').replace(/"/g,'&quot;'); }
+
+    function newsRow(n={}){
+      const div=document.createElement('div'); div.className='news-item';
+      div.innerHTML = `
+        <div class="del-row"><button class="btn btn-del" onclick="this.closest('.news-item').remove()"><i class="fas fa-trash"></i></button></div>
+        <div class="grid2">
+          <div><label>Catégorie (étiquette)</label><input class="n-meta" type="text" value="${esc(n.meta)}"></div>
+          <div><label>Titre</label><input class="n-title" type="text" value="${esc(n.title)}"></div>
+        </div>
+        <label>Texte</label><textarea class="n-text">${(n.text||'').replace(/</g,'&lt;')}</textarea>
+        <div class="grid2">
+          <div><label>Texte du lien</label><input class="n-linkText" type="text" value="${esc(n.linkText||'En savoir plus')}"></div>
+          <div><label>Lien (URL)</label><input class="n-link" type="text" value="${esc(n.link||'#')}"></div>
+        </div>`;
+      document.getElementById('newsList').appendChild(div);
+    }
+    function addNews(){ newsRow({}); }
+
+    async function load(){
+      try {
+        const res = await fetch(`${API_URL}/home`);
+        current = await res.json();
+        const mv = current.missionVision || {};
+        mv_sectionTitle.value = mv.sectionTitle || 'Notre mission & notre vision';
+        mv_missionTitle.value = mv.missionTitle || 'Notre mission';
+        mv_missionText.value  = mv.missionText  || '';
+        mv_visionTitle.value  = mv.visionTitle  || 'Notre vision';
+        mv_visionText.value   = mv.visionText   || '';
+        const nw = current.news || {};
+        news_sectionTitle.value = nw.sectionTitle || 'Actualités';
+        news_subtitle.value = nw.subtitle || '';
+        document.getElementById('newsList').innerHTML='';
+        (nw.items && nw.items.length ? nw.items : []).forEach(newsRow);
+      } catch(e){ toast('Erreur de chargement', false); }
+    }
+
+    async function saveAll(){
+      const items = [...document.querySelectorAll('#newsList .news-item')].map(el => ({
+        meta: el.querySelector('.n-meta').value.trim(),
+        title: el.querySelector('.n-title').value.trim(),
+        text: el.querySelector('.n-text').value.trim(),
+        linkText: el.querySelector('.n-linkText').value.trim() || 'En savoir plus',
+        link: el.querySelector('.n-link').value.trim() || '#'
+      })).filter(i => i.title || i.text);
+
+      const payload = {
+        missionVision: {
+          sectionTitle: mv_sectionTitle.value.trim(),
+          missionTitle: mv_missionTitle.value.trim(),
+          missionText: mv_missionText.value.trim(),
+          visionTitle: mv_visionTitle.value.trim(),
+          visionText: mv_visionText.value.trim()
+        },
+        news: {
+          sectionTitle: news_sectionTitle.value.trim(),
+          subtitle: news_subtitle.value.trim(),
+          items
+        }
+      };
+      try {
+        const res = await fetch(`${API_URL}/home`, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+        if(!res.ok) throw new Error();
+        toast('✅ Enregistré avec succès');
+      } catch(e){ toast('Erreur lors de l\'enregistrement', false); }
+    }
+
+    // Vérification d'authentification (comme les autres pages admin)
+    (async function(){
+      const token = localStorage.getItem('authToken');
+      if(!token){ window.location.href='/admin/login'; return; }
+      try {
+        const r = await fetch('/api/auth/me', { headers:{ 'Authorization':`Bearer ${token}` } });
+        if(!r.ok){ localStorage.clear(); window.location.href='/admin/login'; return; }
+      } catch(e){ window.location.href='/admin/login'; return; }
+      load();
+    })();
+  </script>
+</body>
+</html>

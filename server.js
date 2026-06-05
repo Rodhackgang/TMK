@@ -107,6 +107,11 @@ app.get('/admin/content', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'content-admin.html'));
 });
 
+// Route pour la page admin (Accueil : Mission/Vision & Actualités)
+app.get('/admin/home-sections', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'home-sections-admin.html'));
+});
+
 // Route pour la page admin (à propos)
 app.get('/admin/about', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'about-admin.html'));
