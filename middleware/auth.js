@@ -24,7 +24,7 @@ const authenticateToken = async (req, res, next) => {
         return res.status(401).json({ error: 'Non authentifié' });
       }
       // Pour les pages web, rediriger vers la page de login
-      return res.redirect('/admin/login');
+      return res.status(401).json({ error: 'Non authentifié' });
     }
 
     // Vérifier le token
@@ -37,7 +37,7 @@ const authenticateToken = async (req, res, next) => {
       if (req.xhr || req.headers.accept?.includes('application/json')) {
         return res.status(401).json({ error: 'Utilisateur non trouvé ou désactivé' });
       }
-      return res.redirect('/admin/login');
+      return res.status(401).json({ error: 'Non authentifié' });
     }
 
     // Attacher l'utilisateur à la requête
