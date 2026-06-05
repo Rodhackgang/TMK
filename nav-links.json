@@ -1,0 +1,200 @@
+[
+  {
+    "_id": "6967fb8c82ea732ce20238dc",
+    "type": "simple",
+    "label": "Accueil",
+    "href": "index.php",
+    "order": 0,
+    "isActive": true,
+    "activePages": [
+      "index"
+    ],
+    "dropdownItems": [],
+    "createdAt": "2026-01-14T20:24:45.002Z",
+    "updatedAt": "2026-01-14T20:24:45.003Z",
+    "__v": 0
+  },
+  {
+    "_id": "6967fb8d82ea732ce20238dd",
+    "type": "simple",
+    "label": "À propos",
+    "href": "about.php",
+    "order": 1,
+    "isActive": true,
+    "activePages": [
+      "about"
+    ],
+    "dropdownItems": [],
+    "createdAt": "2026-01-14T20:24:45.005Z",
+    "updatedAt": "2026-01-14T20:24:45.005Z",
+    "__v": 0
+  },
+  {
+    "_id": "6967fb8d82ea732ce20238de",
+    "type": "simple",
+    "label": "Histoire",
+    "href": "histoire.php",
+    "order": 2,
+    "isActive": true,
+    "activePages": [
+      "histoire"
+    ],
+    "dropdownItems": [],
+    "createdAt": "2026-01-14T20:24:45.007Z",
+    "updatedAt": "2026-01-14T20:24:45.007Z",
+    "__v": 0
+  },
+  {
+    "_id": "6967fb8d82ea732ce20238df",
+    "type": "simple",
+    "label": "Communauté",
+    "href": "equipe.php",
+    "order": 3,
+    "isActive": true,
+    "activePages": [
+      "equipe"
+    ],
+    "dropdownItems": [],
+    "createdAt": "2026-01-14T20:24:45.011Z",
+    "updatedAt": "2026-01-14T20:24:45.011Z",
+    "__v": 0
+  },
+  {
+    "_id": "6967fb8d82ea732ce20238e0",
+    "type": "dropdown",
+    "label": "Nos réalisations",
+    "href": "#",
+    "order": 4,
+    "isActive": true,
+    "dropdownItems": [
+      {
+        "label": "Nos photos",
+        "href": "realisationsphoto.php",
+        "isActive": true,
+        "order": 0,
+        "_id": "6967fff099fb5bb74fe10ef3"
+      },
+      {
+        "label": "Nos vidéos",
+        "href": "realisationsvideo.php",
+        "isActive": true,
+        "order": 1,
+        "_id": "6967fff099fb5bb74fe10ef4"
+      },
+      {
+        "label": "Vidéo TMK",
+        "href": "video.php?video=videos/video.mp4",
+        "isActive": true,
+        "order": 2,
+        "_id": "6967fff099fb5bb74fe10ef5"
+      }
+    ],
+    "activePages": [
+      "realisationsphoto",
+      "realisationsvideo"
+    ],
+    "createdAt": "2026-01-14T20:24:45.019Z",
+    "updatedAt": "2026-01-14T20:24:45.019Z",
+    "__v": 0
+  },
+  {
+    "_id": "6967fb8d82ea732ce20238e4",
+    "type": "dropdown",
+    "label": "Membres Services",
+    "href": "#",
+    "order": 5,
+    "isActive": true,
+    "dropdownItems": [
+      {
+        "label": "Comité Administratif",
+        "href": "membreservice.php#comite",
+        "isActive": true,
+        "order": 0,
+        "_id": "6967fb8d82ea732ce20238e5"
+      },
+      {
+        "label": "Service des Ressources Humaines",
+        "href": "membreservice.php#rh",
+        "isActive": true,
+        "order": 1,
+        "_id": "6967fb8d82ea732ce20238e6"
+      },
+      {
+        "label": "Service Promotion et Planification",
+        "href": "membreservice.php#promotion",
+        "isActive": true,
+        "order": 2,
+        "_id": "6967fb8d82ea732ce20238e7"
+      },
+      {
+        "label": "Service Financière & Administrative",
+        "href": "membreservice.php#financiere",
+        "isActive": true,
+        "order": 3,
+        "_id": "6967fb8d82ea732ce20238e8"
+      },
+      {
+        "label": "Service de Logistique",
+        "href": "membreservice.php#logistique",
+        "isActive": true,
+        "order": 4,
+        "_id": "6967fb8d82ea732ce20238e9"
+      },
+      {
+        "label": "Service Relations Internationales",
+        "href": "membreservice.php#international",
+        "isActive": true,
+        "order": 5,
+        "_id": "6967fb8d82ea732ce20238ea"
+      },
+      {
+        "label": "Service Communication Digitale",
+        "href": "membreservice.php#communication",
+        "isActive": true,
+        "order": 6,
+        "_id": "6967fb8d82ea732ce20238eb"
+      },
+      {
+        "label": "Service Juridique",
+        "href": "membreservice.php#juridique",
+        "isActive": true,
+        "order": 7,
+        "_id": "6967fb8d82ea732ce20238ec"
+      }
+    ],
+    "activePages": [],
+    "createdAt": "2026-01-14T20:24:45.029Z",
+    "updatedAt": "2026-01-14T20:24:45.029Z",
+    "__v": 0
+  },
+  {
+    "_id": "6967fb8d82ea732ce20238ed",
+    "type": "simple",
+    "label": "Contact",
+    "href": "contact.php",
+    "order": 6,
+    "isActive": true,
+    "activePages": [
+      "contact"
+    ],
+    "dropdownItems": [],
+    "createdAt": "2026-01-14T20:24:45.031Z",
+    "updatedAt": "2026-01-14T20:24:45.031Z",
+    "__v": 0
+  },
+  {
+    "_id": "6967fb8d82ea732ce20238ee",
+    "type": "simple",
+    "label": "Status Juridique",
+    "href": "juridique.php",
+    "order": 7,
+    "isActive": true,
+    "activePages": [
+      "juridique"
+    ],
+    "dropdownItems": [],
+    "createdAt": "2026-01-14T20:24:45.032Z",
+    "updatedAt": "2026-01-14T20:24:45.032Z",
+    "__v": 0
+  }
+]

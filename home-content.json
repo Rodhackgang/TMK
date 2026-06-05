@@ -1,0 +1,58 @@
+{
+  "_id": "6968039ae1c07822dbee332d",
+  "hero": {
+    "videoUrl": "images/1.mp4",
+    "title": "Un avenir meilleur pour tous",
+    "subtitle": "Agissons ensemble pour un changement durable",
+    "donateButtonText": "Faire un don",
+    "videoButtonText": "Voir notre vidéo",
+    "uiuxText": "Vous souhaitez créer un site web professionnel ? Contactez-nous pour donner vie à vos projets numériques avec une approche UI/UX moderne et efficace.",
+    "uiuxButtonText": "Créer votre site web",
+    "uiuxWhatsappLink": "https://wa.me/243974555964"
+  },
+  "videoSection": {
+    "title": "Notre Mission en Action",
+    "subtitle": "Découvrez comment votre soutien transforme des vies dans les domaines de l'éducation, de la santé et de l'aide humanitaire.",
+    "videos": [
+      "images/2.mp4"
+    ],
+    "youtubeUrl": "https://www.youtube.com/embed/IUnlo_BRRBA"
+  },
+  "donationModal": {
+    "title": "Merci de votre générosité",
+    "subtitle": "Votre don fait la différence !",
+    "note": "Après votre don, envoyez un SMS avec votre nom au même numéro pour confirmation."
+  },
+  "donationSection": {
+    "title": "Soutenez Notre Cause",
+    "description": "Votre générosité peut changer des vies. Faites un don maintenant et aidez-nous à créer un impact durable."
+  },
+  "phoneNumbers": [
+    {
+      "icon": "fab fa-whatsapp",
+      "number": "0824078000",
+      "operator": "Vodacom",
+      "_id": "6968039ae1c07822dbee332e"
+    },
+    {
+      "icon": "fas fa-mobile-alt",
+      "number": "0850958952",
+      "operator": "Orange",
+      "_id": "6968039ae1c07822dbee332f"
+    },
+    {
+      "icon": "fas fa-phone",
+      "number": "0978219845",
+      "operator": "Airtel",
+      "_id": "6968039ae1c07822dbee3330"
+    }
+  ],
+  "contactSection": {
+    "title": "Besoin d'un site similaire ?",
+    "description": "Contactez-nous pour la conception de votre site web professionnel",
+    "buttonText": "Nous contacter",
+    "whatsappLink": "https://wa.me/+243974555964?text=Bonjour,%20je%20suis%20intéressé%20par%20la%20conception%20d'un%20site%20internet."
+  },
+  "updatedAt": "2026-01-14T20:59:56.350Z",
+  "__v": 0
+}

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple du Chat - TMK Foundation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #d4202c 0%, #003366 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: white;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .emoji {
+            font-size: 5rem;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        .message {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .message h2 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .message p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .arrow-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            text-align: center;
+        }
+        
+        .arrow {
+            background: rgba(255, 255, 255, 0.9);
+            color: #d4202c;
+            padding: 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+        
+        .arrow::before {
+            content: '👇';
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .steps {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: left;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .steps h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+        
+        .steps ol {
+            font-size: 1rem;
+            line-height: 2;
+        }
+        
+        .steps li {
+            margin-bottom: 10px;
+        }
+        
+        .status {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(40, 167, 69, 0.9);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
+        .widget-info {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .widget-info code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 8px;
+            border-radius: 5px;
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="status">
+        ✅ Test Simple - HTML Pur (Sans PHP)
+    </div>
+    
+    <div class="container">
+        <div class="emoji">💬</div>
+        <h1>Test du Widget Tawk.to</h1>
+        
+        <div class="message">
+            <h2>🎯 Objectif de ce test</h2>
+            <p><strong>Vérifier si le widget Tawk.to se charge correctement</strong></p>
+            <p>Ce fichier est un simple HTML. Pas de PHP, pas de serveur nécessaire.</p>
+            <p>Si le widget apparaît en bas à droite ➡️ Tawk.to fonctionne !</p>
+        </div>
+        
+        <div class="steps">
+            <h3>📝 Que faire ?</h3>
+            <ol>
+                <li><strong>Attendez 5 secondes</strong> - Le widget se charge</li>
+                <li><strong>Regardez en bas à droite</strong> - Un cercle coloré devrait apparaître</li>
+                <li><strong>Cliquez dessus</strong> - La fenêtre de chat s'ouvre</li>
+                <li><strong>Essayez d'envoyer un message</strong> - Pour tester</li>
+            </ol>
+            
+            <div class="widget-info">
+                <p><strong>Widget ID :</strong> <code>68e8cf7997f1e31950bd9bda</code></p>
+                <p><strong>Widget Key :</strong> <code>1j76mktf9</code></p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="arrow-container">
+        <div class="arrow">
+            Le widget devrait<br>être ICI !
+        </div>
+    </div>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    // Afficher dans la console pour déboguer
+    console.log('🔧 Initialisation du widget Tawk.to...');
+    console.log('Widget ID: 68e8cf7997f1e31950bd9bda');
+    console.log('Widget Key: 1j76mktf9');
+    
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/68e8cf7997f1e31950bd9bda/1j76mktf9';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        
+        // Événement de chargement
+        s1.onload = function() {
+            console.log('✅ Script Tawk.to chargé avec succès !');
+        };
+        
+        // Événement d'erreur
+        s1.onerror = function() {
+            console.error('❌ Erreur lors du chargement du script Tawk.to');
+            console.error('Vérifiez votre connexion internet');
+            alert('⚠️ Le widget Tawk.to n\'a pas pu se charger.\n\nVérifiez :\n1. Votre connexion internet\n2. Que vous n\'avez pas de bloqueur de publicités\n3. La console (F12) pour plus de détails');
+        };
+        
+        s0.parentNode.insertBefore(s1,s0);
+    })();
+    
+    // Vérifier après 5 secondes si le widget est chargé
+    setTimeout(function() {
+        if (typeof Tawk_API !== 'undefined') {
+            console.log('✅ API Tawk.to disponible !');
+            
+            // Événements Tawk.to
+            Tawk_API.onLoad = function(){
+                console.log('✅ Widget Tawk.to complètement chargé !');
+                console.log('Le widget devrait être visible en bas à droite.');
+            };
+            
+            Tawk_API.onChatMaximized = function(){
+                console.log('💬 Fenêtre de chat ouverte');
+            };
+            
+            Tawk_API.onChatMinimized = function(){
+                console.log('💬 Fenêtre de chat fermée');
+            };
+            
+        } else {
+            console.warn('⚠️ L\'API Tawk.to n\'est pas encore chargée après 5 secondes');
+            console.warn('Cela peut être normal si votre connexion est lente');
+            console.warn('Attendez encore quelques secondes...');
+        }
+    }, 5000);
+    
+    // Vérifier après 10 secondes (délai final)
+    setTimeout(function() {
+        if (typeof Tawk_API === 'undefined') {
+            console.error('❌ Le widget Tawk.to n\'a pas pu se charger après 10 secondes');
+            console.error('Problèmes possibles :');
+            console.error('1. Pas de connexion internet');
+            console.error('2. Bloqueur de publicités activé');
+            console.error('3. Pare-feu ou antivirus bloquant');
+            console.error('4. Widget ID incorrect');
+        }
+    }, 10000);
+    </script>
+    <!--End of Tawk.to Script-->
+    
+    <!-- Message de debug en overlay -->
+    <script>
+        // Créer un message de debug
+        setTimeout(function() {
+            var debugDiv = document.createElement('div');
+            debugDiv.style.cssText = 'position: fixed; bottom: 120px; right: 30px; background: rgba(0,0,0,0.8); color: white; padding: 15px; border-radius: 10px; font-size: 12px; max-width: 250px; z-index: 9999;';
+            
+            if (typeof Tawk_API !== 'undefined') {
+                debugDiv.innerHTML = '✅ <strong>Widget chargé!</strong><br>Si vous ne le voyez pas,<br>vérifiez en bas à droite.';
+                debugDiv.style.background = 'rgba(40, 167, 69, 0.9)';
+            } else {
+                debugDiv.innerHTML = '❌ <strong>Widget non chargé</strong><br>Ouvrez la console (F12)<br>pour voir les erreurs.';
+                debugDiv.style.background = 'rgba(220, 53, 69, 0.9)';
+            }
+            
+            document.body.appendChild(debugDiv);
+            
+            // Retirer après 5 secondes
+            setTimeout(function() {
+                debugDiv.style.transition = 'opacity 1s';
+                debugDiv.style.opacity = '0';
+                setTimeout(function() {
+                    document.body.removeChild(debugDiv);
+                }, 1000);
+            }, 5000);
+        }, 6000);
+    </script>
+</body>
+</html>
+

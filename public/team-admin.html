@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Équipe | TMK Fondation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-tertiary: #1a1a25;
+      --bg-card: #16161f;
+      --accent-primary: #8b5cf6;
+      --accent-secondary: #7c3aed;
+      --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0b0;
+      --text-muted: #6c6c7c;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --danger: #ff6b6b;
+      --success: #22c55e;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-gradient);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+    }
+
+    .logo-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .logo-text span { color: var(--accent-primary); }
+
+    .nav-section { margin-bottom: 32px; }
+
+    .nav-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      padding-left: 12px;
+    }
+
+    .nav-menu { list-style: none; }
+    .nav-item { margin-bottom: 4px; }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .nav-link.active {
+      background: rgba(139, 92, 246, 0.1);
+      color: var(--accent-primary);
+    }
+
+    .nav-link i { width: 20px; text-align: center; }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+      padding: 32px;
+      min-height: 100vh;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .page-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .page-subtitle {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-top: 4px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-title i { color: var(--accent-primary); }
+
+    /* Form Elements */
+    .form-group { margin-bottom: 20px; }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); }
+
+    .btn-danger {
+      background: rgba(255, 107, 107, 0.15);
+      color: var(--danger);
+    }
+
+    .btn-danger:hover { background: rgba(255, 107, 107, 0.25); }
+
+    .btn-sm { padding: 8px 16px; font-size: 0.8rem; }
+
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Members Grid */
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .member-card {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
+    }
+
+    .member-card:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-4px);
+    }
+
+    .member-photo {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      background: var(--bg-secondary);
+    }
+
+    .member-info {
+      padding: 16px;
+    }
+
+    .member-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .member-role {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .member-actions {
+      display: flex;
+      gap: 8px;
+      padding: 0 16px 16px;
+    }
+
+    .member-actions .btn { flex: 1; }
+
+    /* File Upload */
+    .file-upload-zone {
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--bg-tertiary);
+    }
+
+    .file-upload-zone:hover {
+      border-color: var(--accent-primary);
+      background: rgba(139, 92, 246, 0.05);
+    }
+
+    .file-upload-zone i {
+      font-size: 2rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .file-upload-zone p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .file-upload-zone span { color: var(--accent-primary); font-weight: 500; }
+
+    .photo-preview {
+      width: 120px;
+      height: 120px;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+      margin: 16px auto;
+      display: block;
+      background: var(--bg-secondary);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      background: var(--bg-tertiary);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover { background: var(--danger); color: white; }
+
+    .modal-body { padding: 24px; }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 20px 24px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 16px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      display: none;
+      align-items: center;
+      gap: 12px;
+      z-index: 2000;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .toast.show {
+      display: flex;
+      animation: slideIn 0.3s ease;
+    }
+
+    .toast.success { border-left: 4px solid var(--success); }
+    .toast.error { border-left: 4px solid var(--danger); }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(100%); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Loading */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border-color);
+      border-top-color: var(--accent-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Stats */
+    .stats-bar {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .stat-item {
+      background: var(--bg-tertiary);
+      padding: 20px 24px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      background: rgba(139, 92, 246, 0.1);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-primary);
+      font-size: 1.25rem;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .sidebar { width: 240px; }
+      .main-content { margin-left: 240px; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main-content { margin-left: 0; padding: 20px; }
+      .members-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-bar { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-crown"></i>
+        </div>
+        <div class="logo-text">TMK <span>Admin</span></div>
+      </div>
+
+      <nav class="nav-section">
+        <div class="nav-title">Navigation</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin" class="nav-link">
+              <i class="fas fa-link"></i>
+              <span>Liens Navigation</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Contenu des Pages</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin/content" class="nav-link">
+              <i class="fas fa-home"></i>
+              <span>Page Accueil</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/about" class="nav-link">
+              <i class="fas fa-info-circle"></i>
+              <span>Page À Propos</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/history" class="nav-link">
+              <i class="fas fa-history"></i>
+              <span>Page Histoire</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/team" class="nav-link active">
+              <i class="fas fa-users"></i>
+              <span>Page Équipe</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/contact" class="nav-link">
+              <i class="fas fa-envelope"></i>
+              <span>Page Contact</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/juridical" class="nav-link">
+              <i class="fas fa-balance-scale"></i>
+              <span>Page Juridique</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Administration</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin/users" class="nav-link">
+              <i class="fas fa-user-shield"></i>
+              <span>Utilisateurs</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Actions</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="syncContent(); return false;">
+              <i class="fas fa-sync-alt"></i>
+              <span>Synchroniser</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/equipe.php" class="nav-link" target="_blank">
+              <i class="fas fa-external-link-alt"></i>
+              <span>Voir la page</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="logoutUser(); return false;" style="color: #ef4444;">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Déconnexion</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Équipe / Communauté</h1>
+          <p class="page-subtitle">Gérez les membres de votre communauté</p>
+        </div>
+        <button class="btn btn-primary" onclick="openMemberModal()">
+          <i class="fas fa-plus"></i>
+          Ajouter un membre
+        </button>
+      </div>
+
+      <!-- Loading -->
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+      </div>
+
+      <div id="content-wrapper" style="display: none;">
+        <!-- Stats -->
+        <div class="stats-bar">
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div>
+              <div class="stat-value" id="membersCount">0</div>
+              <div class="stat-label">Membres</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Title -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-heading"></i>
+              Titre de la Section
+            </h2>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <input type="text" class="form-input" id="sectionTitle" placeholder="Notre Communauté">
+          </div>
+        </div>
+
+        <!-- Members -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-users"></i>
+              Membres de la Communauté
+            </h2>
+          </div>
+          <div class="members-grid" id="membersGrid">
+            <!-- Members will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button class="btn btn-secondary" onclick="loadContent()">
+            <i class="fas fa-undo"></i>
+            Actualiser
+          </button>
+          <button class="btn btn-primary" onclick="saveContent()">
+            <i class="fas fa-save"></i>
+            Enregistrer
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Member Modal -->
+  <div class="modal-overlay" id="memberModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Ajouter un membre</h3>
+        <button class="modal-close" onclick="closeModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editIndex">
+        
+        <div class="form-group">
+          <label class="form-label">Photo du membre</label>
+          <div class="file-upload-zone" onclick="document.getElementById('photoFile').click()">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p><span>Cliquez pour uploader</span> une photo</p>
+            <p style="font-size: 0.75rem;">JPG, PNG, WEBP</p>
+          </div>
+          <input type="file" id="photoFile" accept="image/*" style="display:none" onchange="uploadPhoto(this)">
+          <img id="photoPreview" class="photo-preview" src="" alt="" style="display:none;">
+          <input type="hidden" id="memberPhoto">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Nom complet</label>
+          <input type="text" class="form-input" id="memberName" placeholder="Nom du membre">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Rôle / Fonction (optionnel)</label>
+          <input type="text" class="form-input" id="memberRole" placeholder="Ex: Coordinateur, Bénévole...">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="saveMember()">
+          <i class="fas fa-check"></i>
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <script>
+    const API_BASE = '/api/content';
+    let teamContent = null;
+
+    document.addEventListener('DOMContentLoaded', loadContent);
+
+    async function loadContent() {
+      try {
+        const response = await fetch(`${API_BASE}/team`);
+        teamContent = await response.json();
+        
+        document.getElementById('sectionTitle').value = teamContent.sectionTitle || '';
+        document.getElementById('membersCount').textContent = teamContent.members?.length || 0;
+        
+        renderMembers();
+        
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content-wrapper').style.display = 'block';
+      } catch (error) {
+        console.error('Erreur:', error);
+        showToast('Erreur de chargement', 'error');
+      }
+    }
+
+    function renderMembers() {
+      const grid = document.getElementById('membersGrid');
+      const members = teamContent.members || [];
+      
+      if (members.length === 0) {
+        grid.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 40px; grid-column: 1/-1;">Aucun membre ajouté</p>';
+        return;
+      }
+      
+      grid.innerHTML = members.map((member, index) => `
+        <div class="member-card">
+          <img src="${member.photo || 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%231a1a25%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%236c6c7c%22 font-size=%2230%22>?</text></svg>'}" 
+               alt="${member.name}" 
+               class="member-photo"
+               onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%231a1a25%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%236c6c7c%22 font-size=%2230%22>?</text></svg>'">
+          <div class="member-info">
+            <div class="member-name">${member.name}</div>
+            <div class="member-role">${member.role || 'Membre'}</div>
+          </div>
+          <div class="member-actions">
+            <button class="btn btn-secondary btn-sm" onclick="editMember(${index})">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-danger btn-sm" onclick="deleteMember(${index})">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openMemberModal(index = null) {
+      document.getElementById('memberModal').classList.add('active');
+      document.getElementById('editIndex').value = index !== null ? index : '';
+      document.getElementById('modalTitle').textContent = index !== null ? 'Modifier le membre' : 'Ajouter un membre';
+      
+      // Reset form
+      document.getElementById('memberName').value = '';
+      document.getElementById('memberRole').value = '';
+      document.getElementById('memberPhoto').value = '';
+      document.getElementById('photoPreview').style.display = 'none';
+      
+      if (index !== null && teamContent.members[index]) {
+        const member = teamContent.members[index];
+        document.getElementById('memberName').value = member.name || '';
+        document.getElementById('memberRole').value = member.role || '';
+        document.getElementById('memberPhoto').value = member.photo || '';
+        
+        if (member.photo) {
+          document.getElementById('photoPreview').src = member.photo;
+          document.getElementById('photoPreview').style.display = 'block';
+        }
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('memberModal').classList.remove('active');
+    }
+
+    function editMember(index) {
+      openMemberModal(index);
+    }
+
+    async function uploadPhoto(input) {
+      const file = input.files[0];
+      if (!file) return;
+      
+      const preview = document.getElementById('photoPreview');
+      preview.style.display = 'block';
+      preview.src = 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%231a1a25%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%238b5cf6%22 font-size=%2212%22>Upload...</text></svg>';
+      
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      try {
+        const response = await fetch('/api/upload/single', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          document.getElementById('memberPhoto').value = result.path;
+          preview.src = result.path;
+          showToast('Photo uploadée', 'success');
+        } else {
+          throw new Error(result.error);
+        }
+      } catch (error) {
+        preview.style.display = 'none';
+        showToast('Erreur upload: ' + error.message, 'error');
+      }
+      
+      input.value = '';
+    }
+
+    async function saveMember() {
+      const name = document.getElementById('memberName').value.trim();
+      const photo = document.getElementById('memberPhoto').value.trim();
+      const role = document.getElementById('memberRole').value.trim();
+      const editIndex = document.getElementById('editIndex').value;
+      
+      if (!name) {
+        showToast('Le nom est requis', 'error');
+        return;
+      }
+      
+      if (!photo) {
+        showToast('La photo est requise', 'error');
+        return;
+      }
+      
+      const memberData = { name, photo, role };
+      
+      try {
+        if (editIndex !== '') {
+          await fetch(`${API_BASE}/team/member/${editIndex}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(memberData)
+          });
+        } else {
+          await fetch(`${API_BASE}/team/member`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(memberData)
+          });
+        }
+        
+        closeModal();
+        await loadContent();
+        showToast('Membre enregistré', 'success');
+      } catch (error) {
+        showToast('Erreur', 'error');
+      }
+    }
+
+    async function deleteMember(index) {
+      if (!confirm('Supprimer ce membre ?')) return;
+      
+      try {
+        await fetch(`${API_BASE}/team/member/${index}`, { method: 'DELETE' });
+        await loadContent();
+        showToast('Membre supprimé', 'success');
+      } catch (error) {
+        showToast('Erreur', 'error');
+      }
+    }
+
+    async function saveContent() {
+      const updatedContent = {
+        sectionTitle: document.getElementById('sectionTitle').value,
+        members: teamContent.members || []
+      };
+      
+      try {
+        await fetch(`${API_BASE}/team`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedContent)
+        });
+        
+        showToast('Modifications enregistrées', 'success');
+      } catch (error) {
+        showToast('Erreur', 'error');
+      }
+    }
+
+    async function syncContent() {
+      await saveContent();
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      toast.className = `toast show ${type}`;
+      toastMessage.textContent = message;
+      
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Authentification
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('authToken');
+      if (!token) { window.location.href = '/admin/login'; return; }
+      try {
+        const response = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!response.ok) { localStorage.clear(); window.location.href = '/admin/login'; return; }
+        const data = await response.json();
+        if (data.user.role !== 'admin' && !data.user.permissions?.canManageTeamPage) {
+          document.body.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0a0a0f;color:#fff;text-align:center;padding:2rem;"><i class="fas fa-lock" style="font-size:4rem;color:#ef4444;margin-bottom:1.5rem;"></i><h1>Accès Refusé</h1><p style="color:#8b8b9e;margin:1rem 0 2rem;">Vous n\'avez pas la permission.</p><button onclick="localStorage.clear();window.location.href=\'/admin/login\'" style="padding:0.75rem 1.5rem;background:#6366f1;color:white;border:none;border-radius:10px;cursor:pointer;">Se déconnecter</button></div>';
+          return;
+        }
+        if (data.user.role !== 'admin') { const ul = document.querySelector('a[href="/admin/users"]'); if (ul) ul.style.display = 'none'; }
+      } catch (e) { window.location.href = '/admin/login'; }
+    });
+    function logoutUser() { localStorage.clear(); window.location.href = '/admin/login'; }
+  </script>
+</body>
+</html>

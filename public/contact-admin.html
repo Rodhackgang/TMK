@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Contact | TMK Fondation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-tertiary: #1a1a25;
+      --bg-card: #16161f;
+      --accent-primary: #ec4899;
+      --accent-secondary: #db2777;
+      --accent-gradient: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0b0;
+      --text-muted: #6c6c7c;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --danger: #ff6b6b;
+      --success: #22c55e;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(219, 39, 119, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-gradient);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+    }
+
+    .logo-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .logo-text span { color: var(--accent-primary); }
+
+    .nav-section { margin-bottom: 32px; }
+
+    .nav-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      padding-left: 12px;
+    }
+
+    .nav-menu { list-style: none; }
+    .nav-item { margin-bottom: 4px; }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .nav-link.active {
+      background: rgba(236, 72, 153, 0.1);
+      color: var(--accent-primary);
+    }
+
+    .nav-link i { width: 20px; text-align: center; }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+      padding: 32px;
+      min-height: 100vh;
+    }
+
+    .page-header { margin-bottom: 32px; }
+
+    .page-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .page-subtitle {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-top: 4px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-title i { color: var(--accent-primary); }
+
+    /* Form Elements */
+    .form-group { margin-bottom: 20px; }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(236, 72, 153, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); }
+
+    .btn-danger {
+      background: rgba(255, 107, 107, 0.15);
+      color: var(--danger);
+    }
+
+    .btn-danger:hover { background: rgba(255, 107, 107, 0.25); }
+
+    .btn-sm { padding: 8px 16px; font-size: 0.8rem; }
+
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Social Links */
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .social-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+    }
+
+    .social-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .social-icon.facebook { background: rgba(59, 89, 152, 0.2); color: #3b5998; }
+    .social-icon.twitter { background: rgba(29, 161, 242, 0.2); color: #1da1f2; }
+    .social-icon.instagram { background: rgba(225, 48, 108, 0.2); color: #e1306c; }
+    .social-icon.linkedin { background: rgba(0, 119, 181, 0.2); color: #0077b5; }
+    .social-icon.whatsapp { background: rgba(37, 211, 102, 0.2); color: #25d366; }
+    .social-icon.youtube { background: rgba(255, 0, 0, 0.2); color: #ff0000; }
+    .social-icon.default { background: rgba(236, 72, 153, 0.2); color: var(--accent-primary); }
+
+    .social-info { flex: 1; }
+    .social-platform { font-weight: 600; font-size: 0.95rem; }
+    .social-url { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+
+    .social-actions { display: flex; gap: 8px; }
+
+    /* Contact Info Preview */
+    .contact-preview {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-top: 16px;
+    }
+
+    .contact-preview-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .contact-preview-item:last-child { border-bottom: none; }
+
+    .contact-preview-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(236, 72, 153, 0.1);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-primary);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      background: var(--bg-tertiary);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover { background: var(--danger); color: white; }
+
+    .modal-body { padding: 24px; }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 20px 24px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* Icon Selector */
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .icon-option {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-secondary);
+    }
+
+    .icon-option:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    .icon-option.selected {
+      background: rgba(236, 72, 153, 0.1);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 16px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      display: none;
+      align-items: center;
+      gap: 12px;
+      z-index: 2000;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .toast.show {
+      display: flex;
+      animation: slideIn 0.3s ease;
+    }
+
+    .toast.success { border-left: 4px solid var(--success); }
+    .toast.error { border-left: 4px solid var(--danger); }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(100%); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Loading */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border-color);
+      border-top-color: var(--accent-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .sidebar { width: 240px; }
+      .main-content { margin-left: 240px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main-content { margin-left: 0; padding: 20px; }
+      .social-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-crown"></i>
+        </div>
+        <div class="logo-text">TMK <span>Admin</span></div>
+      </div>
+
+      <nav class="nav-section">
+        <div class="nav-title">Navigation</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin" class="nav-link">
+              <i class="fas fa-link"></i>
+              <span>Liens Navigation</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Contenu des Pages</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin/content" class="nav-link">
+              <i class="fas fa-home"></i>
+              <span>Page Accueil</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/about" class="nav-link">
+              <i class="fas fa-info-circle"></i>
+              <span>Page À Propos</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/history" class="nav-link">
+              <i class="fas fa-history"></i>
+              <span>Page Histoire</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/team" class="nav-link">
+              <i class="fas fa-users"></i>
+              <span>Page Équipe</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/contact" class="nav-link active">
+              <i class="fas fa-envelope"></i>
+              <span>Page Contact</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/juridical" class="nav-link">
+              <i class="fas fa-balance-scale"></i>
+              <span>Page Juridique</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Administration</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin/users" class="nav-link">
+              <i class="fas fa-user-shield"></i>
+              <span>Utilisateurs</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Actions</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="syncContent(); return false;">
+              <i class="fas fa-sync-alt"></i>
+              <span>Synchroniser</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/contact.php" class="nav-link" target="_blank">
+              <i class="fas fa-external-link-alt"></i>
+              <span>Voir la page</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="logoutUser(); return false;" style="color: #ef4444;">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Déconnexion</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <h1 class="page-title">Page Contact</h1>
+        <p class="page-subtitle">Gérez les informations de contact et les réseaux sociaux</p>
+      </div>
+
+      <!-- Loading -->
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+      </div>
+
+      <div id="content-wrapper" style="display: none;">
+        <!-- Page Titles -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-heading"></i>
+              Titres de la Page
+            </h2>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Titre de la page</label>
+              <input type="text" class="form-input" id="pageTitle" placeholder="Contactez-nous">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Titre de la section</label>
+              <input type="text" class="form-input" id="sectionTitle" placeholder="Contactez TMK">
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-address-card"></i>
+              Informations de Contact
+            </h2>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Titre du bloc</label>
+            <input type="text" class="form-input" id="contactInfoTitle" placeholder="Informations de Contact">
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Label Téléphone</label>
+              <input type="text" class="form-input" id="phoneLabel" placeholder="Téléphone">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Numéro de téléphone</label>
+              <input type="text" class="form-input" id="phoneNumber" placeholder="+243 900 000 000">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Label Email</label>
+              <input type="text" class="form-input" id="emailLabel" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Adresse email</label>
+              <input type="text" class="form-input" id="emailAddress" placeholder="contact@tmkfoundation.org">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Label Adresse</label>
+            <input type="text" class="form-input" id="addressLabel" placeholder="Adresse">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Adresse ligne 1</label>
+              <input type="text" class="form-input" id="addressLine1" placeholder="A108 Rue Adam">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Adresse ligne 2</label>
+              <input type="text" class="form-input" id="addressLine2" placeholder="Kinshasa, RDC">
+            </div>
+          </div>
+
+          <!-- Preview -->
+          <div class="contact-preview">
+            <div class="contact-preview-item">
+              <div class="contact-preview-icon"><i class="fa fa-phone"></i></div>
+              <div>
+                <strong id="previewPhoneLabel">Téléphone</strong><br>
+                <span id="previewPhone" style="color: var(--text-muted);">+243 900 000 000</span>
+              </div>
+            </div>
+            <div class="contact-preview-item">
+              <div class="contact-preview-icon"><i class="fa fa-envelope"></i></div>
+              <div>
+                <strong id="previewEmailLabel">Email</strong><br>
+                <span id="previewEmail" style="color: var(--text-muted);">contact@tmkfoundation.org</span>
+              </div>
+            </div>
+            <div class="contact-preview-item">
+              <div class="contact-preview-icon"><i class="fa fa-map-marker"></i></div>
+              <div>
+                <strong id="previewAddressLabel">Adresse</strong><br>
+                <span id="previewAddress" style="color: var(--text-muted);">A108 Rue Adam, Kinshasa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-share-alt"></i>
+              Réseaux Sociaux
+            </h2>
+            <button class="btn btn-primary btn-sm" onclick="openSocialModal()">
+              <i class="fas fa-plus"></i>
+              Ajouter
+            </button>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Titre de la section</label>
+            <input type="text" class="form-input" id="socialTitle" placeholder="Suivez-nous">
+          </div>
+          <div class="social-grid" id="socialGrid">
+            <!-- Social links will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Form Section -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-file-alt"></i>
+              Section Formulaire
+            </h2>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Titre du formulaire</label>
+            <input type="text" class="form-input" id="formTitle" placeholder="Envoyez-nous un Message">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea class="form-textarea" id="formDescription" placeholder="Remplissez le formulaire ci-dessous..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Texte du bouton</label>
+            <input type="text" class="form-input" id="submitButtonText" placeholder="Envoyer le Message">
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button class="btn btn-secondary" onclick="loadContent()">
+            <i class="fas fa-undo"></i>
+            Actualiser
+          </button>
+          <button class="btn btn-primary" onclick="saveContent()">
+            <i class="fas fa-save"></i>
+            Enregistrer
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Social Modal -->
+  <div class="modal-overlay" id="socialModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Ajouter un réseau social</h3>
+        <button class="modal-close" onclick="closeModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editIndex">
+        
+        <div class="form-group">
+          <label class="form-label">Plateforme</label>
+          <input type="text" class="form-input" id="socialPlatform" placeholder="Facebook, Twitter, etc.">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Icône</label>
+          <input type="text" class="form-input" id="socialIcon" placeholder="fa fa-facebook">
+          <div class="icon-grid">
+            <div class="icon-option" onclick="selectIcon('fa fa-facebook')"><i class="fa fa-facebook"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-twitter')"><i class="fa fa-twitter"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-instagram')"><i class="fa fa-instagram"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-linkedin')"><i class="fa fa-linkedin"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-youtube')"><i class="fa fa-youtube"></i></div>
+            <div class="icon-option" onclick="selectIcon('fab fa-whatsapp')"><i class="fab fa-whatsapp"></i></div>
+            <div class="icon-option" onclick="selectIcon('fab fa-tiktok')"><i class="fab fa-tiktok"></i></div>
+            <div class="icon-option" onclick="selectIcon('fab fa-telegram')"><i class="fab fa-telegram"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-globe')"><i class="fa fa-globe"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-envelope')"><i class="fa fa-envelope"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-phone')"><i class="fa fa-phone"></i></div>
+            <div class="icon-option" onclick="selectIcon('fab fa-pinterest')"><i class="fab fa-pinterest"></i></div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">URL du profil</label>
+          <input type="text" class="form-input" id="socialUrl" placeholder="https://facebook.com/...">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="saveSocial()">
+          <i class="fas fa-check"></i>
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <script>
+    const API_BASE = '/api/content';
+    let contactContent = null;
+
+    document.addEventListener('DOMContentLoaded', loadContent);
+
+    async function loadContent() {
+      try {
+        const response = await fetch(`${API_BASE}/contact`);
+        contactContent = await response.json();
+        
+        // Populate form
+        document.getElementById('pageTitle').value = contactContent.pageTitle || '';
+        document.getElementById('sectionTitle').value = contactContent.sectionTitle || '';
+        
+        // Contact Info
+        document.getElementById('contactInfoTitle').value = contactContent.contactInfo?.title || '';
+        document.getElementById('phoneLabel').value = contactContent.contactInfo?.phone?.label || '';
+        document.getElementById('phoneNumber').value = contactContent.contactInfo?.phone?.number || '';
+        document.getElementById('emailLabel').value = contactContent.contactInfo?.email?.label || '';
+        document.getElementById('emailAddress').value = contactContent.contactInfo?.email?.address || '';
+        document.getElementById('addressLabel').value = contactContent.contactInfo?.address?.label || '';
+        document.getElementById('addressLine1').value = contactContent.contactInfo?.address?.line1 || '';
+        document.getElementById('addressLine2').value = contactContent.contactInfo?.address?.line2 || '';
+        
+        // Social
+        document.getElementById('socialTitle').value = contactContent.socialTitle || '';
+        
+        // Form
+        document.getElementById('formTitle').value = contactContent.formSection?.title || '';
+        document.getElementById('formDescription').value = contactContent.formSection?.description || '';
+        document.getElementById('submitButtonText').value = contactContent.formSection?.submitButtonText || '';
+        
+        updatePreview();
+        renderSocialLinks();
+        
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content-wrapper').style.display = 'block';
+      } catch (error) {
+        console.error('Erreur:', error);
+        showToast('Erreur de chargement', 'error');
+      }
+    }
+
+    function updatePreview() {
+      document.getElementById('previewPhoneLabel').textContent = document.getElementById('phoneLabel').value || 'Téléphone';
+      document.getElementById('previewPhone').textContent = document.getElementById('phoneNumber').value || '+243 900 000 000';
+      document.getElementById('previewEmailLabel').textContent = document.getElementById('emailLabel').value || 'Email';
+      document.getElementById('previewEmail').textContent = document.getElementById('emailAddress').value || 'contact@tmkfoundation.org';
+      document.getElementById('previewAddressLabel').textContent = document.getElementById('addressLabel').value || 'Adresse';
+      document.getElementById('previewAddress').textContent = 
+        (document.getElementById('addressLine1').value || 'A108 Rue Adam') + ', ' + 
+        (document.getElementById('addressLine2').value || 'Kinshasa');
+    }
+
+    // Update preview on input
+    ['phoneLabel', 'phoneNumber', 'emailLabel', 'emailAddress', 'addressLabel', 'addressLine1', 'addressLine2'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', updatePreview);
+    });
+
+    function renderSocialLinks() {
+      const grid = document.getElementById('socialGrid');
+      const links = contactContent.socialLinks || [];
+      
+      if (links.length === 0) {
+        grid.innerHTML = '<p style="color: var(--text-muted); padding: 20px; grid-column: 1/-1;">Aucun réseau social ajouté</p>';
+        return;
+      }
+      
+      grid.innerHTML = links.map((link, index) => {
+        const platform = link.platform?.toLowerCase() || 'default';
+        return `
+          <div class="social-item">
+            <div class="social-icon ${platform}">
+              <i class="${link.icon || 'fa fa-globe'}"></i>
+            </div>
+            <div class="social-info">
+              <div class="social-platform">${link.platform || 'Social'}</div>
+              <div class="social-url">${link.url || '#'}</div>
+            </div>
+            <div class="social-actions">
+              <button class="btn btn-secondary btn-icon" onclick="editSocial(${index})">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-danger btn-icon" onclick="deleteSocial(${index})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openSocialModal(index = null) {
+      document.getElementById('socialModal').classList.add('active');
+      document.getElementById('editIndex').value = index !== null ? index : '';
+      document.getElementById('modalTitle').textContent = index !== null ? 'Modifier le réseau social' : 'Ajouter un réseau social';
+      
+      // Reset
+      document.getElementById('socialPlatform').value = '';
+      document.getElementById('socialIcon').value = '';
+      document.getElementById('socialUrl').value = '';
+      document.querySelectorAll('.icon-option').forEach(el => el.classList.remove('selected'));
+      
+      if (index !== null && contactContent.socialLinks[index]) {
+        const link = contactContent.socialLinks[index];
+        document.getElementById('socialPlatform').value = link.platform || '';
+        document.getElementById('socialIcon').value = link.icon || '';
+        document.getElementById('socialUrl').value = link.url || '';
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('socialModal').classList.remove('active');
+    }
+
+    function editSocial(index) {
+      openSocialModal(index);
+    }
+
+    function selectIcon(iconClass) {
+      document.getElementById('socialIcon').value = iconClass;
+      document.querySelectorAll('.icon-option').forEach(el => el.classList.remove('selected'));
+      event.target.closest('.icon-option').classList.add('selected');
+    }
+
+    async function saveSocial() {
+      const editIndex = document.getElementById('editIndex').value;
+      const socialData = {
+        platform: document.getElementById('socialPlatform').value,
+        icon: document.getElementById('socialIcon').value,
+        url: document.getElementById('socialUrl').value
+      };
+      
+      if (!socialData.platform) {
+        showToast('Le nom de la plateforme est requis', 'error');
+        return;
+      }
+      
+      try {
+        if (editIndex !== '') {
+          await fetch(`${API_BASE}/contact/social/${editIndex}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(socialData)
+          });
+        } else {
+          await fetch(`${API_BASE}/contact/social`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(socialData)
+          });
+        }
+        
+        closeModal();
+        await loadContent();
+        showToast('Réseau social enregistré', 'success');
+      } catch (error) {
+        showToast('Erreur', 'error');
+      }
+    }
+
+    async function deleteSocial(index) {
+      if (!confirm('Supprimer ce réseau social ?')) return;
+      
+      try {
+        await fetch(`${API_BASE}/contact/social/${index}`, { method: 'DELETE' });
+        await loadContent();
+        showToast('Réseau social supprimé', 'success');
+      } catch (error) {
+        showToast('Erreur', 'error');
+      }
+    }
+
+    async function saveContent() {
+      const updatedContent = {
+        pageTitle: document.getElementById('pageTitle').value,
+        sectionTitle: document.getElementById('sectionTitle').value,
+        contactInfo: {
+          title: document.getElementById('contactInfoTitle').value,
+          phone: {
+            label: document.getElementById('phoneLabel').value,
+            number: document.getElementById('phoneNumber').value
+          },
+          email: {
+            label: document.getElementById('emailLabel').value,
+            address: document.getElementById('emailAddress').value
+          },
+          address: {
+            label: document.getElementById('addressLabel').value,
+            line1: document.getElementById('addressLine1').value,
+            line2: document.getElementById('addressLine2').value
+          }
+        },
+        socialTitle: document.getElementById('socialTitle').value,
+        socialLinks: contactContent.socialLinks || [],
+        formSection: {
+          title: document.getElementById('formTitle').value,
+          description: document.getElementById('formDescription').value,
+          submitButtonText: document.getElementById('submitButtonText').value
+        }
+      };
+      
+      try {
+        await fetch(`${API_BASE}/contact`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedContent)
+        });
+        
+        showToast('Modifications enregistrées', 'success');
+      } catch (error) {
+        showToast('Erreur', 'error');
+      }
+    }
+
+    async function syncContent() {
+      await saveContent();
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      toast.className = `toast show ${type}`;
+      toastMessage.textContent = message;
+      
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Authentification
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('authToken');
+      if (!token) { window.location.href = '/admin/login'; return; }
+      try {
+        const response = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!response.ok) { localStorage.clear(); window.location.href = '/admin/login'; return; }
+        const data = await response.json();
+        if (data.user.role !== 'admin' && !data.user.permissions?.canManageContactPage) {
+          document.body.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0a0a0f;color:#fff;text-align:center;padding:2rem;"><i class="fas fa-lock" style="font-size:4rem;color:#ef4444;margin-bottom:1.5rem;"></i><h1>Accès Refusé</h1><p style="color:#8b8b9e;margin:1rem 0 2rem;">Vous n\'avez pas la permission.</p><button onclick="localStorage.clear();window.location.href=\'/admin/login\'" style="padding:0.75rem 1.5rem;background:#6366f1;color:white;border:none;border-radius:10px;cursor:pointer;">Se déconnecter</button></div>';
+          return;
+        }
+        if (data.user.role !== 'admin') { const ul = document.querySelector('a[href="/admin/users"]'); if (ul) ul.style.display = 'none'; }
+      } catch (e) { window.location.href = '/admin/login'; }
+    });
+    function logoutUser() { localStorage.clear(); window.location.href = '/admin/login'; }
+  </script>
+</body>
+</html>

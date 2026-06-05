@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Page À Propos | TMK Fondation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-tertiary: #1a1a25;
+      --bg-card: #16161f;
+      --accent-primary: #00d4aa;
+      --accent-secondary: #00b894;
+      --accent-gradient: linear-gradient(135deg, #00d4aa 0%, #00b894 100%);
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0b0;
+      --text-muted: #6c6c7c;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --danger: #ff6b6b;
+      --warning: #ffd93d;
+      --info: #6bcfff;
+      --success: #00d4aa;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Background Pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(0, 212, 170, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(0, 184, 148, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Layout */
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-gradient);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: var(--bg-primary);
+    }
+
+    .logo-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .logo-text span {
+      color: var(--accent-primary);
+    }
+
+    /* Navigation */
+    .nav-section {
+      margin-bottom: 32px;
+    }
+
+    .nav-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      padding-left: 12px;
+    }
+
+    .nav-menu {
+      list-style: none;
+    }
+
+    .nav-item {
+      margin-bottom: 4px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .nav-link.active {
+      background: rgba(0, 212, 170, 0.1);
+      color: var(--accent-primary);
+    }
+
+    .nav-link i {
+      width: 20px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+      padding: 32px;
+      min-height: 100vh;
+    }
+
+    /* Page Header */
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-title i {
+      color: var(--accent-primary);
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.1);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: var(--bg-primary);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0, 212, 170, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-danger {
+      background: rgba(255, 107, 107, 0.15);
+      color: var(--danger);
+    }
+
+    .btn-danger:hover {
+      background: rgba(255, 107, 107, 0.25);
+    }
+
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 0.8rem;
+    }
+
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Service Cards */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
+    }
+
+    .service-card:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .service-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .service-icon-preview {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .service-icon-preview.humanitarian { background: rgba(231, 76, 60, 0.2); color: #e74c3c; }
+    .service-icon-preview.education { background: rgba(52, 152, 219, 0.2); color: #3498db; }
+    .service-icon-preview.health { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
+    .service-icon-preview.marginalized { background: rgba(155, 89, 182, 0.2); color: #9b59b6; }
+    .service-icon-preview.peace { background: rgba(241, 196, 15, 0.2); color: #f1c40f; }
+    .service-icon-preview.development { background: rgba(230, 126, 34, 0.2); color: #e67e22; }
+
+    .service-card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .service-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .service-description {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .service-stats {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-sm);
+    }
+
+    .stat-number {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Values Grid */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+    }
+
+    .value-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 212, 170, 0.1);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-primary);
+    }
+
+    .value-label {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      background: var(--bg-tertiary);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 20px 24px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* Impact Preview */
+    .impact-preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+
+    .impact-circle {
+      width: 160px;
+      height: 160px;
+      background: var(--accent-gradient);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--bg-primary);
+    }
+
+    .impact-number-display {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .impact-label-display {
+      font-size: 0.85rem;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 16px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      display: none;
+      align-items: center;
+      gap: 12px;
+      z-index: 2000;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .toast.show {
+      display: flex;
+      animation: slideIn 0.3s ease;
+    }
+
+    .toast.success { border-left: 4px solid var(--success); }
+    .toast.error { border-left: 4px solid var(--danger); }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Loading */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border-color);
+      border-top-color: var(--accent-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Icon Selector */
+    .icon-selector {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .icon-option {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+    }
+
+    .icon-option:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    .icon-option.selected {
+      background: rgba(0, 212, 170, 0.1);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 240px;
+      }
+      .main-content {
+        margin-left: 240px;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .form-row-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 20px;
+      }
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-crown"></i>
+        </div>
+        <div class="logo-text">TMK <span>Admin</span></div>
+      </div>
+
+      <nav class="nav-section">
+        <div class="nav-title">Navigation</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin" class="nav-link">
+              <i class="fas fa-link"></i>
+              <span>Liens Navigation</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/content" class="nav-link">
+              <i class="fas fa-home"></i>
+              <span>Page Accueil</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/about" class="nav-link active">
+              <i class="fas fa-info-circle"></i>
+              <span>Page À Propos</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/history" class="nav-link">
+              <i class="fas fa-history"></i>
+              <span>Page Histoire</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/team" class="nav-link">
+              <i class="fas fa-users"></i>
+              <span>Page Équipe</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/contact" class="nav-link">
+              <i class="fas fa-envelope"></i>
+              <span>Page Contact</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/juridical" class="nav-link">
+              <i class="fas fa-balance-scale"></i>
+              <span>Page Juridique</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Administration</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin/users" class="nav-link">
+              <i class="fas fa-user-shield"></i>
+              <span>Utilisateurs</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Actions</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="syncContent(); return false;">
+              <i class="fas fa-sync-alt"></i>
+              <span>Synchroniser</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/" class="nav-link" target="_blank">
+              <i class="fas fa-external-link-alt"></i>
+              <span>Voir le site</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="logoutUser(); return false;" style="color: #ef4444;">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Déconnexion</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <h1 class="page-title">Page À Propos</h1>
+        <p class="page-subtitle">Gérez le contenu de votre page À Propos</p>
+      </div>
+
+      <!-- Loading -->
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+      </div>
+
+      <div id="content-wrapper" style="display: none;">
+        <!-- Page Header Section -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-heading"></i>
+              En-tête de Page
+            </h2>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Titre de la page</label>
+            <input type="text" class="form-input" id="pageTitle" placeholder="À Propos de Nous">
+          </div>
+        </div>
+
+        <!-- Section Header -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-align-left"></i>
+              Section Domaines d'Intervention
+            </h2>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Titre de la section</label>
+            <input type="text" class="form-input" id="sectionTitle" placeholder="Nos Domaines d'Intervention">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea class="form-textarea" id="sectionDescription" placeholder="Description de la section..."></textarea>
+          </div>
+        </div>
+
+        <!-- Services Section -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-th-large"></i>
+              Domaines / Services
+            </h2>
+            <button class="btn btn-primary btn-sm" onclick="openServiceModal()">
+              <i class="fas fa-plus"></i>
+              Ajouter
+            </button>
+          </div>
+          <div class="services-grid" id="servicesGrid">
+            <!-- Services will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Mission Section -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-bullseye"></i>
+              Section Mission
+            </h2>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Titre</label>
+              <input type="text" class="form-input" id="missionTitle" placeholder="Notre Mission">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nombre d'impact</label>
+              <input type="text" class="form-input" id="impactNumber" placeholder="10,000+">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description de la mission</label>
+            <textarea class="form-textarea" id="missionDescription" placeholder="Description de votre mission..."></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Label d'impact</label>
+              <input type="text" class="form-input" id="impactLabel" placeholder="Vies Transformées">
+            </div>
+            <div>
+              <label class="form-label">Aperçu</label>
+              <div class="impact-preview">
+                <div class="impact-circle">
+                  <span class="impact-number-display" id="impactPreviewNumber">10,000+</span>
+                  <span class="impact-label-display" id="impactPreviewLabel">Vies Transformées</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Values Section -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-gem"></i>
+              Valeurs
+            </h2>
+            <button class="btn btn-primary btn-sm" onclick="openValueModal()">
+              <i class="fas fa-plus"></i>
+              Ajouter
+            </button>
+          </div>
+          <div class="values-grid" id="valuesGrid">
+            <!-- Values will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button class="btn btn-secondary" onclick="loadContent()">
+            <i class="fas fa-undo"></i>
+            Réinitialiser
+          </button>
+          <button class="btn btn-primary" onclick="saveContent()">
+            <i class="fas fa-save"></i>
+            Enregistrer les modifications
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Service Modal -->
+  <div class="modal-overlay" id="serviceModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="serviceModalTitle">Ajouter un domaine</h3>
+        <button class="modal-close" onclick="closeServiceModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editServiceIndex">
+        <div class="form-group">
+          <label class="form-label">Icône (classe FontAwesome)</label>
+          <input type="text" class="form-input" id="serviceIcon" placeholder="fa fa-heart">
+          <div class="icon-selector">
+            <div class="icon-option" onclick="selectIcon('fa fa-heart')"><i class="fa fa-heart"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-graduation-cap')"><i class="fa fa-graduation-cap"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-stethoscope')"><i class="fa fa-stethoscope"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-users')"><i class="fa fa-users"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-dove')"><i class="fa fa-dove"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-cogs')"><i class="fa fa-cogs"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-hands-helping')"><i class="fa fa-hands-helping"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-seedling')"><i class="fa fa-seedling"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-home')"><i class="fa fa-home"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-child')"><i class="fa fa-child"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-water')"><i class="fa fa-water"></i></div>
+            <div class="icon-option" onclick="selectIcon('fa fa-book')"><i class="fa fa-book"></i></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Style de couleur</label>
+          <select class="form-select" id="serviceIconClass">
+            <option value="humanitarian">Humanitaire (Rouge)</option>
+            <option value="education">Éducation (Bleu)</option>
+            <option value="health">Santé (Vert)</option>
+            <option value="marginalized">Marginalisés (Violet)</option>
+            <option value="peace">Paix (Jaune)</option>
+            <option value="development">Développement (Orange)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Titre</label>
+          <input type="text" class="form-input" id="serviceTitle" placeholder="Projets Humanitaires">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" id="serviceDescription" placeholder="Description du domaine..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Statistique (nombre)</label>
+            <input type="text" class="form-input" id="serviceStatNumber" placeholder="500+">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Statistique (label)</label>
+            <input type="text" class="form-input" id="serviceStatLabel" placeholder="Familles aidées">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeServiceModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="saveService()">
+          <i class="fas fa-check"></i>
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Value Modal -->
+  <div class="modal-overlay" id="valueModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Ajouter une valeur</h3>
+        <button class="modal-close" onclick="closeValueModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Icône (classe FontAwesome)</label>
+          <input type="text" class="form-input" id="valueIcon" placeholder="fa fa-heart">
+          <div class="icon-selector">
+            <div class="icon-option" onclick="selectValueIcon('fa fa-heart')"><i class="fa fa-heart"></i></div>
+            <div class="icon-option" onclick="selectValueIcon('fa fa-handshake')"><i class="fa fa-handshake"></i></div>
+            <div class="icon-option" onclick="selectValueIcon('fa fa-star')"><i class="fa fa-star"></i></div>
+            <div class="icon-option" onclick="selectValueIcon('fa fa-globe')"><i class="fa fa-globe"></i></div>
+            <div class="icon-option" onclick="selectValueIcon('fa fa-shield-alt')"><i class="fa fa-shield-alt"></i></div>
+            <div class="icon-option" onclick="selectValueIcon('fa fa-lightbulb')"><i class="fa fa-lightbulb"></i></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Label</label>
+          <input type="text" class="form-input" id="valueLabel" placeholder="Compassion">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeValueModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="saveValue()">
+          <i class="fas fa-check"></i>
+          Ajouter
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <script>
+    const API_BASE = '/api/content';
+    let aboutContent = null;
+
+    // Load content on page load
+    document.addEventListener('DOMContentLoaded', loadContent);
+
+    async function loadContent() {
+      try {
+        const response = await fetch(`${API_BASE}/about`);
+        aboutContent = await response.json();
+        
+        // Populate form fields
+        document.getElementById('pageTitle').value = aboutContent.pageTitle || '';
+        document.getElementById('sectionTitle').value = aboutContent.sectionTitle || '';
+        document.getElementById('sectionDescription').value = aboutContent.sectionDescription || '';
+        
+        // Mission
+        document.getElementById('missionTitle').value = aboutContent.mission?.title || '';
+        document.getElementById('missionDescription').value = aboutContent.mission?.description || '';
+        document.getElementById('impactNumber').value = aboutContent.mission?.impactNumber || '';
+        document.getElementById('impactLabel').value = aboutContent.mission?.impactLabel || '';
+        
+        updateImpactPreview();
+        renderServices();
+        renderValues();
+        
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content-wrapper').style.display = 'block';
+      } catch (error) {
+        console.error('Erreur:', error);
+        showToast('Erreur de chargement', 'error');
+      }
+    }
+
+    function updateImpactPreview() {
+      document.getElementById('impactPreviewNumber').textContent = document.getElementById('impactNumber').value || '10,000+';
+      document.getElementById('impactPreviewLabel').textContent = document.getElementById('impactLabel').value || 'Vies Transformées';
+    }
+
+    // Update preview on input
+    document.getElementById('impactNumber')?.addEventListener('input', updateImpactPreview);
+    document.getElementById('impactLabel')?.addEventListener('input', updateImpactPreview);
+
+    function renderServices() {
+      const grid = document.getElementById('servicesGrid');
+      grid.innerHTML = '';
+      
+      if (!aboutContent.services || aboutContent.services.length === 0) {
+        grid.innerHTML = '<p style="color: var(--text-muted); padding: 20px;">Aucun domaine ajouté</p>';
+        return;
+      }
+      
+      aboutContent.services.forEach((service, index) => {
+        grid.innerHTML += `
+          <div class="service-card">
+            <div class="service-card-header">
+              <div class="service-icon-preview ${service.iconClass || 'humanitarian'}">
+                <i class="${service.icon || 'fa fa-heart'}"></i>
+              </div>
+              <div class="service-card-actions">
+                <button class="btn btn-secondary btn-icon" onclick="editService(${index})" title="Modifier">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-danger btn-icon" onclick="deleteService(${index})" title="Supprimer">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+            <div class="service-title">${service.title || 'Sans titre'}</div>
+            <div class="service-description">${service.description || 'Aucune description'}</div>
+            <div class="service-stats">
+              <span class="stat-number">${service.statNumber || '0'}</span>
+              <span class="stat-label">${service.statLabel || ''}</span>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function renderValues() {
+      const grid = document.getElementById('valuesGrid');
+      grid.innerHTML = '';
+      
+      if (!aboutContent.mission?.values || aboutContent.mission.values.length === 0) {
+        grid.innerHTML = '<p style="color: var(--text-muted); padding: 20px;">Aucune valeur ajoutée</p>';
+        return;
+      }
+      
+      aboutContent.mission.values.forEach((value, index) => {
+        grid.innerHTML += `
+          <div class="value-item">
+            <div class="value-icon">
+              <i class="${value.icon || 'fa fa-star'}"></i>
+            </div>
+            <span class="value-label">${value.label || 'Valeur'}</span>
+            <button class="btn btn-danger btn-icon btn-sm" onclick="deleteValue(${index})" title="Supprimer">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        `;
+      });
+    }
+
+    // Service Modal Functions
+    function openServiceModal(index = null) {
+      document.getElementById('serviceModal').classList.add('active');
+      document.getElementById('editServiceIndex').value = index !== null ? index : '';
+      document.getElementById('serviceModalTitle').textContent = index !== null ? 'Modifier le domaine' : 'Ajouter un domaine';
+      
+      if (index !== null && aboutContent.services[index]) {
+        const service = aboutContent.services[index];
+        document.getElementById('serviceIcon').value = service.icon || '';
+        document.getElementById('serviceIconClass').value = service.iconClass || 'humanitarian';
+        document.getElementById('serviceTitle').value = service.title || '';
+        document.getElementById('serviceDescription').value = service.description || '';
+        document.getElementById('serviceStatNumber').value = service.statNumber || '';
+        document.getElementById('serviceStatLabel').value = service.statLabel || '';
+      } else {
+        document.getElementById('serviceIcon').value = '';
+        document.getElementById('serviceIconClass').value = 'humanitarian';
+        document.getElementById('serviceTitle').value = '';
+        document.getElementById('serviceDescription').value = '';
+        document.getElementById('serviceStatNumber').value = '';
+        document.getElementById('serviceStatLabel').value = '';
+      }
+    }
+
+    function closeServiceModal() {
+      document.getElementById('serviceModal').classList.remove('active');
+    }
+
+    function editService(index) {
+      openServiceModal(index);
+    }
+
+    function selectIcon(iconClass) {
+      document.getElementById('serviceIcon').value = iconClass;
+      document.querySelectorAll('#serviceModal .icon-option').forEach(el => el.classList.remove('selected'));
+      event.target.closest('.icon-option').classList.add('selected');
+    }
+
+    async function saveService() {
+      const index = document.getElementById('editServiceIndex').value;
+      const serviceData = {
+        icon: document.getElementById('serviceIcon').value,
+        iconClass: document.getElementById('serviceIconClass').value,
+        title: document.getElementById('serviceTitle').value,
+        description: document.getElementById('serviceDescription').value,
+        statNumber: document.getElementById('serviceStatNumber').value,
+        statLabel: document.getElementById('serviceStatLabel').value
+      };
+      
+      try {
+        if (index !== '') {
+          // Update existing
+          await fetch(`${API_BASE}/about/service/${index}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(serviceData)
+          });
+        } else {
+          // Add new
+          await fetch(`${API_BASE}/about/service`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(serviceData)
+          });
+        }
+        
+        closeServiceModal();
+        await loadContent();
+        showToast('Domaine enregistré avec succès', 'success');
+      } catch (error) {
+        showToast('Erreur lors de l\'enregistrement', 'error');
+      }
+    }
+
+    async function deleteService(index) {
+      if (!confirm('Supprimer ce domaine ?')) return;
+      
+      try {
+        await fetch(`${API_BASE}/about/service/${index}`, { method: 'DELETE' });
+        await loadContent();
+        showToast('Domaine supprimé', 'success');
+      } catch (error) {
+        showToast('Erreur lors de la suppression', 'error');
+      }
+    }
+
+    // Value Modal Functions
+    function openValueModal() {
+      document.getElementById('valueModal').classList.add('active');
+      document.getElementById('valueIcon').value = '';
+      document.getElementById('valueLabel').value = '';
+    }
+
+    function closeValueModal() {
+      document.getElementById('valueModal').classList.remove('active');
+    }
+
+    function selectValueIcon(iconClass) {
+      document.getElementById('valueIcon').value = iconClass;
+      document.querySelectorAll('#valueModal .icon-option').forEach(el => el.classList.remove('selected'));
+      event.target.closest('.icon-option').classList.add('selected');
+    }
+
+    async function saveValue() {
+      const valueData = {
+        icon: document.getElementById('valueIcon').value,
+        label: document.getElementById('valueLabel').value
+      };
+      
+      try {
+        await fetch(`${API_BASE}/about/value`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(valueData)
+        });
+        
+        closeValueModal();
+        await loadContent();
+        showToast('Valeur ajoutée avec succès', 'success');
+      } catch (error) {
+        showToast('Erreur lors de l\'ajout', 'error');
+      }
+    }
+
+    async function deleteValue(index) {
+      if (!confirm('Supprimer cette valeur ?')) return;
+      
+      try {
+        await fetch(`${API_BASE}/about/value/${index}`, { method: 'DELETE' });
+        await loadContent();
+        showToast('Valeur supprimée', 'success');
+      } catch (error) {
+        showToast('Erreur lors de la suppression', 'error');
+      }
+    }
+
+    // Save all content
+    async function saveContent() {
+      const updatedContent = {
+        pageTitle: document.getElementById('pageTitle').value,
+        sectionTitle: document.getElementById('sectionTitle').value,
+        sectionDescription: document.getElementById('sectionDescription').value,
+        mission: {
+          title: document.getElementById('missionTitle').value,
+          description: document.getElementById('missionDescription').value,
+          impactNumber: document.getElementById('impactNumber').value,
+          impactLabel: document.getElementById('impactLabel').value,
+          values: aboutContent.mission?.values || []
+        },
+        services: aboutContent.services || []
+      };
+      
+      try {
+        await fetch(`${API_BASE}/about`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedContent)
+        });
+        
+        showToast('Modifications enregistrées !', 'success');
+      } catch (error) {
+        showToast('Erreur lors de l\'enregistrement', 'error');
+      }
+    }
+
+    async function syncContent() {
+      try {
+        await saveContent();
+        showToast('Contenu synchronisé avec succès !', 'success');
+      } catch (error) {
+        showToast('Erreur de synchronisation', 'error');
+      }
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      toast.className = `toast show ${type}`;
+      toastMessage.textContent = message;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Authentification
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('authToken');
+      if (!token) { window.location.href = '/admin/login'; return; }
+      try {
+        const response = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!response.ok) { localStorage.clear(); window.location.href = '/admin/login'; return; }
+        const data = await response.json();
+        if (data.user.role !== 'admin' && !data.user.permissions?.canManageAboutPage) {
+          document.body.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0a0a0f;color:#fff;text-align:center;padding:2rem;"><i class="fas fa-lock" style="font-size:4rem;color:#ef4444;margin-bottom:1.5rem;"></i><h1>Accès Refusé</h1><p style="color:#8b8b9e;margin:1rem 0 2rem;">Vous n\'avez pas la permission.</p><button onclick="localStorage.clear();window.location.href=\'/admin/login\'" style="padding:0.75rem 1.5rem;background:#6366f1;color:white;border:none;border-radius:10px;cursor:pointer;">Se déconnecter</button></div>';
+          return;
+        }
+        if (data.user.role !== 'admin') { const ul = document.querySelector('a[href="/admin/users"]'); if (ul) ul.style.display = 'none'; }
+      } catch (e) { window.location.href = '/admin/login'; }
+    });
+    function logoutUser() { localStorage.clear(); window.location.href = '/admin/login'; }
+  </script>
+</body>
+</html>

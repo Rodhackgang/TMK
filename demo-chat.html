@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démonstration du Widget de Chat - TMK Foundation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #d4202c, #ff4757);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .demo-section {
+            margin-bottom: 40px;
+        }
+
+        .demo-section h2 {
+            color: #d4202c;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .demo-section h2::before {
+            content: '💬';
+            font-size: 2rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #d4202c;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            color: #003366;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .widget-preview {
+            position: relative;
+            background: #f0f0f0;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin: 30px 0;
+            min-height: 200px;
+        }
+
+        .widget-preview::before {
+            content: 'Aperçu du Widget';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #d4202c;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .chat-bubble {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #d4202c, #ff4757);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 10px 30px rgba(212, 32, 44, 0.4);
+            animation: pulse 2s infinite;
+            cursor: pointer;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(212, 32, 44, 0.4);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 15px 40px rgba(212, 32, 44, 0.6);
+            }
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ffd700;
+            color: #000;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .info-box h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #0d47a1;
+            line-height: 1.6;
+        }
+
+        .steps {
+            margin-top: 30px;
+        }
+
+        .step {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .step:hover {
+            transform: translateX(10px);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #d4202c, #ff4757);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: #003366;
+            margin-bottom: 8px;
+        }
+
+        .step-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4202c, #ff4757);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 32, 44, 0.4);
+        }
+
+        .footer {
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .footer a {
+            color: #ff4757;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💬 Widget de Chat en Direct</h1>
+            <p>Système de chat gratuit et professionnel pour TMK Foundation</p>
+        </div>
+
+        <div class="content">
+            <div class="demo-section">
+                <h2>Aperçu du Widget</h2>
+                <p>Voici à quoi ressemblera le widget de chat sur votre site :</p>
+
+                <div class="widget-preview">
+                    <p style="color: #999; font-size: 1.1rem; margin-top: 40px;">
+                        🖥️ Votre site web TMK Foundation
+                    </p>
+                    <div class="chat-bubble" onclick="alert('Le widget de chat s\'ouvrira ici! 💬\n\nVos visiteurs pourront vous contacter instantanément.')">
+                        💬
+                        <div class="notification-badge">1</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>🎯 Position du Widget</h3>
+                    <p>Le widget apparaîtra en <strong>bas à droite</strong> de toutes les pages de votre site. Vos visiteurs pourront cliquer dessus pour démarrer une conversation instantanée avec vous !</p>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>Fonctionnalités Incluses (100% GRATUIT)</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>💬 Chat Illimité</h3>
+                        <p>Conversations illimitées avec tous vos visiteurs sans aucune restriction.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>👥 Agents Illimités</h3>
+                        <p>Ajoutez autant d'agents que nécessaire pour gérer les conversations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📱 Applications Mobiles</h3>
+                        <p>Répondez depuis votre téléphone avec les apps iOS et Android.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔔 Notifications en Temps Réel</h3>
+                        <p>Soyez alerté instantanément de chaque nouveau message.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>📊 Statistiques Détaillées</h3>
+                        <p>Suivez vos performances avec des rapports complets.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🎨 Personnalisation Complète</h3>
+                        <p>Adaptez les couleurs, messages et apparence à votre marque.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>Installation Rapide</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Créer un compte Tawk.to</h4>
+                            <p>Allez sur <strong>tawk.to</strong> et créez un compte gratuit en 2 minutes.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Récupérer votre Widget ID</h4>
+                            <p>Dans le dashboard, copiez votre Widget ID depuis les paramètres.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Configurer sur votre site</h4>
+                            <p>Collez votre Widget ID dans <code>config/chat-config.php</code></p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>C'est prêt !</h4>
+                            <p>Le widget s'affiche automatiquement sur toutes les pages de votre site.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <a href="https://www.tawk.to" target="_blank" class="cta-button">
+                        🚀 Créer Mon Compte Gratuit
+                    </a>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>📚 Documentation Complète</h3>
+                <p>Consultez le fichier <strong>GUIDE-CHAT-INTEGRATION.md</strong> pour des instructions détaillées, ou <strong>INSTALLATION-RAPIDE-CHAT.txt</strong> pour un guide condensé.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>TMK Foundation</strong> - Système de Chat Intégré</p>
+            <p style="margin-top: 10px;">
+                Besoin d'aide ? Consultez <a href="https://help.tawk.to" target="_blank">help.tawk.to</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Animation au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.feature-card, .step');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
+

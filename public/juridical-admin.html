@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Page Juridique | TMK Foundation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #0d1117;
+      --bg-card: #161b22;
+      --bg-input: #21262d;
+      --border-color: #30363d;
+      --text-primary: #f0f6fc;
+      --text-secondary: #8b949e;
+      --accent-primary: #238636;
+      --accent-secondary: #1f6feb;
+      --accent-warning: #d29922;
+      --accent-danger: #f85149;
+      --accent-purple: #a371f7;
+      --gradient-1: linear-gradient(135deg, #238636 0%, #1f6feb 100%);
+      --shadow-glow: 0 0 40px rgba(35, 134, 54, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(ellipse at top left, rgba(35, 134, 54, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(31, 111, 235, 0.1) 0%, transparent 50%);
+    }
+
+    /* Navigation */
+    .nav-header {
+      background: rgba(22, 27, 34, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-brand i {
+      font-size: 1.8rem;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-brand span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      padding: 0.6rem 1rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      border-color: var(--accent-primary);
+      color: var(--text-primary);
+    }
+
+    .nav-link.active {
+      background: var(--gradient-1);
+      border-color: transparent;
+      color: white;
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-header p {
+      color: var(--text-secondary);
+    }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title i {
+      color: var(--accent-primary);
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.2);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--gradient-1);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(35, 134, 54, 0.4);
+    }
+
+    .btn-secondary {
+      background: var(--bg-input);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-secondary);
+      background: rgba(31, 111, 235, 0.1);
+    }
+
+    .btn-danger {
+      background: rgba(248, 81, 73, 0.1);
+      color: var(--accent-danger);
+      border: 1px solid var(--accent-danger);
+    }
+
+    .btn-danger:hover {
+      background: var(--accent-danger);
+      color: white;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 0.8rem;
+      font-size: 0.8rem;
+    }
+
+    /* Items List */
+    .items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .item-card {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .item-card:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .item-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .item-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: white;
+    }
+
+    .item-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .item-order {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .item-description {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .item-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .drag-handle {
+      cursor: grab;
+      color: var(--text-secondary);
+      padding: 0.5rem;
+    }
+
+    .drag-handle:hover {
+      color: var(--accent-primary);
+    }
+
+    /* Form Modal */
+    .item-form {
+      background: var(--bg-input);
+      border: 1px solid var(--accent-primary);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .item-form-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--accent-primary);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* Icon Selector */
+    .icon-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+      gap: 0.5rem;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 1rem;
+      background: var(--bg-dark);
+      border-radius: 10px;
+      margin-top: 0.5rem;
+    }
+
+    .icon-option {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .icon-option:hover,
+    .icon-option.selected {
+      border-color: var(--accent-primary);
+      background: rgba(35, 134, 54, 0.2);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      color: white;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideUp 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.success {
+      background: var(--accent-primary);
+    }
+
+    .toast.error {
+      background: var(--accent-danger);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-secondary);
+    }
+
+    .loading i {
+      font-size: 2rem;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-links {
+        justify-content: center;
+      }
+
+      .page-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .container {
+        padding: 1rem;
+      }
+
+      .section-header {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav-header">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <i class="fas fa-balance-scale"></i>
+        <span>TMK Admin - Juridique</span>
+      </div>
+      <div class="nav-links">
+        <a href="/admin" class="nav-link"><i class="fas fa-link"></i> Navigation</a>
+        <a href="/admin/content" class="nav-link"><i class="fas fa-home"></i> Accueil</a>
+        <a href="/admin/about" class="nav-link"><i class="fas fa-info-circle"></i> À Propos</a>
+        <a href="/admin/history" class="nav-link"><i class="fas fa-history"></i> Histoire</a>
+        <a href="/admin/team" class="nav-link"><i class="fas fa-users"></i> Équipe</a>
+        <a href="/admin/contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="/admin/juridical" class="nav-link active"><i class="fas fa-balance-scale"></i> Juridique</a>
+        <a href="/admin/users" class="nav-link"><i class="fas fa-user-shield"></i> Utilisateurs</a>
+        <a href="#" class="nav-link" onclick="logoutUser(); return false;" style="color: #f85149;"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <h1><i class="fas fa-balance-scale"></i> Page Statut Juridique</h1>
+      <p>Gérez le contenu de la page du statut juridique de TMK Foundation</p>
+    </div>
+
+    <div id="loading" class="loading">
+      <i class="fas fa-spinner"></i>
+      <p>Chargement du contenu...</p>
+    </div>
+
+    <div id="content" style="display: none;">
+      <!-- Informations générales -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title"><i class="fas fa-cog"></i> Informations générales</h2>
+          <button class="btn btn-primary" onclick="saveGeneral()">
+            <i class="fas fa-save"></i> Sauvegarder
+          </button>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Titre de la page</label>
+            <input type="text" id="pageTitle" placeholder="Statut Juridique">
+          </div>
+          <div class="form-group">
+            <label>Titre principal</label>
+            <input type="text" id="mainTitle" placeholder="Le Statut Juridique de l'Entreprise">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Introduction (HTML autorisé)</label>
+          <textarea id="introduction" placeholder="Texte d'introduction..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Titre de la liste des documents</label>
+          <input type="text" id="listTitle" placeholder="Points clés des documents :">
+        </div>
+
+        <div class="form-group">
+          <label>Résumé final</label>
+          <textarea id="summary" placeholder="Texte de résumé..."></textarea>
+        </div>
+      </div>
+
+      <!-- Items juridiques -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title"><i class="fas fa-file-alt"></i> Documents juridiques</h2>
+          <button class="btn btn-secondary" onclick="showAddItemForm()">
+            <i class="fas fa-plus"></i> Ajouter un document
+          </button>
+        </div>
+
+        <div id="addItemForm" class="item-form" style="display: none;">
+          <h3 class="item-form-title"><i class="fas fa-plus-circle"></i> Nouveau document</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Titre</label>
+              <input type="text" id="newItemTitle" placeholder="Titre du document">
+            </div>
+            <div class="form-group">
+              <label>Icône FontAwesome</label>
+              <input type="text" id="newItemIcon" placeholder="fa-file-text" value="fa-file-text">
+              <div class="icon-selector">
+                <div class="icon-option" onclick="selectIcon('fa-file-text', 'new')"><i class="fa fa-file-text"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-book', 'new')"><i class="fa fa-book"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-envelope', 'new')"><i class="fa fa-envelope"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-check-circle', 'new')"><i class="fa fa-check-circle"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-certificate', 'new')"><i class="fa fa-certificate"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-gavel', 'new')"><i class="fa fa-gavel"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-university', 'new')"><i class="fa fa-university"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-shield', 'new')"><i class="fa fa-shield"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-file-signature', 'new')"><i class="fa fa-file-signature"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-stamp', 'new')"><i class="fa fa-stamp"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-award', 'new')"><i class="fa fa-award"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-clipboard', 'new')"><i class="fa fa-clipboard"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="newItemDescription" placeholder="Description du document..."></textarea>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" onclick="addItem()">
+              <i class="fas fa-check"></i> Ajouter
+            </button>
+            <button class="btn btn-secondary" onclick="hideAddItemForm()">
+              <i class="fas fa-times"></i> Annuler
+            </button>
+          </div>
+        </div>
+
+        <div id="itemsList" class="items-list">
+          <!-- Items générés dynamiquement -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = '/api/content/juridical';
+    let currentContent = null;
+    let editingItemIndex = null;
+
+    // Charger le contenu
+    async function loadContent() {
+      try {
+        const response = await fetch(API_URL);
+        currentContent = await response.json();
+        
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+        
+        populateForm();
+        renderItems();
+      } catch (error) {
+        console.error('Erreur:', error);
+        showToast('Erreur lors du chargement', 'error');
+      }
+    }
+
+    // Remplir le formulaire
+    function populateForm() {
+      document.getElementById('pageTitle').value = currentContent.pageTitle || '';
+      document.getElementById('mainTitle').value = currentContent.mainTitle || '';
+      document.getElementById('introduction').value = currentContent.introduction || '';
+      document.getElementById('listTitle').value = currentContent.listTitle || '';
+      document.getElementById('summary').value = currentContent.summary || '';
+    }
+
+    // Afficher les items
+    function renderItems() {
+      const container = document.getElementById('itemsList');
+      container.innerHTML = '';
+
+      if (!currentContent.items || currentContent.items.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Aucun document. Cliquez sur "Ajouter un document" pour commencer.</p>';
+        return;
+      }
+
+      currentContent.items.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'item-card';
+        card.id = `item-${index}`;
+        card.innerHTML = `
+          <div class="item-header">
+            <div class="item-info">
+              <div class="item-icon">
+                <i class="fa ${item.icon}"></i>
+              </div>
+              <div>
+                <div class="item-title">${item.title}</div>
+                <div class="item-order">Document #${item.order || index + 1}</div>
+              </div>
+            </div>
+            <div class="item-actions">
+              <button class="btn btn-sm btn-secondary drag-handle" title="Déplacer">
+                <i class="fas fa-grip-vertical"></i>
+              </button>
+              ${index > 0 ? `<button class="btn btn-sm btn-secondary" onclick="moveItem(${index}, ${index - 1})" title="Monter"><i class="fas fa-arrow-up"></i></button>` : ''}
+              ${index < currentContent.items.length - 1 ? `<button class="btn btn-sm btn-secondary" onclick="moveItem(${index}, ${index + 1})" title="Descendre"><i class="fas fa-arrow-down"></i></button>` : ''}
+              <button class="btn btn-sm btn-secondary" onclick="editItem(${index})" title="Modifier">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" onclick="deleteItem(${index})" title="Supprimer">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          <div id="editForm-${index}" style="display: none;"></div>
+          <div class="item-description">${item.description}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Sauvegarder les informations générales
+    async function saveGeneral() {
+      try {
+        const data = {
+          pageTitle: document.getElementById('pageTitle').value,
+          mainTitle: document.getElementById('mainTitle').value,
+          introduction: document.getElementById('introduction').value,
+          listTitle: document.getElementById('listTitle').value,
+          summary: document.getElementById('summary').value
+        };
+
+        const response = await fetch(API_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        currentContent = await response.json();
+        showToast('Informations sauvegardées !', 'success');
+      } catch (error) {
+        console.error('Erreur:', error);
+        showToast('Erreur lors de la sauvegarde', 'error');
+      }
+    }
+
+    // Afficher le formulaire d'ajout
+    function showAddItemForm() {
+      document.getElementById('addItemForm').style.display = 'block';
+      document.getElementById('newItemTitle').focus();
+    }
+
+    // Cacher le formulaire d'ajout
+    function hideAddItemForm() {
+      document.getElementById('addItemForm').style.display = 'none';
+      document.getElementById('newItemTitle').value = '';
+      document.getElementById('newItemIcon').value = 'fa-file-text';
+      document.getElementById('newItemDescription').value = '';
+    }
+
+    // Sélectionner une icône
+    function selectIcon(icon, type) {
+      if (type === 'new') {
+        document.getElementById('newItemIcon').value = icon;
+      } else {
+        document.getElementById('editItemIcon').value = icon;
+      }
+      
+      // Mettre à jour la sélection visuelle
+      document.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
+      event.target.closest('.icon-option').classList.add('selected');
+    }
+
+    // Ajouter un item
+    async function addItem() {
+      const title = document.getElementById('newItemTitle').value.trim();
+      const icon = document.getElementById('newItemIcon').value.trim();
+      const description = document.getElementById('newItemDescription').value.trim();
+
+      if (!title || !description) {
+        showToast('Veuillez remplir tous les champs', 'error');
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/item`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, icon, description })
+        });
+
+        currentContent = await response.json();
+        renderItems();
+        hideAddItemForm();
+        showToast('Document ajouté !', 'success');
+      } catch (error) {
+        console.error('Erreur:', error);
+        showToast('Erreur lors de l\'ajout', 'error');
+      }
+    }
+
+    // Modifier un item
+    function editItem(index) {
+      const item = currentContent.items[index];
+      const formContainer = document.getElementById(`editForm-${index}`);
+      
+      if (editingItemIndex !== null && editingItemIndex !== index) {
+        document.getElementById(`editForm-${editingItemIndex}`).style.display = 'none';
+        document.getElementById(`editForm-${editingItemIndex}`).innerHTML = '';
+      }
+
+      if (formContainer.style.display === 'block') {
+        formContainer.style.display = 'none';
+        formContainer.innerHTML = '';
+        editingItemIndex = null;
+        return;
+      }
+
+      editingItemIndex = index;
+      formContainer.innerHTML = `
+        <div class="item-form" style="margin-top: 1rem; border-color: var(--accent-secondary);">
+          <h3 class="item-form-title" style="color: var(--accent-secondary);"><i class="fas fa-edit"></i> Modifier le document</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Titre</label>
+              <input type="text" id="editItemTitle" value="${item.title}">
+            </div>
+            <div class="form-group">
+              <label>Icône FontAwesome</label>
+              <input type="text" id="editItemIcon" value="${item.icon}">
+              <div class="icon-selector">
+                <div class="icon-option" onclick="selectIcon('fa-file-text', 'edit')"><i class="fa fa-file-text"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-book', 'edit')"><i class="fa fa-book"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-envelope', 'edit')"><i class="fa fa-envelope"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-check-circle', 'edit')"><i class="fa fa-check-circle"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-certificate', 'edit')"><i class="fa fa-certificate"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-gavel', 'edit')"><i class="fa fa-gavel"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-university', 'edit')"><i class="fa fa-university"></i></div>
+                <div class="icon-option" onclick="selectIcon('fa-shield', 'edit')"><i class="fa fa-shield"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="editItemDescription">${item.description}</textarea>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" onclick="saveItem(${index})">
+              <i class="fas fa-check"></i> Sauvegarder
+            </button>
+            <button class="btn btn-secondary" onclick="cancelEdit(${index})">
+              <i class="fas fa-times"></i> Annuler
+            </button>
+          </div>
+        </div>
+      `;
+      formContainer.style.display = 'block';
+    }
+
+    // Sauvegarder les modifications d'un item
+    async function saveItem(index) {
+      const title = document.getElementById('editItemTitle').value.trim();
+      const icon = document.getElementById('editItemIcon').value.trim();
+      const description = document.getElementById('editItemDescription').value.trim();
+
+      if (!title || !description) {
+        showToast('Veuillez remplir tous les champs', 'error');
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/item/${index}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, icon, description })
+        });
+
+        currentContent = await response.json();
+        editingItemIndex = null;
+        renderItems();
+        showToast('Document modifié !', 'success');
+      } catch (error) {
+        console.error('Erreur:', error);
+        showToast('Erreur lors de la modification', 'error');
+      }
+    }
+
+    // Annuler la modification
+    function cancelEdit(index) {
+      document.getElementById(`editForm-${index}`).style.display = 'none';
+      document.getElementById(`editForm-${index}`).innerHTML = '';
+      editingItemIndex = null;
+    }
+
+    // Supprimer un item
+    async function deleteItem(index) {
+      if (!confirm('Êtes-vous sûr de vouloir supprimer ce document ?')) return;
+
+      try {
+        const response = await fetch(`${API_URL}/item/${index}`, {
+          method: 'DELETE'
+        });
+
+        currentContent = await response.json();
+        renderItems();
+        showToast('Document supprimé !', 'success');
+      } catch (error) {
+        console.error('Erreur:', error);
+        showToast('Erreur lors de la suppression', 'error');
+      }
+    }
+
+    // Déplacer un item
+    async function moveItem(fromIndex, toIndex) {
+      try {
+        const response = await fetch(`${API_URL}/reorder`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fromIndex, toIndex })
+        });
+
+        currentContent = await response.json();
+        renderItems();
+        showToast('Ordre modifié !', 'success');
+      } catch (error) {
+        console.error('Erreur:', error);
+        showToast('Erreur lors du déplacement', 'error');
+      }
+    }
+
+    // Afficher un toast
+    function showToast(message, type) {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+    // Charger au démarrage
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('authToken');
+      if (!token) { window.location.href = '/admin/login'; return; }
+      try {
+        const response = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!response.ok) { localStorage.clear(); window.location.href = '/admin/login'; return; }
+        const data = await response.json();
+        if (data.user.role !== 'admin' && !data.user.permissions?.canManageJuridicalPage) {
+          document.body.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0d1117;color:#fff;text-align:center;padding:2rem;"><i class="fas fa-lock" style="font-size:4rem;color:#f85149;margin-bottom:1.5rem;"></i><h1>Accès Refusé</h1><p style="color:#8b949e;margin:1rem 0 2rem;">Vous n\'avez pas la permission.</p><button onclick="localStorage.clear();window.location.href=\'/admin/login\'" style="padding:0.75rem 1.5rem;background:#238636;color:white;border:none;border-radius:10px;cursor:pointer;">Se déconnecter</button></div>';
+          return;
+        }
+        if (data.user.role !== 'admin') { const ul = document.querySelector('a[href="/admin/users"]'); if (ul) ul.style.display = 'none'; }
+        loadContent();
+      } catch (e) { window.location.href = '/admin/login'; }
+    });
+    function logoutUser() { localStorage.clear(); window.location.href = '/admin/login'; }
+  </script>
+</body>
+</html>

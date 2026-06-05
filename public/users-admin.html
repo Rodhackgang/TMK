@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion des Utilisateurs | TMK Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: #1a1a24;
+      --bg-input: #0f0f15;
+      --border-color: #2a2a3a;
+      --text-primary: #ffffff;
+      --text-secondary: #8b8b9e;
+      --accent-primary: #6366f1;
+      --accent-secondary: #8b5cf6;
+      --accent-success: #22c55e;
+      --accent-warning: #f59e0b;
+      --accent-danger: #ef4444;
+      --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 280px;
+      height: 100vh;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      padding: 1.5rem;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sidebar-brand-icon {
+      width: 45px;
+      height: 45px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: white;
+    }
+
+    .sidebar-brand-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .nav-section {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.85rem 1rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 10px;
+      margin-bottom: 4px;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .nav-link:hover {
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--text-primary);
+    }
+
+    .nav-link.active {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .nav-link i {
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 280px;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    /* Header */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .page-subtitle {
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    .user-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg-card);
+      padding: 0.75rem 1.25rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--gradient-primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+
+    .user-info {
+      text-align: right;
+    }
+
+    .user-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: var(--accent-primary);
+    }
+
+    .btn-logout {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-logout:hover {
+      color: var(--accent-danger);
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-title i {
+      color: var(--accent-primary);
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 0.75rem 1.25rem;
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-secondary {
+      background: var(--bg-input);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--accent-danger);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-danger:hover {
+      background: var(--accent-danger);
+      color: white;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    /* Users Table */
+    .users-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .users-table th,
+    .users-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .users-table th {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .users-table tr:hover {
+      background: rgba(99, 102, 241, 0.05);
+    }
+
+    .user-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-cell-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--gradient-primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .user-cell-info {
+      line-height: 1.4;
+    }
+
+    .user-cell-name {
+      font-weight: 500;
+    }
+
+    .user-cell-email {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .badge {
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .badge-admin {
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--accent-primary);
+    }
+
+    .badge-gestionnaire {
+      background: rgba(139, 92, 246, 0.1);
+      color: var(--accent-secondary);
+    }
+
+    .badge-active {
+      background: rgba(34, 197, 94, 0.1);
+      color: var(--accent-success);
+    }
+
+    .badge-inactive {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--accent-danger);
+    }
+
+    .actions-cell {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: modalSlide 0.3s ease;
+    }
+
+    @keyframes modalSlide {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      transition: color 0.3s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--accent-danger);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    /* Permissions */
+    .permissions-section {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .permissions-title {
+      font-weight: 500;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .permissions-title i {
+      color: var(--accent-warning);
+    }
+
+    .permission-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .permission-item:last-child {
+      border-bottom: none;
+    }
+
+    .permission-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .permission-label i {
+      color: var(--text-secondary);
+      width: 20px;
+    }
+
+    /* Toggle Switch */
+    .toggle {
+      position: relative;
+      width: 48px;
+      height: 26px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: var(--border-color);
+      border-radius: 26px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: white;
+      left: 3px;
+      top: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .toggle input:checked + .toggle-slider {
+      background: var(--accent-primary);
+    }
+
+    .toggle input:checked + .toggle-slider::before {
+      transform: translateX(22px);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      color: white;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 2000;
+      animation: toastSlide 0.3s ease;
+    }
+
+    .toast.success { background: var(--accent-success); }
+    .toast.error { background: var(--accent-danger); }
+
+    @keyframes toastSlide {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-secondary);
+    }
+
+    .loading i {
+      font-size: 2rem;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-secondary);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    /* Access Denied */
+    .access-denied {
+      display: none;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .access-denied i {
+      font-size: 4rem;
+      color: var(--accent-danger);
+      margin-bottom: 1.5rem;
+    }
+
+    .access-denied h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 1rem;
+    }
+
+    .access-denied p {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .users-table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon">
+        <i class="fas fa-crown"></i>
+      </div>
+      <span class="sidebar-brand-text">TMK Admin</span>
+    </div>
+
+    <div class="nav-section">Pages</div>
+    <a href="/admin" class="nav-link"><i class="fas fa-link"></i> Navigation</a>
+    <a href="/admin/content" class="nav-link"><i class="fas fa-home"></i> Accueil</a>
+    <a href="/admin/about" class="nav-link"><i class="fas fa-info-circle"></i> À Propos</a>
+    <a href="/admin/history" class="nav-link"><i class="fas fa-history"></i> Histoire</a>
+    <a href="/admin/team" class="nav-link"><i class="fas fa-users"></i> Équipe</a>
+    <a href="/admin/contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="/admin/juridical" class="nav-link"><i class="fas fa-balance-scale"></i> Juridique</a>
+
+    <div class="nav-section">Administration</div>
+    <a href="/admin/users" class="nav-link active"><i class="fas fa-user-shield"></i> Utilisateurs</a>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Gestion des Utilisateurs</h1>
+        <p class="page-subtitle">Gérez les accès et permissions des utilisateurs</p>
+      </div>
+      <div class="user-badge">
+        <div class="user-avatar" id="currentUserAvatar">A</div>
+        <div class="user-info">
+          <div class="user-name" id="currentUserName">Admin</div>
+          <div class="user-role" id="currentUserRole">Administrateur</div>
+        </div>
+        <button class="btn-logout" onclick="logout()" title="Déconnexion">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Access Denied -->
+    <div class="access-denied" id="accessDenied">
+      <i class="fas fa-lock"></i>
+      <h2>Accès Refusé</h2>
+      <p>Vous n'avez pas la permission d'accéder à cette page.<br>Seuls les administrateurs peuvent gérer les utilisateurs.</p>
+      <a href="/admin" class="btn btn-primary">
+        <i class="fas fa-arrow-left"></i> Retour au Dashboard
+      </a>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+      <!-- Users Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            <i class="fas fa-users"></i>
+            Liste des Utilisateurs
+          </h2>
+          <button class="btn btn-primary" onclick="openAddModal()">
+            <i class="fas fa-plus"></i> Ajouter un utilisateur
+          </button>
+        </div>
+
+        <div id="loading" class="loading">
+          <i class="fas fa-spinner"></i>
+          <p>Chargement des utilisateurs...</p>
+        </div>
+
+        <div id="usersContainer" style="display: none;">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>Utilisateur</th>
+                <th>Rôle</th>
+                <th>Statut</th>
+                <th>Créé le</th>
+                <th>Dernière connexion</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <!-- Users will be rendered here -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="emptyState" class="empty-state" style="display: none;">
+          <i class="fas fa-user-slash"></i>
+          <p>Aucun utilisateur trouvé</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add/Edit User Modal -->
+  <div class="modal-overlay" id="userModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-user-plus"></i>
+          <span id="modalTitle">Ajouter un utilisateur</span>
+        </h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="userForm">
+          <input type="hidden" id="userId">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nom complet *</label>
+              <input type="text" class="form-input" id="userName" placeholder="Jean Dupont" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email *</label>
+              <input type="email" class="form-input" id="userEmail" placeholder="jean@example.com" required>
+            </div>
+          </div>
+
+          <div class="form-row" id="passwordFields">
+            <div class="form-group">
+              <label class="form-label">Mot de passe *</label>
+              <input type="password" class="form-input" id="userPassword" placeholder="Min. 6 caractères">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Rôle</label>
+              <select class="form-input" id="userRole">
+                <option value="gestionnaire">Gestionnaire</option>
+                <option value="admin">Administrateur</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="permissions-section" id="permissionsSection">
+            <div class="permissions-title">
+              <i class="fas fa-key"></i>
+              Permissions (pour les gestionnaires)
+            </div>
+            
+            <div class="permission-item">
+              <div class="permission-label">
+                <i class="fas fa-link"></i>
+                Gérer la navigation
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="perm_canManageNavigation">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="permission-item">
+              <div class="permission-label">
+                <i class="fas fa-home"></i>
+                Gérer la page d'accueil
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="perm_canManageHomePage">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="permission-item">
+              <div class="permission-label">
+                <i class="fas fa-info-circle"></i>
+                Gérer la page À Propos
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="perm_canManageAboutPage">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="permission-item">
+              <div class="permission-label">
+                <i class="fas fa-history"></i>
+                Gérer la page Histoire
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="perm_canManageHistoryPage">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="permission-item">
+              <div class="permission-label">
+                <i class="fas fa-users"></i>
+                Gérer la page Équipe
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="perm_canManageTeamPage">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="permission-item">
+              <div class="permission-label">
+                <i class="fas fa-envelope"></i>
+                Gérer la page Contact
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="perm_canManageContactPage">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="permission-item">
+              <div class="permission-label">
+                <i class="fas fa-balance-scale"></i>
+                Gérer la page Juridique
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="perm_canManageJuridicalPage">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="saveUser()">
+          <i class="fas fa-save"></i> Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset Password Modal -->
+  <div class="modal-overlay" id="resetPasswordModal">
+    <div class="modal" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fas fa-key"></i>
+          Réinitialiser le mot de passe
+        </h3>
+        <button class="modal-close" onclick="closeResetModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="resetUserId">
+        <div class="form-group">
+          <label class="form-label">Nouveau mot de passe *</label>
+          <input type="password" class="form-input" id="newPassword" placeholder="Min. 6 caractères" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeResetModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="resetPassword()">
+          <i class="fas fa-check"></i> Réinitialiser
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentUser = null;
+    let users = [];
+    const DEFAULT_ADMIN_EMAIL = 'samarodrigue690@gmail.com';
+
+    // Get auth token
+    function getToken() {
+      return localStorage.getItem('authToken');
+    }
+
+    // API call helper
+    async function apiCall(url, options = {}) {
+      const token = getToken();
+      if (!token) {
+        window.location.href = '/admin/login';
+        return;
+      }
+
+      const defaultOptions = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      };
+
+      const response = await fetch(url, { ...defaultOptions, ...options });
+      
+      if (response.status === 401) {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+        window.location.href = '/admin/login';
+        return;
+      }
+
+      return response;
+    }
+
+    // Initialize
+    async function init() {
+      try {
+        // Check auth and get current user
+        const response = await apiCall('/api/auth/me');
+        if (!response) return;
+
+        const data = await response.json();
+        currentUser = data.user;
+
+        // Update UI with user info
+        document.getElementById('currentUserName').textContent = currentUser.name;
+        document.getElementById('currentUserRole').textContent = 
+          currentUser.role === 'admin' ? 'Administrateur' : 'Gestionnaire';
+        document.getElementById('currentUserAvatar').textContent = 
+          currentUser.name.charAt(0).toUpperCase();
+
+        // Check if user is admin
+        if (currentUser.role !== 'admin') {
+          document.getElementById('mainContent').style.display = 'none';
+          document.getElementById('accessDenied').style.display = 'block';
+          return;
+        }
+
+        // Load users
+        await loadUsers();
+
+      } catch (error) {
+        console.error('Init error:', error);
+        showToast('Erreur de chargement', 'error');
+      }
+    }
+
+    // Load users
+    async function loadUsers() {
+      try {
+        const response = await apiCall('/api/auth/users');
+        if (!response) return;
+
+        users = await response.json();
+        renderUsers();
+
+      } catch (error) {
+        console.error('Load users error:', error);
+        showToast('Erreur lors du chargement des utilisateurs', 'error');
+      }
+    }
+
+    // Render users table
+    function renderUsers() {
+      document.getElementById('loading').style.display = 'none';
+      
+      if (users.length === 0) {
+        document.getElementById('emptyState').style.display = 'block';
+        document.getElementById('usersContainer').style.display = 'none';
+        return;
+      }
+
+      document.getElementById('emptyState').style.display = 'none';
+      document.getElementById('usersContainer').style.display = 'block';
+
+      const tbody = document.getElementById('usersTableBody');
+      tbody.innerHTML = users.map(user => `
+        <tr>
+          <td>
+            <div class="user-cell">
+              <div class="user-cell-avatar">${user.name.charAt(0).toUpperCase()}</div>
+              <div class="user-cell-info">
+                <div class="user-cell-name">${user.name}</div>
+                <div class="user-cell-email">${user.email}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="badge badge-${user.role}">
+              ${user.role === 'admin' ? 'Administrateur' : 'Gestionnaire'}
+            </span>
+          </td>
+          <td>
+            <span class="badge badge-${user.isActive ? 'active' : 'inactive'}">
+              ${user.isActive ? 'Actif' : 'Inactif'}
+            </span>
+          </td>
+          <td>${formatDate(user.createdAt)}</td>
+          <td>${user.lastLogin ? formatDate(user.lastLogin) : 'Jamais'}</td>
+          <td>
+            <div class="actions-cell">
+              <button class="btn btn-sm btn-secondary" onclick="openEditModal('${user._id}')" title="Modifier">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-secondary" onclick="openResetModal('${user._id}')" title="Réinitialiser le mot de passe">
+                <i class="fas fa-key"></i>
+              </button>
+              ${user.email.toLowerCase() !== DEFAULT_ADMIN_EMAIL.toLowerCase() ? `
+                <button class="btn btn-sm btn-secondary" onclick="toggleUserStatus('${user._id}', ${!user.isActive})" title="${user.isActive ? 'Désactiver' : 'Activer'}">
+                  <i class="fas fa-${user.isActive ? 'ban' : 'check'}"></i>
+                </button>
+                <button class="btn btn-sm btn-danger" onclick="deleteUser('${user._id}')" title="Supprimer">
+                  <i class="fas fa-trash"></i>
+                </button>
+              ` : ''}
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Format date
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('fr-FR', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      });
+    }
+
+    // Open Add Modal
+    function openAddModal() {
+      document.getElementById('modalTitle').textContent = 'Ajouter un utilisateur';
+      document.getElementById('userId').value = '';
+      document.getElementById('userName').value = '';
+      document.getElementById('userEmail').value = '';
+      document.getElementById('userEmail').disabled = false;
+      document.getElementById('userPassword').value = '';
+      document.getElementById('userPassword').required = true;
+      document.getElementById('passwordFields').style.display = 'grid';
+      document.getElementById('userRole').value = 'gestionnaire';
+      
+      // Reset permissions
+      document.querySelectorAll('[id^="perm_"]').forEach(el => el.checked = false);
+      
+      document.getElementById('permissionsSection').style.display = 'block';
+      document.getElementById('userModal').classList.add('show');
+    }
+
+    // Open Edit Modal
+    function openEditModal(userId) {
+      const user = users.find(u => u._id === userId);
+      if (!user) return;
+
+      document.getElementById('modalTitle').textContent = 'Modifier l\'utilisateur';
+      document.getElementById('userId').value = user._id;
+      document.getElementById('userName').value = user.name;
+      document.getElementById('userEmail').value = user.email;
+      document.getElementById('userEmail').disabled = true;
+      document.getElementById('userPassword').value = '';
+      document.getElementById('userPassword').required = false;
+      document.getElementById('passwordFields').style.display = 'none';
+      document.getElementById('userRole').value = user.role;
+
+      // Set permissions
+      document.getElementById('perm_canManageNavigation').checked = user.permissions?.canManageNavigation || false;
+      document.getElementById('perm_canManageHomePage').checked = user.permissions?.canManageHomePage || false;
+      document.getElementById('perm_canManageAboutPage').checked = user.permissions?.canManageAboutPage || false;
+      document.getElementById('perm_canManageHistoryPage').checked = user.permissions?.canManageHistoryPage || false;
+      document.getElementById('perm_canManageTeamPage').checked = user.permissions?.canManageTeamPage || false;
+      document.getElementById('perm_canManageContactPage').checked = user.permissions?.canManageContactPage || false;
+      document.getElementById('perm_canManageJuridicalPage').checked = user.permissions?.canManageJuridicalPage || false;
+
+      // Show/hide permissions based on role
+      const role = document.getElementById('userRole').value;
+      document.getElementById('permissionsSection').style.display = role === 'gestionnaire' ? 'block' : 'none';
+
+      document.getElementById('userModal').classList.add('show');
+    }
+
+    // Close Modal
+    function closeModal() {
+      document.getElementById('userModal').classList.remove('show');
+    }
+
+    // Handle role change
+    document.getElementById('userRole').addEventListener('change', function() {
+      document.getElementById('permissionsSection').style.display = 
+        this.value === 'gestionnaire' ? 'block' : 'none';
+    });
+
+    // Save User
+    async function saveUser() {
+      const userId = document.getElementById('userId').value;
+      const name = document.getElementById('userName').value.trim();
+      const email = document.getElementById('userEmail').value.trim();
+      const password = document.getElementById('userPassword').value;
+      const role = document.getElementById('userRole').value;
+
+      if (!name || !email) {
+        showToast('Veuillez remplir tous les champs obligatoires', 'error');
+        return;
+      }
+
+      const permissions = {
+        canManageNavigation: document.getElementById('perm_canManageNavigation').checked,
+        canManageHomePage: document.getElementById('perm_canManageHomePage').checked,
+        canManageAboutPage: document.getElementById('perm_canManageAboutPage').checked,
+        canManageHistoryPage: document.getElementById('perm_canManageHistoryPage').checked,
+        canManageTeamPage: document.getElementById('perm_canManageTeamPage').checked,
+        canManageContactPage: document.getElementById('perm_canManageContactPage').checked,
+        canManageJuridicalPage: document.getElementById('perm_canManageJuridicalPage').checked
+      };
+
+      try {
+        let response;
+        
+        if (userId) {
+          // Update existing user
+          response = await apiCall(`/api/auth/users/${userId}`, {
+            method: 'PUT',
+            body: JSON.stringify({ name, role, permissions })
+          });
+        } else {
+          // Create new user
+          if (!password || password.length < 6) {
+            showToast('Le mot de passe doit contenir au moins 6 caractères', 'error');
+            return;
+          }
+          response = await apiCall('/api/auth/users', {
+            method: 'POST',
+            body: JSON.stringify({ name, email, password, role, permissions })
+          });
+        }
+
+        if (!response) return;
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Erreur lors de la sauvegarde');
+        }
+
+        showToast(userId ? 'Utilisateur modifié' : 'Utilisateur créé', 'success');
+        closeModal();
+        await loadUsers();
+
+      } catch (error) {
+        console.error('Save user error:', error);
+        showToast(error.message, 'error');
+      }
+    }
+
+    // Toggle user status
+    async function toggleUserStatus(userId, isActive) {
+      try {
+        const response = await apiCall(`/api/auth/users/${userId}`, {
+          method: 'PUT',
+          body: JSON.stringify({ isActive })
+        });
+
+        if (!response) return;
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Erreur');
+        }
+
+        showToast(`Utilisateur ${isActive ? 'activé' : 'désactivé'}`, 'success');
+        await loadUsers();
+
+      } catch (error) {
+        console.error('Toggle status error:', error);
+        showToast(error.message, 'error');
+      }
+    }
+
+    // Delete user
+    async function deleteUser(userId) {
+      if (!confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) return;
+
+      try {
+        const response = await apiCall(`/api/auth/users/${userId}`, {
+          method: 'DELETE'
+        });
+
+        if (!response) return;
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Erreur lors de la suppression');
+        }
+
+        showToast('Utilisateur supprimé', 'success');
+        await loadUsers();
+
+      } catch (error) {
+        console.error('Delete user error:', error);
+        showToast(error.message, 'error');
+      }
+    }
+
+    // Open Reset Password Modal
+    function openResetModal(userId) {
+      document.getElementById('resetUserId').value = userId;
+      document.getElementById('newPassword').value = '';
+      document.getElementById('resetPasswordModal').classList.add('show');
+    }
+
+    // Close Reset Modal
+    function closeResetModal() {
+      document.getElementById('resetPasswordModal').classList.remove('show');
+    }
+
+    // Reset Password
+    async function resetPassword() {
+      const userId = document.getElementById('resetUserId').value;
+      const newPassword = document.getElementById('newPassword').value;
+
+      if (!newPassword || newPassword.length < 6) {
+        showToast('Le mot de passe doit contenir au moins 6 caractères', 'error');
+        return;
+      }
+
+      try {
+        const response = await apiCall(`/api/auth/users/${userId}/reset-password`, {
+          method: 'PUT',
+          body: JSON.stringify({ newPassword })
+        });
+
+        if (!response) return;
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Erreur');
+        }
+
+        showToast('Mot de passe réinitialisé', 'success');
+        closeResetModal();
+
+      } catch (error) {
+        console.error('Reset password error:', error);
+        showToast(error.message, 'error');
+      }
+    }
+
+    // Logout
+    async function logout() {
+      try {
+        await apiCall('/api/auth/logout', { method: 'POST' });
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
+      window.location.href = '/admin/login';
+    }
+
+    // Show toast
+    function showToast(message, type) {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+      document.body.appendChild(toast);
+
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Init on load
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

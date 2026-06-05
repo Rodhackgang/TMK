@@ -1,0 +1,92 @@
+{
+  "_id": "696808b513b22a03357ebaa6",
+  "pageTitle": "À Propos de Nous ",
+  "sectionTitle": "Nos Domaines d'Intervention",
+  "sectionDescription": "The Miracle Kingdom Foundation s'engage dans six domaines clés pour transformer les communautés et créer un impact durable.",
+  "services": [
+    {
+      "icon": "fa fa-heart",
+      "iconClass": "humanitarian",
+      "title": "Projets Humanitaires",
+      "description": "Interventions dans les zones vulnérables pour fournir aide alimentaire et soins médicaux d'urgence aux populations dans le besoin.",
+      "statNumber": "500+",
+      "statLabel": "Familles aidées",
+      "_id": "696808b513b22a03357ebaa7"
+    },
+    {
+      "icon": "fa fa-graduation-cap",
+      "iconClass": "education",
+      "title": "Éducation pour Tous",
+      "description": "Programmes éducatifs innovants pour les enfants et jeunes des communautés défavorisées, avec un focus sur l'alphabétisation.",
+      "statNumber": "1000+",
+      "statLabel": "Élèves scolarisés",
+      "_id": "696808b513b22a03357ebaa8"
+    },
+    {
+      "icon": "fa fa-stethoscope",
+      "iconClass": "health",
+      "title": "Services de Santé",
+      "description": "Accès aux soins primaires et campagnes de prévention dans les zones reculées pour améliorer la santé communautaire.",
+      "statNumber": "2000+",
+      "statLabel": "Consultations",
+      "_id": "696808b513b22a03357ebaa9"
+    },
+    {
+      "icon": "fa fa-users",
+      "iconClass": "marginalized",
+      "title": "Aide aux Marginalisés",
+      "description": "Soutien spécialisé pour les réfugiés, déplacés internes et autres groupes vulnérables avec programmes de réinsertion.",
+      "statNumber": "300+",
+      "statLabel": "Personnes réinsérées",
+      "_id": "696808b513b22a03357ebaaa"
+    },
+    {
+      "icon": "fa fa-dove",
+      "iconClass": "peace",
+      "title": "Unité et Paix",
+      "description": "Initiatives de réconciliation et programmes de cohésion sociale dans les zones post-conflit pour construire la paix.",
+      "statNumber": "15",
+      "statLabel": "Communautés réconciliées",
+      "_id": "696808b513b22a03357ebaab"
+    },
+    {
+      "icon": "fa fa-cogs",
+      "iconClass": "development",
+      "title": "Développement Communautaire",
+      "description": "Projets durables pour renforcer l'autonomie et les infrastructures locales avec approche participative communautaire.",
+      "statNumber": "25",
+      "statLabel": "Projets réalisés",
+      "_id": "696808b513b22a03357ebaac"
+    }
+  ],
+  "mission": {
+    "title": "Notre Mission",
+    "description": "The Miracle Kingdom Foundation s'engage à transformer les vies et les communautés à travers des interventions humanitaires, éducatives et de développement durable. Nous croyons en la dignité de chaque être humain et nous nous efforçons de créer un monde où chacun peut vivre dans la paix, la prospérité et l'harmonie.",
+    "values": [
+      {
+        "icon": "fa fa-heart",
+        "label": "Compassion",
+        "_id": "696808b513b22a03357ebaad"
+      },
+      {
+        "icon": "fa fa-handshake",
+        "label": "Intégrité",
+        "_id": "696808b513b22a03357ebaae"
+      },
+      {
+        "icon": "fa fa-star",
+        "label": "Excellence",
+        "_id": "696808b513b22a03357ebaaf"
+      },
+      {
+        "icon": "fa fa-globe",
+        "label": "Impact",
+        "_id": "696808b513b22a03357ebab0"
+      }
+    ],
+    "impactNumber": "10,000+",
+    "impactLabel": "Vies Transformées"
+  },
+  "updatedAt": "2026-01-14T22:30:24.437Z",
+  "__v": 0
+}

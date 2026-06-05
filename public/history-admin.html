@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Page Histoire | TMK Fondation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-tertiary: #1a1a25;
+      --bg-card: #16161f;
+      --accent-primary: #f59e0b;
+      --accent-secondary: #d97706;
+      --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0b0;
+      --text-muted: #6c6c7c;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --danger: #ff6b6b;
+      --warning: #ffd93d;
+      --info: #6bcfff;
+      --success: #22c55e;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(217, 119, 6, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-gradient);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: var(--bg-primary);
+    }
+
+    .logo-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .logo-text span { color: var(--accent-primary); }
+
+    .nav-section { margin-bottom: 32px; }
+
+    .nav-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      padding-left: 12px;
+    }
+
+    .nav-menu { list-style: none; }
+    .nav-item { margin-bottom: 4px; }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .nav-link.active {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--accent-primary);
+    }
+
+    .nav-link i { width: 20px; text-align: center; font-size: 1rem; }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+      padding: 32px;
+      min-height: 100vh;
+    }
+
+    .page-header { margin-bottom: 32px; }
+
+    .page-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .page-subtitle {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-title i { color: var(--accent-primary); }
+
+    /* Form Elements */
+    .form-group { margin-bottom: 20px; }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: var(--bg-primary);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); }
+
+    .btn-danger {
+      background: rgba(255, 107, 107, 0.15);
+      color: var(--danger);
+    }
+
+    .btn-danger:hover { background: rgba(255, 107, 107, 0.25); }
+
+    .btn-sm { padding: 8px 16px; font-size: 0.8rem; }
+
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Section Cards */
+    .sections-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .section-item {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .section-item:hover {
+      border-color: var(--accent-primary);
+    }
+
+    .section-drag {
+      color: var(--text-muted);
+      cursor: grab;
+      padding: 8px;
+    }
+
+    .section-drag:active { cursor: grabbing; }
+
+    .section-type-badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      min-width: 90px;
+      text-align: center;
+    }
+
+    .section-type-badge.heading { background: rgba(99, 102, 241, 0.2); color: #818cf8; }
+    .section-type-badge.paragraph { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    .section-type-badge.list { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+    .section-type-badge.image { background: rgba(236, 72, 153, 0.2); color: #ec4899; }
+    .section-type-badge.images { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+
+    .section-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .section-preview {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .section-level {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .section-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Add Section Buttons */
+    .add-section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .add-section-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 20px;
+      background: var(--bg-tertiary);
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .add-section-btn:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    .add-section-btn i { font-size: 1.5rem; }
+    .add-section-btn span { font-size: 0.85rem; font-weight: 500; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      background: var(--bg-tertiary);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close:hover { background: var(--danger); color: white; }
+
+    .modal-body { padding: 24px; }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 20px 24px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* List Items Editor */
+    .list-items-editor { margin-top: 12px; }
+
+    .list-item-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .list-item-row input { flex: 1; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 16px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      display: none;
+      align-items: center;
+      gap: 12px;
+      z-index: 2000;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .toast.show {
+      display: flex;
+      animation: slideIn 0.3s ease;
+    }
+
+    .toast.success { border-left: 4px solid var(--success); }
+    .toast.error { border-left: 4px solid var(--danger); }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(100%); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Loading */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border-color);
+      border-top-color: var(--accent-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 48px;
+      color: var(--text-muted);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* File Upload */
+    .file-upload-zone {
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--bg-tertiary);
+    }
+    
+    .file-upload-zone:hover {
+      border-color: var(--accent-primary);
+      background: rgba(245, 158, 11, 0.05);
+    }
+    
+    .file-upload-zone i {
+      font-size: 2rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    
+    .file-upload-zone p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    
+    .file-upload-zone span { color: var(--accent-primary); font-weight: 500; }
+    
+    .file-preview {
+      margin-top: 12px;
+      padding: 12px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .file-preview img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+    }
+    
+    .file-preview-info { flex: 1; }
+    .file-preview-info strong { display: block; font-size: 0.85rem; }
+    .file-preview-info span { font-size: 0.75rem; color: var(--text-muted); }
+    
+    .upload-progress {
+      margin-top: 8px;
+      height: 4px;
+      background: var(--bg-secondary);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .upload-progress-bar {
+      height: 100%;
+      background: var(--accent-primary);
+      width: 0%;
+      transition: width 0.3s;
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .sidebar { width: 240px; }
+      .main-content { margin-left: 240px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main-content { margin-left: 0; padding: 20px; }
+      .add-section-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fas fa-crown"></i>
+        </div>
+        <div class="logo-text">TMK <span>Admin</span></div>
+      </div>
+
+      <nav class="nav-section">
+        <div class="nav-title">Navigation</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin" class="nav-link">
+              <i class="fas fa-link"></i>
+              <span>Liens Navigation</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Contenu des Pages</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin/content" class="nav-link">
+              <i class="fas fa-home"></i>
+              <span>Page Accueil</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/about" class="nav-link">
+              <i class="fas fa-info-circle"></i>
+              <span>Page À Propos</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/history" class="nav-link active">
+              <i class="fas fa-history"></i>
+              <span>Page Histoire</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/team" class="nav-link">
+              <i class="fas fa-users"></i>
+              <span>Page Équipe</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/contact" class="nav-link">
+              <i class="fas fa-envelope"></i>
+              <span>Page Contact</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/juridical" class="nav-link">
+              <i class="fas fa-balance-scale"></i>
+              <span>Page Juridique</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Administration</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin/users" class="nav-link">
+              <i class="fas fa-user-shield"></i>
+              <span>Utilisateurs</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <nav class="nav-section">
+        <div class="nav-title">Actions</div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="syncContent(); return false;">
+              <i class="fas fa-sync-alt"></i>
+              <span>Synchroniser</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/histoire.php" class="nav-link" target="_blank">
+              <i class="fas fa-external-link-alt"></i>
+              <span>Voir la page</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="logoutUser(); return false;" style="color: #ef4444;">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Déconnexion</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <h1 class="page-title">Page Histoire</h1>
+        <p class="page-subtitle">Gérez le contenu de la page Histoire de TMK Foundation</p>
+      </div>
+
+      <!-- Loading -->
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+      </div>
+
+      <div id="content-wrapper" style="display: none;">
+        <!-- Page Header Info -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-heading"></i>
+              Informations de la Page
+            </h2>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Titre de la page</label>
+              <input type="text" class="form-input" id="pageTitle" placeholder="Histoire de TMK Foundation">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Titre principal</label>
+              <input type="text" class="form-input" id="mainTitle" placeholder="The Miracle Kingdom">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">URL du logo</label>
+            <input type="text" class="form-input" id="logoUrl" placeholder="../images/logo.png">
+          </div>
+        </div>
+
+        <!-- Add Section -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-plus-circle"></i>
+              Ajouter une Section
+            </h2>
+          </div>
+          <div class="add-section-grid">
+            <button class="add-section-btn" onclick="openModal('heading')">
+              <i class="fas fa-heading"></i>
+              <span>Titre</span>
+            </button>
+            <button class="add-section-btn" onclick="openModal('paragraph')">
+              <i class="fas fa-paragraph"></i>
+              <span>Paragraphe</span>
+            </button>
+            <button class="add-section-btn" onclick="openModal('list')">
+              <i class="fas fa-list-ul"></i>
+              <span>Liste</span>
+            </button>
+            <button class="add-section-btn" onclick="openModal('image')">
+              <i class="fas fa-image"></i>
+              <span>Image</span>
+            </button>
+            <button class="add-section-btn" onclick="openModal('images')">
+              <i class="fas fa-images"></i>
+              <span>Multi-Images</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sections List -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <i class="fas fa-layer-group"></i>
+              Sections du Contenu
+            </h2>
+            <span id="sectionsCount" style="color: var(--text-muted); font-size: 0.9rem;">0 sections</span>
+          </div>
+          <div class="sections-list" id="sectionsList">
+            <!-- Sections will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button class="btn btn-secondary" onclick="loadContent()">
+            <i class="fas fa-undo"></i>
+            Réinitialiser
+          </button>
+          <button class="btn btn-primary" onclick="saveContent()">
+            <i class="fas fa-save"></i>
+            Enregistrer les modifications
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Section Modal -->
+  <div class="modal-overlay" id="sectionModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Ajouter une section</h3>
+        <button class="modal-close" onclick="closeModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="editIndex">
+        <input type="hidden" id="sectionType">
+        
+        <!-- Heading Fields -->
+        <div id="headingFields" class="section-fields">
+          <div class="form-group">
+            <label class="form-label">Niveau du titre</label>
+            <select class="form-select" id="headingLevel">
+              <option value="2">H2 - Titre principal</option>
+              <option value="3">H3 - Sous-titre</option>
+              <option value="4">H4 - Petit titre</option>
+              <option value="5">H5 - Très petit titre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Texte du titre</label>
+            <input type="text" class="form-input" id="headingContent" placeholder="Entrez le titre...">
+          </div>
+        </div>
+        
+        <!-- Paragraph Fields -->
+        <div id="paragraphFields" class="section-fields" style="display: none;">
+          <div class="form-group">
+            <label class="form-label">Contenu du paragraphe</label>
+            <textarea class="form-textarea" id="paragraphContent" placeholder="Entrez le texte..." rows="6"></textarea>
+          </div>
+        </div>
+        
+        <!-- List Fields -->
+        <div id="listFields" class="section-fields" style="display: none;">
+          <div class="form-group">
+            <label class="form-label">Éléments de la liste</label>
+            <div class="list-items-editor" id="listItemsEditor">
+              <!-- List items will be added here -->
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="addListItem()" style="margin-top: 8px;">
+              <i class="fas fa-plus"></i>
+              Ajouter un élément
+            </button>
+          </div>
+        </div>
+        
+        <!-- Image Fields -->
+        <div id="imageFields" class="section-fields" style="display: none;">
+          <div class="form-group">
+            <label class="form-label">Image</label>
+            <div class="file-upload-zone" onclick="document.getElementById('imageFile').click()">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p><span>Cliquez pour uploader</span> une image</p>
+              <p style="font-size: 0.75rem;">JPG, PNG, GIF, WEBP</p>
+            </div>
+            <input type="file" id="imageFile" accept="image/*" style="display:none" onchange="uploadImageFile(this)">
+            <div id="imagePreview" class="file-preview" style="display:none;"></div>
+            <input type="hidden" id="imageUrl">
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <input type="checkbox" id="imageCentered"> Centrer l'image
+            </label>
+          </div>
+        </div>
+        
+        <!-- Multiple Images Fields -->
+        <div id="imagesFields" class="section-fields" style="display: none;">
+          <div class="form-group">
+            <label class="form-label">Images (sélectionnez plusieurs)</label>
+            <div class="file-upload-zone" onclick="document.getElementById('imagesFile').click()">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p><span>Cliquez pour uploader</span> plusieurs images</p>
+              <p style="font-size: 0.75rem;">JPG, PNG, GIF, WEBP</p>
+            </div>
+            <input type="file" id="imagesFile" accept="image/*" multiple style="display:none" onchange="uploadMultipleImages(this)">
+            <div id="imagesPreviewList" style="margin-top:12px;"></div>
+            <input type="hidden" id="imagesUrls">
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <input type="checkbox" id="imagesCentered"> Centrer les images
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="saveSection()">
+          <i class="fas fa-check"></i>
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Message</span>
+  </div>
+
+  <script>
+    const API_BASE = '/api/content';
+    let historyContent = null;
+    let listItems = [];
+
+    document.addEventListener('DOMContentLoaded', loadContent);
+
+    async function loadContent() {
+      try {
+        const response = await fetch(`${API_BASE}/history`);
+        historyContent = await response.json();
+        
+        document.getElementById('pageTitle').value = historyContent.pageTitle || '';
+        document.getElementById('mainTitle').value = historyContent.mainTitle || '';
+        document.getElementById('logoUrl').value = historyContent.logoUrl || '';
+        
+        renderSections();
+        
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content-wrapper').style.display = 'block';
+      } catch (error) {
+        console.error('Erreur:', error);
+        showToast('Erreur de chargement', 'error');
+      }
+    }
+
+    function renderSections() {
+      const container = document.getElementById('sectionsList');
+      const sections = historyContent.sections || [];
+      
+      document.getElementById('sectionsCount').textContent = `${sections.length} section${sections.length > 1 ? 's' : ''}`;
+      
+      if (sections.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-layer-group"></i>
+            <p>Aucune section ajoutée</p>
+            <p style="font-size: 0.85rem;">Utilisez les boutons ci-dessus pour ajouter du contenu</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = sections.map((section, index) => `
+        <div class="section-item" data-index="${index}">
+          <div class="section-drag">
+            <i class="fas fa-grip-vertical"></i>
+          </div>
+          <span class="section-type-badge ${section.type}">${getSectionTypeName(section.type)}</span>
+          <div class="section-content">
+            <div class="section-preview">${getSectionPreview(section)}</div>
+            ${section.type === 'heading' ? `<div class="section-level">Niveau H${section.level}</div>` : ''}
+          </div>
+          <div class="section-actions">
+            <button class="btn btn-secondary btn-icon" onclick="editSection(${index})" title="Modifier">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-secondary btn-icon" onclick="moveSection(${index}, -1)" title="Monter" ${index === 0 ? 'disabled' : ''}>
+              <i class="fas fa-arrow-up"></i>
+            </button>
+            <button class="btn btn-secondary btn-icon" onclick="moveSection(${index}, 1)" title="Descendre" ${index === sections.length - 1 ? 'disabled' : ''}>
+              <i class="fas fa-arrow-down"></i>
+            </button>
+            <button class="btn btn-danger btn-icon" onclick="deleteSection(${index})" title="Supprimer">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function getSectionTypeName(type) {
+      const names = {
+        heading: 'Titre',
+        paragraph: 'Texte',
+        list: 'Liste',
+        image: 'Image',
+        images: 'Images'
+      };
+      return names[type] || type;
+    }
+
+    function getSectionPreview(section) {
+      switch(section.type) {
+        case 'heading':
+        case 'paragraph':
+          return section.content ? section.content.substring(0, 80) + (section.content.length > 80 ? '...' : '') : 'Vide';
+        case 'list':
+          return section.items ? `${section.items.length} élément(s)` : 'Liste vide';
+        case 'image':
+          return section.content || 'Aucune image';
+        case 'images':
+          return section.images ? `${section.images.length} image(s)` : 'Aucune image';
+        default:
+          return '';
+      }
+    }
+
+    function openModal(type, index = null) {
+      document.getElementById('sectionModal').classList.add('active');
+      document.getElementById('sectionType').value = type;
+      document.getElementById('editIndex').value = index !== null ? index : '';
+      document.getElementById('modalTitle').textContent = index !== null ? 'Modifier la section' : 'Ajouter une section';
+      
+      // Hide all fields
+      document.querySelectorAll('.section-fields').forEach(el => el.style.display = 'none');
+      
+      // Show relevant fields
+      document.getElementById(`${type}Fields`).style.display = 'block';
+      
+      // Populate if editing
+      if (index !== null && historyContent.sections[index]) {
+        const section = historyContent.sections[index];
+        
+        switch(type) {
+          case 'heading':
+            document.getElementById('headingLevel').value = section.level || 2;
+            document.getElementById('headingContent').value = section.content || '';
+            break;
+          case 'paragraph':
+            document.getElementById('paragraphContent').value = section.content || '';
+            break;
+          case 'list':
+            listItems = [...(section.items || [])];
+            renderListItems();
+            break;
+          case 'image':
+            document.getElementById('imageUrl').value = section.content || '';
+            document.getElementById('imageCentered').checked = section.centered || false;
+            break;
+          case 'images':
+            document.getElementById('imagesUrls').value = (section.images || []).join('\n');
+            document.getElementById('imagesCentered').checked = section.centered || false;
+            break;
+        }
+      } else {
+        // Clear fields
+        document.getElementById('headingLevel').value = 2;
+        document.getElementById('headingContent').value = '';
+        document.getElementById('paragraphContent').value = '';
+        document.getElementById('imageUrl').value = '';
+        document.getElementById('imageCentered').checked = false;
+        document.getElementById('imagesUrls').value = '';
+        document.getElementById('imagesCentered').checked = false;
+        listItems = [''];
+        renderListItems();
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('sectionModal').classList.remove('active');
+    }
+
+    function editSection(index) {
+      const section = historyContent.sections[index];
+      openModal(section.type, index);
+    }
+
+    // List items management
+    function renderListItems() {
+      const container = document.getElementById('listItemsEditor');
+      container.innerHTML = listItems.map((item, i) => `
+        <div class="list-item-row">
+          <input type="text" class="form-input" value="${item}" onchange="updateListItem(${i}, this.value)" placeholder="Élément ${i + 1}">
+          <button class="btn btn-danger btn-icon" onclick="removeListItem(${i})" ${listItems.length === 1 ? 'disabled' : ''}>
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function addListItem() {
+      listItems.push('');
+      renderListItems();
+    }
+
+    function updateListItem(index, value) {
+      listItems[index] = value;
+    }
+
+    function removeListItem(index) {
+      listItems.splice(index, 1);
+      renderListItems();
+    }
+
+    async function saveSection() {
+      const type = document.getElementById('sectionType').value;
+      const editIndex = document.getElementById('editIndex').value;
+      
+      let sectionData = { type };
+      
+      switch(type) {
+        case 'heading':
+          sectionData.level = parseInt(document.getElementById('headingLevel').value);
+          sectionData.content = document.getElementById('headingContent').value;
+          break;
+        case 'paragraph':
+          sectionData.content = document.getElementById('paragraphContent').value;
+          break;
+        case 'list':
+          sectionData.items = listItems.filter(item => item.trim() !== '');
+          break;
+        case 'image':
+          sectionData.content = document.getElementById('imageUrl').value;
+          sectionData.centered = document.getElementById('imageCentered').checked;
+          break;
+        case 'images':
+          sectionData.images = document.getElementById('imagesUrls').value.split('\n').filter(url => url.trim() !== '');
+          sectionData.centered = document.getElementById('imagesCentered').checked;
+          break;
+      }
+      
+      try {
+        if (editIndex !== '') {
+          await fetch(`${API_BASE}/history/section/${editIndex}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(sectionData)
+          });
+        } else {
+          await fetch(`${API_BASE}/history/section`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(sectionData)
+          });
+        }
+        
+        closeModal();
+        await loadContent();
+        showToast('Section enregistrée !', 'success');
+      } catch (error) {
+        showToast('Erreur lors de l\'enregistrement', 'error');
+      }
+    }
+
+    async function deleteSection(index) {
+      if (!confirm('Supprimer cette section ?')) return;
+      
+      try {
+        await fetch(`${API_BASE}/history/section/${index}`, { method: 'DELETE' });
+        await loadContent();
+        showToast('Section supprimée', 'success');
+      } catch (error) {
+        showToast('Erreur lors de la suppression', 'error');
+      }
+    }
+
+    async function moveSection(fromIndex, direction) {
+      const toIndex = fromIndex + direction;
+      
+      try {
+        await fetch(`${API_BASE}/history/reorder`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fromIndex, toIndex })
+        });
+        await loadContent();
+      } catch (error) {
+        showToast('Erreur lors du déplacement', 'error');
+      }
+    }
+
+    async function saveContent() {
+      const updatedContent = {
+        pageTitle: document.getElementById('pageTitle').value,
+        mainTitle: document.getElementById('mainTitle').value,
+        logoUrl: document.getElementById('logoUrl').value,
+        sections: historyContent.sections || []
+      };
+      
+      try {
+        await fetch(`${API_BASE}/history`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedContent)
+        });
+        
+        showToast('Modifications enregistrées !', 'success');
+      } catch (error) {
+        showToast('Erreur lors de l\'enregistrement', 'error');
+      }
+    }
+
+    async function syncContent() {
+      await saveContent();
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      toast.className = `toast show ${type}`;
+      toastMessage.textContent = message;
+      
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // =====================
+    // FILE UPLOAD FUNCTIONS
+    // =====================
+    
+    let uploadedImages = [];
+    
+    async function uploadImageFile(input) {
+      const file = input.files[0];
+      if (!file) return;
+      
+      const previewDiv = document.getElementById('imagePreview');
+      previewDiv.style.display = 'flex';
+      previewDiv.innerHTML = '<div style="width:24px;height:24px;border:2px solid var(--border-color);border-top-color:var(--accent-primary);border-radius:50%;animation:spin 0.8s linear infinite;"></div><span>Upload en cours...</span>';
+      
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      try {
+        const response = await fetch('/api/upload/single', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          document.getElementById('imageUrl').value = result.path;
+          previewDiv.innerHTML = `
+            <img src="${result.path}" alt="">
+            <div class="file-preview-info">
+              <strong>${result.originalname}</strong>
+              <span>${formatFileSize(result.size)}</span>
+            </div>
+          `;
+          showToast('Image uploadée', 'success');
+        } else {
+          throw new Error(result.error);
+        }
+      } catch (error) {
+        previewDiv.style.display = 'none';
+        showToast('Erreur upload: ' + error.message, 'error');
+      }
+      
+      input.value = '';
+    }
+    
+    async function uploadMultipleImages(input) {
+      const files = input.files;
+      if (!files.length) return;
+      
+      const previewList = document.getElementById('imagesPreviewList');
+      uploadedImages = document.getElementById('imagesUrls').value 
+        ? document.getElementById('imagesUrls').value.split('\n').filter(u => u.trim()) 
+        : [];
+      
+      for (const file of files) {
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        try {
+          const response = await fetch('/api/upload/single', {
+            method: 'POST',
+            body: formData
+          });
+          
+          const result = await response.json();
+          
+          if (result.success) {
+            uploadedImages.push(result.path);
+          }
+        } catch (error) {
+          showToast('Erreur upload: ' + error.message, 'error');
+        }
+      }
+      
+      document.getElementById('imagesUrls').value = uploadedImages.join('\n');
+      renderImagesPreview();
+      showToast(`${files.length} image(s) uploadée(s)`, 'success');
+      input.value = '';
+    }
+    
+    function renderImagesPreview() {
+      const previewList = document.getElementById('imagesPreviewList');
+      const urls = document.getElementById('imagesUrls').value.split('\n').filter(u => u.trim());
+      
+      previewList.innerHTML = urls.map((url, i) => `
+        <div class="file-preview" style="margin-bottom:8px;">
+          <img src="${url}" alt="">
+          <div class="file-preview-info">
+            <strong>Image ${i + 1}</strong>
+            <span>${url}</span>
+          </div>
+          <button type="button" onclick="removeUploadedImage(${i})" style="width:32px;height:32px;border-radius:8px;border:none;background:var(--danger);color:white;cursor:pointer;">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+    
+    function removeUploadedImage(index) {
+      const urls = document.getElementById('imagesUrls').value.split('\n').filter(u => u.trim());
+      urls.splice(index, 1);
+      document.getElementById('imagesUrls').value = urls.join('\n');
+      renderImagesPreview();
+    }
+    
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+    
+    // Override openModal to show image preview when editing
+    const originalOpenModal = openModal;
+    openModal = function(type, index = null) {
+      originalOpenModal(type, index);
+      
+      // Clear previews
+      document.getElementById('imagePreview').style.display = 'none';
+      document.getElementById('imagesPreviewList').innerHTML = '';
+      
+      if (index !== null && historyContent.sections[index]) {
+        const section = historyContent.sections[index];
+        
+        if (section.type === 'image' && section.content) {
+          const previewDiv = document.getElementById('imagePreview');
+          previewDiv.style.display = 'flex';
+          previewDiv.innerHTML = `
+            <img src="${section.content}" alt="">
+            <div class="file-preview-info">
+              <strong>Image actuelle</strong>
+              <span>${section.content}</span>
+            </div>
+          `;
+        }
+        
+        if (section.type === 'images' && section.images) {
+          renderImagesPreview();
+        }
+      }
+    };
+
+    // Authentification
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('authToken');
+      if (!token) { window.location.href = '/admin/login'; return; }
+      try {
+        const response = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!response.ok) { localStorage.clear(); window.location.href = '/admin/login'; return; }
+        const data = await response.json();
+        if (data.user.role !== 'admin' && !data.user.permissions?.canManageHistoryPage) {
+          document.body.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0a0a0f;color:#fff;text-align:center;padding:2rem;"><i class="fas fa-lock" style="font-size:4rem;color:#ef4444;margin-bottom:1.5rem;"></i><h1>Accès Refusé</h1><p style="color:#8b8b9e;margin:1rem 0 2rem;">Vous n\'avez pas la permission.</p><button onclick="localStorage.clear();window.location.href=\'/admin/login\'" style="padding:0.75rem 1.5rem;background:#6366f1;color:white;border:none;border-radius:10px;cursor:pointer;">Se déconnecter</button></div>';
+          return;
+        }
+        if (data.user.role !== 'admin') { const ul = document.querySelector('a[href="/admin/users"]'); if (ul) ul.style.display = 'none'; }
+      } catch (e) { window.location.href = '/admin/login'; }
+    });
+    function logoutUser() { localStorage.clear(); window.location.href = '/admin/login'; }
+  </script>
+</body>
+</html>

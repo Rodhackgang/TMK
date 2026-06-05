@@ -1,0 +1,32 @@
+{
+    "videos": [
+        {
+            "video_path": "Teaser TMK.mp4",
+            "preview_image": "",
+            "title": "Teaser TMK",
+            "description": "Découvrez le teaser TMK.",
+            "category": "Vidéo"
+        },
+        {
+            "video_path": "Teaser The Miracle Kingdom.mp4",
+            "preview_image": "",
+            "title": "Teaser The Miracle Kingdom",
+            "description": "Découvrez le teaser de The Miracle Kingdom.",
+            "category": "Vidéo"
+        },
+        {
+            "video_path": "1.mp4",
+            "preview_image": "",
+            "title": "Réalisation Vidéo 1",
+            "description": "Découvrez cette réalisation vidéo",
+            "category": "Vidéo"
+        },
+        {
+            "video_path": "2.mp4",
+            "preview_image": "",
+            "title": "Réalisation Vidéo 2",
+            "description": "Découvrez cette réalisation vidéo",
+            "category": "Vidéo"
+        }
+    ]
+}

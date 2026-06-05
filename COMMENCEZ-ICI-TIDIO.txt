@@ -1,0 +1,143 @@
+═══════════════════════════════════════════════════════════════════
+  ✨ TIDIO EST PRÊT À ÊTRE INSTALLÉ ! ✨
+═══════════════════════════════════════════════════════════════════
+
+Votre site est CONFIGURÉ et PRÊT pour Tidio !
+
+Il ne reste plus que 3 ÉTAPES SIMPLES :
+
+═══════════════════════════════════════════════════════════════════
+🚀 ÉTAPE 1 : CRÉER VOTRE COMPTE (2 minutes)
+═══════════════════════════════════════════════════════════════════
+
+1. Allez sur : https://www.tidio.com
+
+2. Cliquez sur le bouton vert "Start Free Trial"
+
+3. Remplissez :
+   Email : votre-email@example.com
+   Mot de passe : (votre mot de passe)
+   Site web : tmkfoundation.org
+
+4. Vérifiez votre email et cliquez sur le lien
+
+═══════════════════════════════════════════════════════════════════
+🤖 ÉTAPE 2 : CONFIGURER LE BOT IA (5 minutes)
+═══════════════════════════════════════════════════════════════════
+
+Une fois connecté au dashboard Tidio :
+
+1. Menu gauche > "Chatbots"
+2. Cliquez "Add Chatbot"
+3. Choisissez "Lyro AI Chatbot" (c'est l'IA !)
+4. Nommez-le : "Assistant TMK"
+5. Langue : Français
+
+Puis ajoutez ces questions (copiez-collez) :
+
+Q: Qu'est-ce que TMK Foundation ?
+R: TMK Foundation est une organisation humanitaire qui aide les 
+   communautés défavorisées en RDC. Nous intervenons dans les 
+   orphelinats, hôpitaux, écoles et centres d'accueil.
+
+Q: Comment vous contacter ?
+R: WhatsApp : +243 978 219 845
+   Email : contact@tmkfoundation.org
+   Site : www.tmkfoundation.org
+
+Q: Comment faire un don ?
+R: Contactez-nous via WhatsApp au +243 978 219 845 ou par email 
+   à contact@tmkfoundation.org pour les modalités de don.
+
+(Plus de questions dans GUIDE-INSTALLATION-TIDIO.md)
+
+═══════════════════════════════════════════════════════════════════
+🎨 PERSONNALISER (2 minutes)
+═══════════════════════════════════════════════════════════════════
+
+Settings > Appearance :
+  - Couleur : #d4202c (Rouge TMK)
+  - Position : Bottom Right
+
+═══════════════════════════════════════════════════════════════════
+📋 ÉTAPE 3 : RÉCUPÉRER VOTRE CODE (1 minute)
+═══════════════════════════════════════════════════════════════════
+
+1. Settings > Channels > Web Widget
+
+2. Vous verrez un code comme :
+   <script src="//code.tidio.co/abc123xyz.js" async></script>
+
+3. COPIEZ la partie entre "tidio.co/" et ".js"
+   Exemple : abc123xyz
+
+4. Ouvrez le fichier : config/chatbot-ia-config.php
+
+5. Trouvez cette ligne :
+   define('TIDIO_ID', 'VOTRE_TIDIO_ID');
+
+6. Remplacez par :
+   define('TIDIO_ID', 'abc123xyz'); ← Votre vrai ID
+
+7. Sauvegardez (Ctrl + S)
+
+═══════════════════════════════════════════════════════════════════
+✅ C'EST FAIT !
+═══════════════════════════════════════════════════════════════════
+
+Maintenant :
+
+1. Ouvrez votre site web
+2. Regardez en bas à droite
+3. Le widget Tidio devrait apparaître !
+4. Cliquez dessus et posez une question
+5. Le bot répond automatiquement ! 🎉
+
+═══════════════════════════════════════════════════════════════════
+📱 BONUS : APPLICATION MOBILE
+═══════════════════════════════════════════════════════════════════
+
+Téléchargez l'app Tidio pour gérer depuis votre téléphone :
+
+iOS : https://apps.apple.com/app/tidio/id916822567
+Android : https://play.google.com/store/apps/details?id=com.tidio
+
+═══════════════════════════════════════════════════════════════════
+📚 DOCUMENTATION COMPLÈTE
+═══════════════════════════════════════════════════════════════════
+
+Pour plus de détails :
+→ GUIDE-INSTALLATION-TIDIO.md (guide complet avec 6 Q&R)
+→ CHATBOT-IA-GRATUIT.md (comparatif des options)
+→ INSTALLATION-TIDIO-IA.txt (guide condensé)
+
+═══════════════════════════════════════════════════════════════════
+✅ CONFIGURATION ACTUELLE
+═══════════════════════════════════════════════════════════════════
+
+✅ Tawk.to (chat humain) : DÉSACTIVÉ
+✅ Tidio (chatbot IA) : ACTIVÉ (en attente de votre ID)
+
+Une fois votre ID Tidio ajouté, le bot fonctionnera automatiquement
+sur toutes les pages de votre site !
+
+═══════════════════════════════════════════════════════════════════
+🆘 BESOIN D'AIDE ?
+═══════════════════════════════════════════════════════════════════
+
+Le widget ne s'affiche pas après configuration ?
+1. Vérifiez que vous avez bien mis votre ID Tidio
+2. Videz le cache (Ctrl + F5)
+3. Testez en navigation privée
+4. Ouvrez F12 > Console pour voir les erreurs
+
+═══════════════════════════════════════════════════════════════════
+
+🚀 COMMENCEZ MAINTENANT !
+
+Étape 1 : Allez sur https://www.tidio.com
+Étape 2 : Créez votre compte
+Étape 3 : Suivez le guide !
+
+Bon courage ! 💪🤖
+

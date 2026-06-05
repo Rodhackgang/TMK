@@ -1,0 +1,55 @@
+{
+  "_id": "69682047b3c831a4c657c75c",
+  "pageTitle": "Contactez-nous",
+  "sectionTitle": "Contactez TMK",
+  "contactInfo": {
+    "title": "Informations de Contact",
+    "phone": {
+      "label": "Téléphone",
+      "number": "+243 900 000 000"
+    },
+    "email": {
+      "label": "Email",
+      "address": "contact@tmkfoundation.org"
+    },
+    "address": {
+      "label": "Adresse",
+      "line1": "A108 Rue Adam",
+      "line2": "Kinshasa, RDC"
+    }
+  },
+  "socialTitle": "Suivez-nous",
+  "socialLinks": [
+    {
+      "platform": "Facebook",
+      "icon": "fa fa-facebook",
+      "url": "#",
+      "_id": "69682047b3c831a4c657c75d"
+    },
+    {
+      "platform": "Twitter",
+      "icon": "fa fa-twitter",
+      "url": "#",
+      "_id": "69682047b3c831a4c657c75e"
+    },
+    {
+      "platform": "Instagram",
+      "icon": "fa fa-instagram",
+      "url": "#",
+      "_id": "69682047b3c831a4c657c75f"
+    },
+    {
+      "platform": "LinkedIn",
+      "icon": "fa fa-linkedin",
+      "url": "#",
+      "_id": "69682047b3c831a4c657c760"
+    }
+  ],
+  "formSection": {
+    "title": "Envoyez-nous un Message",
+    "description": "Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.",
+    "submitButtonText": "Envoyer le Message"
+  },
+  "updatedAt": "2026-01-14T23:01:27.560Z",
+  "__v": 0
+}

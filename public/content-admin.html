@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TMK Admin - Contenu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #7EC13F;
+      --primary-dark: #5a9c1f;
+      --bg-dark: #0a0a0f;
+      --bg-card: #12121a;
+      --bg-hover: #1a1a25;
+      --border: #2a2a35;
+      --text: #e4e4e7;
+      --text-muted: #71717a;
+      --danger: #ef4444;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --info: #3b82f6;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      padding: 24px 0;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      z-index: 100;
+      overflow-y: auto;
+    }
+    
+    .logo {
+      padding: 0 24px 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    
+    .logo h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logo h1 span { color: var(--primary); }
+    .logo p { color: var(--text-muted); font-size: 0.8rem; margin-top: 4px; }
+    
+    .nav-menu { flex: 1; padding: 0 12px; }
+    
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-bottom: 4px;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    
+    .nav-item:hover { background: var(--bg-hover); color: var(--text); }
+    .nav-item.active { background: var(--primary); color: #000; }
+    .nav-item i { width: 20px; text-align: center; }
+    
+    .nav-section {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      padding: 16px 16px 8px;
+      font-weight: 600;
+    }
+    
+    /* Main Content */
+    .main {
+      flex: 1;
+      margin-left: 280px;
+      padding: 32px;
+      padding-bottom: 100px;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    
+    .header h2 { font-size: 1.75rem; font-weight: 700; }
+    
+    .btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    
+    .btn-primary { background: var(--primary); color: #000; }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(126, 193, 63, 0.3); }
+    .btn-secondary { background: var(--bg-hover); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--border); }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-sm { padding: 8px 14px; font-size: 0.8rem; }
+    
+    /* Alert */
+    .alert {
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      animation: slideIn 0.3s ease;
+    }
+    .alert.show { display: flex; }
+    .alert-success { background: rgba(34, 197, 94, 0.15); border: 1px solid var(--success); color: var(--success); }
+    .alert-error { background: rgba(239, 68, 68, 0.15); border: 1px solid var(--danger); color: var(--danger); }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Section Cards */
+    .section-grid {
+      display: grid;
+      gap: 24px;
+    }
+    
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    
+    .section-card:hover { border-color: var(--primary); }
+    
+    .section-header {
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+    
+    .section-header:hover { background: var(--bg-hover); }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    
+    .section-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    
+    .section-icon.hero { background: rgba(126, 193, 63, 0.15); color: var(--primary); }
+    .section-icon.video { background: rgba(59, 130, 246, 0.15); color: var(--info); }
+    .section-icon.donation { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+    .section-icon.contact { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+    
+    .section-title h3 { font-size: 1rem; font-weight: 600; }
+    .section-title p { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+    
+    .toggle-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--bg-hover);
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    
+    .toggle-btn.open { transform: rotate(180deg); }
+    
+    .section-content {
+      padding: 0 24px 24px;
+      display: none;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+    
+    .section-content.open { display: block; }
+    
+    /* Form Elements */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    
+    .form-grid.single { grid-template-columns: 1fr; }
+    
+    .form-group { }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(126, 193, 63, 0.15);
+    }
+    
+    .form-textarea { min-height: 100px; resize: vertical; }
+    
+    /* List Items */
+    .items-list { margin-top: 20px; }
+    
+    .items-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .items-list-header h4 {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    
+    .list-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      transition: all 0.2s;
+    }
+    
+    .list-item:hover { border-color: var(--primary); }
+    
+    .list-item-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .list-item-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--bg-hover);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+    }
+    
+    .list-item-text strong { font-size: 0.9rem; }
+    .list-item-text span { font-size: 0.8rem; color: var(--text-muted); margin-left: 8px; }
+    
+    /* Add Item */
+    .add-item {
+      background: var(--bg-dark);
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 16px;
+    }
+    
+    .add-item h5 {
+      font-size: 0.85rem;
+      color: var(--primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .add-item-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+    }
+    
+    .add-item-row .form-group { flex: 1; margin-bottom: 0; }
+    
+    /* Save Bar */
+    .save-bar {
+      position: fixed;
+      bottom: 0;
+      left: 280px;
+      right: 0;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 90;
+    }
+    
+    .save-bar-info {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    
+    .save-bar-actions { display: flex; gap: 12px; }
+    
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .main { margin-left: 0; }
+      .save-bar { left: 0; }
+      .form-grid { grid-template-columns: 1fr; }
+      .add-item-row { flex-direction: column; }
+    }
+    
+    /* File Upload Styles */
+    .file-upload-wrapper {
+      position: relative;
+    }
+    
+    .file-upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--bg-dark);
+    }
+    
+    .file-upload-zone:hover {
+      border-color: var(--primary);
+      background: rgba(126, 193, 63, 0.05);
+    }
+    
+    .file-upload-zone.dragover {
+      border-color: var(--primary);
+      background: rgba(126, 193, 63, 0.1);
+    }
+    
+    .file-upload-zone i {
+      font-size: 2rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    
+    .file-upload-zone p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+    
+    .file-upload-zone span {
+      color: var(--primary);
+      font-weight: 500;
+    }
+    
+    .file-upload-input {
+      display: none;
+    }
+    
+    .file-preview {
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--bg-hover);
+      border-radius: 10px;
+    }
+    
+    .file-preview img,
+    .file-preview video {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    
+    .file-preview-info {
+      flex: 1;
+    }
+    
+    .file-preview-info strong {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+    
+    .file-preview-info span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    
+    .file-preview-remove {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: var(--danger);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .upload-progress {
+      margin-top: 12px;
+      height: 4px;
+      background: var(--bg-hover);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .upload-progress-bar {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.3s;
+    }
+    
+    /* Media Library Modal */
+    .media-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .media-modal.show { display: flex; }
+    
+    .media-modal-content {
+      background: var(--bg-card);
+      border-radius: 20px;
+      width: 90%;
+      max-width: 900px;
+      max-height: 80vh;
+      overflow: hidden;
+    }
+    
+    .media-modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .media-modal-header h3 { font-size: 1.1rem; }
+    
+    .media-modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: none;
+      background: var(--bg-hover);
+      color: var(--text);
+      cursor: pointer;
+    }
+    
+    .media-modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      max-height: calc(80vh - 140px);
+    }
+    
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 16px;
+    }
+    
+    .media-item {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    
+    .media-item:hover { border-color: var(--primary); }
+    .media-item.selected { border-color: var(--primary); }
+    
+    .media-item img,
+    .media-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .media-item-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 8px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .media-item-overlay i {
+      font-size: 0.8rem;
+      color: var(--text);
+    }
+    
+    .media-item-overlay span {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .media-modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">
+      <h1><span>TMK</span> Admin</h1>
+      <p>Panneau d'administration</p>
+    </div>
+    
+    <nav class="nav-menu">
+      <div class="nav-section">Navigation</div>
+      <a href="/admin" class="nav-item">
+        <i class="fas fa-link"></i>
+        Liens du menu
+      </a>
+      
+      <div class="nav-section">Contenu</div>
+      <a href="/admin/content" class="nav-item active">
+        <i class="fas fa-home"></i>
+        Page d'accueil
+      </a>
+      <a href="/admin/about" class="nav-item">
+        <i class="fas fa-info-circle"></i>
+        Page À Propos
+      </a>
+      <a href="/admin/history" class="nav-item">
+        <i class="fas fa-history"></i>
+        Page Histoire
+      </a>
+      <a href="/admin/team" class="nav-item">
+        <i class="fas fa-users"></i>
+        Page Équipe
+      </a>
+      <a href="/admin/contact" class="nav-item">
+        <i class="fas fa-envelope"></i>
+        Page Contact
+      </a>
+      <a href="/admin/juridical" class="nav-item">
+        <i class="fas fa-balance-scale"></i>
+        Page Juridique
+      </a>
+      
+      <div class="nav-section">Administration</div>
+      <a href="/admin/users" class="nav-item">
+        <i class="fas fa-user-shield"></i>
+        Utilisateurs
+      </a>
+      
+      <div class="nav-section">Site</div>
+      <a href="/" class="nav-item" target="_blank">
+        <i class="fas fa-external-link-alt"></i>
+        Voir le site
+      </a>
+      <a href="#" class="nav-item" onclick="logoutUser(); return false;" style="color: #ef4444;">
+        <i class="fas fa-sign-out-alt"></i>
+        Déconnexion
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="header">
+      <h2>Contenu de l'accueil</h2>
+    </div>
+
+    <div id="alert" class="alert"></div>
+
+    <div class="section-grid">
+      <!-- Hero Section -->
+      <div class="section-card">
+        <div class="section-header" onclick="toggleSection(this)">
+          <div class="section-title">
+            <div class="section-icon hero"><i class="fas fa-film"></i></div>
+            <div>
+              <h3>Bannière principale</h3>
+              <p>Vidéo, titre et boutons d'action</p>
+            </div>
+          </div>
+          <button class="toggle-btn"><i class="fas fa-chevron-down"></i></button>
+        </div>
+        <div class="section-content">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Vidéo principale</label>
+              <div class="file-upload-wrapper">
+                <div class="file-upload-zone" onclick="openMediaLibrary('heroVideo', 'video')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'heroVideo')">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <p><span>Cliquez pour choisir</span> ou glissez un fichier</p>
+                  <p style="font-size: 0.75rem;">MP4, WEBM (max 100MB)</p>
+                </div>
+                <input type="file" class="file-upload-input" id="heroVideoFile" accept="video/*" onchange="uploadFile(this, 'heroVideo')">
+                <div id="heroVideoPreview" class="file-preview" style="display: none;"></div>
+                <input type="hidden" id="heroVideo">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Lien WhatsApp (UI/UX)</label>
+              <input type="text" class="form-input" id="heroUiuxLink" placeholder="https://wa.me/...">
+            </div>
+          </div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label">Titre principal</label>
+              <input type="text" class="form-input" id="heroTitle" placeholder="Un avenir meilleur pour tous">
+            </div>
+          </div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label">Sous-titre</label>
+              <input type="text" class="form-input" id="heroSubtitle" placeholder="Agissons ensemble...">
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Bouton Don</label>
+              <input type="text" class="form-input" id="heroDonateBtn" placeholder="Faire un don">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Bouton Vidéo</label>
+              <input type="text" class="form-input" id="heroVideoBtn" placeholder="Voir notre vidéo">
+            </div>
+          </div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label">Texte section UI/UX</label>
+              <textarea class="form-textarea" id="heroUiuxText" placeholder="Vous souhaitez créer..."></textarea>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Bouton UI/UX</label>
+              <input type="text" class="form-input" id="heroUiuxBtn" placeholder="Créer votre site web">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Section -->
+      <div class="section-card">
+        <div class="section-header" onclick="toggleSection(this)">
+          <div class="section-title">
+            <div class="section-icon video"><i class="fas fa-video"></i></div>
+            <div>
+              <h3>Section Vidéos</h3>
+              <p>Galerie de vidéos et YouTube</p>
+            </div>
+          </div>
+          <button class="toggle-btn"><i class="fas fa-chevron-down"></i></button>
+        </div>
+        <div class="section-content">
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label">Titre de la section</label>
+              <input type="text" class="form-input" id="videoTitle" placeholder="Notre Mission en Action">
+            </div>
+          </div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <textarea class="form-textarea" id="videoSubtitle" placeholder="Découvrez comment..."></textarea>
+            </div>
+          </div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label">URL YouTube (popup)</label>
+              <input type="text" class="form-input" id="videoYoutube" placeholder="https://youtube.com/embed/...">
+            </div>
+          </div>
+          
+          <div class="items-list">
+            <div class="items-list-header">
+              <h4><i class="fas fa-list"></i> Liste des vidéos</h4>
+            </div>
+            <div id="videosList"></div>
+            
+            <div class="add-item">
+              <h5><i class="fas fa-plus-circle"></i> Ajouter une vidéo</h5>
+              <div class="file-upload-wrapper">
+                <div class="file-upload-zone" onclick="document.getElementById('newVideoFile').click()">
+                  <i class="fas fa-cloud-upload-alt"></i>
+                  <p><span>Cliquez pour uploader</span> une vidéo</p>
+                  <p style="font-size: 0.75rem;">MP4, WEBM (max 100MB)</p>
+                </div>
+                <input type="file" class="file-upload-input" id="newVideoFile" accept="video/*" onchange="uploadAndAddVideo(this)">
+                <div class="upload-progress" id="newVideoProgress" style="display: none;">
+                  <div class="upload-progress-bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Donation Section -->
+      <div class="section-card">
+        <div class="section-header" onclick="toggleSection(this)">
+          <div class="section-title">
+            <div class="section-icon donation"><i class="fas fa-heart"></i></div>
+            <div>
+              <h3>Section Dons</h3>
+              <p>Numéros et informations de paiement</p>
+            </div>
+          </div>
+          <button class="toggle-btn"><i class="fas fa-chevron-down"></i></button>
+        </div>
+        <div class="section-content">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Titre du popup</label>
+              <input type="text" class="form-input" id="donModalTitle" placeholder="Merci de votre générosité">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Sous-titre popup</label>
+              <input type="text" class="form-input" id="donModalSubtitle" placeholder="Votre don fait la différence !">
+            </div>
+          </div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label">Note d'information</label>
+              <textarea class="form-textarea" id="donNote" placeholder="Après votre don..."></textarea>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Titre section</label>
+              <input type="text" class="form-input" id="donTitle" placeholder="Soutenez Notre Cause">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <input type="text" class="form-input" id="donDescription" placeholder="Votre générosité...">
+            </div>
+          </div>
+          
+          <div class="items-list">
+            <div class="items-list-header">
+              <h4><i class="fas fa-phone"></i> Numéros de téléphone</h4>
+            </div>
+            <div id="phonesList"></div>
+            
+            <div class="add-item">
+              <h5><i class="fas fa-plus-circle"></i> Ajouter un numéro</h5>
+              <div class="add-item-row">
+                <div class="form-group">
+                  <input type="text" class="form-input" id="newPhoneNumber" placeholder="0824078000">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-input" id="newPhoneOperator" placeholder="Vodacom">
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="addPhone()">
+                  <i class="fas fa-plus"></i> Ajouter
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="section-card">
+        <div class="section-header" onclick="toggleSection(this)">
+          <div class="section-title">
+            <div class="section-icon contact"><i class="fas fa-envelope"></i></div>
+            <div>
+              <h3>Section Contact</h3>
+              <p>Informations de contact</p>
+            </div>
+          </div>
+          <button class="toggle-btn"><i class="fas fa-chevron-down"></i></button>
+        </div>
+        <div class="section-content">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Titre</label>
+              <input type="text" class="form-input" id="contactTitle" placeholder="Besoin d'un site ?">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <input type="text" class="form-input" id="contactDescription" placeholder="Contactez-nous...">
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Texte du bouton</label>
+              <input type="text" class="form-input" id="contactBtn" placeholder="Nous contacter">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Lien WhatsApp</label>
+              <input type="text" class="form-input" id="contactLink" placeholder="https://wa.me/...">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Save Bar -->
+  <div class="save-bar">
+    <div class="save-bar-info">
+      <i class="fas fa-info-circle"></i>
+      Les modifications sont automatiquement synchronisées
+    </div>
+    <div class="save-bar-actions">
+      <button class="btn btn-secondary" onclick="loadContent()">
+        <i class="fas fa-sync-alt"></i> Actualiser
+      </button>
+      <button class="btn btn-primary" onclick="saveContent()">
+        <i class="fas fa-save"></i> Enregistrer
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = '/api/content';
+    let contentData = null;
+
+    document.addEventListener('DOMContentLoaded', loadContent);
+
+    function toggleSection(header) {
+      const btn = header.querySelector('.toggle-btn');
+      const content = header.nextElementSibling;
+      btn.classList.toggle('open');
+      content.classList.toggle('open');
+    }
+
+    async function loadContent() {
+      try {
+        const response = await fetch(`${API_URL}/home`);
+        contentData = await response.json();
+        populateForm(contentData);
+        showAlert('Contenu chargé', 'success');
+      } catch (error) {
+        showAlert('Erreur: ' + error.message, 'error');
+      }
+    }
+
+    function populateForm(data) {
+      // Hero
+      document.getElementById('heroVideo').value = data.hero?.videoUrl || '';
+      document.getElementById('heroTitle').value = data.hero?.title || '';
+      document.getElementById('heroSubtitle').value = data.hero?.subtitle || '';
+      document.getElementById('heroDonateBtn').value = data.hero?.donateButtonText || '';
+      document.getElementById('heroVideoBtn').value = data.hero?.videoButtonText || '';
+      document.getElementById('heroUiuxText').value = data.hero?.uiuxText || '';
+      document.getElementById('heroUiuxBtn').value = data.hero?.uiuxButtonText || '';
+      document.getElementById('heroUiuxLink').value = data.hero?.uiuxWhatsappLink || '';
+
+      // Video
+      document.getElementById('videoTitle').value = data.videoSection?.title || '';
+      document.getElementById('videoSubtitle').value = data.videoSection?.subtitle || '';
+      document.getElementById('videoYoutube').value = data.videoSection?.youtubeUrl || '';
+      renderVideosList(data.videoSection?.videos || []);
+
+      // Donation
+      document.getElementById('donModalTitle').value = data.donationModal?.title || '';
+      document.getElementById('donModalSubtitle').value = data.donationModal?.subtitle || '';
+      document.getElementById('donNote').value = data.donationModal?.note || '';
+      document.getElementById('donTitle').value = data.donationSection?.title || '';
+      document.getElementById('donDescription').value = data.donationSection?.description || '';
+      renderPhonesList(data.phoneNumbers || []);
+
+      // Contact
+      document.getElementById('contactTitle').value = data.contactSection?.title || '';
+      document.getElementById('contactDescription').value = data.contactSection?.description || '';
+      document.getElementById('contactBtn').value = data.contactSection?.buttonText || '';
+      document.getElementById('contactLink').value = data.contactSection?.whatsappLink || '';
+    }
+
+    function renderVideosList(videos) {
+      const container = document.getElementById('videosList');
+      container.innerHTML = videos.map((video, i) => `
+        <div class="list-item">
+          <div class="list-item-info">
+            <div class="list-item-icon"><i class="fas fa-play"></i></div>
+            <div class="list-item-text">
+              <strong>Vidéo ${i + 1}</strong>
+              <span>${video}</span>
+            </div>
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="removeVideo(${i})">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      `).join('') || '<p style="color:var(--text-muted);text-align:center;padding:20px;">Aucune vidéo</p>';
+    }
+
+    function renderPhonesList(phones) {
+      const container = document.getElementById('phonesList');
+      container.innerHTML = phones.map((phone, i) => `
+        <div class="list-item">
+          <div class="list-item-info">
+            <div class="list-item-icon"><i class="${phone.icon || 'fas fa-phone'}"></i></div>
+            <div class="list-item-text">
+              <strong>${phone.number}</strong>
+              <span>${phone.operator}</span>
+            </div>
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="removePhone(${i})">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      `).join('') || '<p style="color:var(--text-muted);text-align:center;padding:20px;">Aucun numéro</p>';
+    }
+
+    async function saveContent() {
+      const data = {
+        hero: {
+          videoUrl: document.getElementById('heroVideo').value,
+          title: document.getElementById('heroTitle').value,
+          subtitle: document.getElementById('heroSubtitle').value,
+          donateButtonText: document.getElementById('heroDonateBtn').value,
+          videoButtonText: document.getElementById('heroVideoBtn').value,
+          uiuxText: document.getElementById('heroUiuxText').value,
+          uiuxButtonText: document.getElementById('heroUiuxBtn').value,
+          uiuxWhatsappLink: document.getElementById('heroUiuxLink').value
+        },
+        videoSection: {
+          title: document.getElementById('videoTitle').value,
+          subtitle: document.getElementById('videoSubtitle').value,
+          youtubeUrl: document.getElementById('videoYoutube').value,
+          videos: contentData?.videoSection?.videos || []
+        },
+        donationModal: {
+          title: document.getElementById('donModalTitle').value,
+          subtitle: document.getElementById('donModalSubtitle').value,
+          note: document.getElementById('donNote').value
+        },
+        donationSection: {
+          title: document.getElementById('donTitle').value,
+          description: document.getElementById('donDescription').value
+        },
+        phoneNumbers: contentData?.phoneNumbers || [],
+        contactSection: {
+          title: document.getElementById('contactTitle').value,
+          description: document.getElementById('contactDescription').value,
+          buttonText: document.getElementById('contactBtn').value,
+          whatsappLink: document.getElementById('contactLink').value
+        }
+      };
+
+      try {
+        const response = await fetch(`${API_URL}/home`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          contentData = await response.json();
+          showAlert('✅ Modifications enregistrées !', 'success');
+        } else {
+          throw new Error('Erreur serveur');
+        }
+      } catch (error) {
+        showAlert('Erreur: ' + error.message, 'error');
+      }
+    }
+
+    async function addVideo() {
+      const url = document.getElementById('newVideoUrl').value.trim();
+      if (!url) return showAlert('Entrez une URL', 'error');
+
+      try {
+        const response = await fetch(`${API_URL}/home/video`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
+
+        if (response.ok) {
+          contentData = await response.json();
+          renderVideosList(contentData.videoSection?.videos || []);
+          document.getElementById('newVideoUrl').value = '';
+          showAlert('Vidéo ajoutée', 'success');
+        }
+      } catch (error) {
+        showAlert('Erreur', 'error');
+      }
+    }
+
+    async function removeVideo(index) {
+      if (!confirm('Supprimer cette vidéo ?')) return;
+
+      try {
+        const response = await fetch(`${API_URL}/home/video/${index}`, { method: 'DELETE' });
+        if (response.ok) {
+          contentData = await response.json();
+          renderVideosList(contentData.videoSection?.videos || []);
+          showAlert('Vidéo supprimée', 'success');
+        }
+      } catch (error) {
+        showAlert('Erreur', 'error');
+      }
+    }
+
+    async function addPhone() {
+      const number = document.getElementById('newPhoneNumber').value.trim();
+      const operator = document.getElementById('newPhoneOperator').value.trim();
+      if (!number || !operator) return showAlert('Remplissez tous les champs', 'error');
+
+      try {
+        const response = await fetch(`${API_URL}/home/phone`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ icon: 'fas fa-phone', number, operator })
+        });
+
+        if (response.ok) {
+          contentData = await response.json();
+          renderPhonesList(contentData.phoneNumbers || []);
+          document.getElementById('newPhoneNumber').value = '';
+          document.getElementById('newPhoneOperator').value = '';
+          showAlert('Numéro ajouté', 'success');
+        }
+      } catch (error) {
+        showAlert('Erreur', 'error');
+      }
+    }
+
+    async function removePhone(index) {
+      if (!confirm('Supprimer ce numéro ?')) return;
+
+      try {
+        const response = await fetch(`${API_URL}/home/phone/${index}`, { method: 'DELETE' });
+        if (response.ok) {
+          contentData = await response.json();
+          renderPhonesList(contentData.phoneNumbers || []);
+          showAlert('Numéro supprimé', 'success');
+        }
+      } catch (error) {
+        showAlert('Erreur', 'error');
+      }
+    }
+
+    function showAlert(message, type) {
+      const alert = document.getElementById('alert');
+      const icon = type === 'success' ? 'check-circle' : 'exclamation-circle';
+      alert.innerHTML = `<i class="fas fa-${icon}"></i><span>${message}</span>`;
+      alert.className = `alert alert-${type} show`;
+      setTimeout(() => alert.classList.remove('show'), 3000);
+    }
+
+    // =====================
+    // FILE UPLOAD FUNCTIONS
+    // =====================
+    
+    let currentUploadTarget = null;
+    let currentMediaType = null;
+    let mediaLibraryFiles = [];
+    
+    // Drag & Drop
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('dragover');
+    }
+    
+    function handleDragLeave(e) {
+      e.currentTarget.classList.remove('dragover');
+    }
+    
+    function handleDrop(e, targetId) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('dragover');
+      
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        uploadFileFromDrop(files[0], targetId);
+      }
+    }
+    
+    // Upload un fichier
+    async function uploadFile(input, targetId) {
+      const file = input.files[0];
+      if (!file) return;
+      
+      await uploadFileToServer(file, targetId);
+    }
+    
+    async function uploadFileFromDrop(file, targetId) {
+      await uploadFileToServer(file, targetId);
+    }
+    
+    async function uploadFileToServer(file, targetId) {
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      // Afficher la zone de preview avec loading
+      const previewDiv = document.getElementById(targetId + 'Preview');
+      if (previewDiv) {
+        previewDiv.style.display = 'flex';
+        previewDiv.innerHTML = '<div class="spinner" style="width:24px;height:24px;border-width:2px;"></div><span>Upload en cours...</span>';
+      }
+      
+      try {
+        const response = await fetch('/api/upload/single', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          // Mettre à jour la valeur du champ caché
+          document.getElementById(targetId).value = result.path;
+          
+          // Afficher la preview
+          if (previewDiv) {
+            const isVideo = result.mimetype.startsWith('video');
+            previewDiv.innerHTML = `
+              ${isVideo 
+                ? `<video src="${result.path}" muted></video>` 
+                : `<img src="${result.path}" alt="">`}
+              <div class="file-preview-info">
+                <strong>${result.originalname}</strong>
+                <span>${formatFileSize(result.size)}</span>
+              </div>
+              <button class="file-preview-remove" onclick="removeFilePreview('${targetId}')">
+                <i class="fas fa-times"></i>
+              </button>
+            `;
+          }
+          
+          showAlert('Fichier uploadé avec succès', 'success');
+        } else {
+          throw new Error(result.error);
+        }
+      } catch (error) {
+        showAlert('Erreur upload: ' + error.message, 'error');
+        if (previewDiv) previewDiv.style.display = 'none';
+      }
+    }
+    
+    function removeFilePreview(targetId) {
+      document.getElementById(targetId).value = '';
+      const previewDiv = document.getElementById(targetId + 'Preview');
+      if (previewDiv) {
+        previewDiv.style.display = 'none';
+        previewDiv.innerHTML = '';
+      }
+    }
+    
+    // Upload et ajouter une vidéo à la liste
+    async function uploadAndAddVideo(input) {
+      const file = input.files[0];
+      if (!file) return;
+      
+      const progressDiv = document.getElementById('newVideoProgress');
+      progressDiv.style.display = 'block';
+      
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      try {
+        const response = await fetch('/api/upload/single', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const result = await response.json();
+        progressDiv.style.display = 'none';
+        
+        if (result.success) {
+          // Ajouter la vidéo via l'API
+          const addResponse = await fetch(`${API_URL}/home/video`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: result.path })
+          });
+          
+          if (addResponse.ok) {
+            contentData = await addResponse.json();
+            renderVideosList(contentData.videoSection?.videos || []);
+            showAlert('Vidéo ajoutée', 'success');
+          }
+        } else {
+          throw new Error(result.error);
+        }
+      } catch (error) {
+        progressDiv.style.display = 'none';
+        showAlert('Erreur: ' + error.message, 'error');
+      }
+      
+      input.value = '';
+    }
+    
+    // Bibliothèque de médias
+    async function openMediaLibrary(targetId, type = 'all') {
+      currentUploadTarget = targetId;
+      currentMediaType = type;
+      
+      // Ouvrir le sélecteur de fichiers directement
+      const inputId = targetId + 'File';
+      const input = document.getElementById(inputId);
+      if (input) {
+        input.click();
+      }
+    }
+    
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+    
+    // Mettre à jour la preview au chargement
+    function updateHeroVideoPreview() {
+      const videoUrl = document.getElementById('heroVideo').value;
+      const previewDiv = document.getElementById('heroVideoPreview');
+      
+      if (videoUrl && previewDiv) {
+        previewDiv.style.display = 'flex';
+        const isVideo = videoUrl.endsWith('.mp4') || videoUrl.endsWith('.webm') || videoUrl.includes('video');
+        previewDiv.innerHTML = `
+          ${isVideo 
+            ? `<video src="${videoUrl}" muted></video>` 
+            : `<img src="${videoUrl}" alt="">`}
+          <div class="file-preview-info">
+            <strong>Vidéo actuelle</strong>
+            <span>${videoUrl}</span>
+          </div>
+          <button class="file-preview-remove" onclick="removeFilePreview('heroVideo')">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+      }
+    }
+    
+    // Override populateForm pour afficher les previews
+    const originalPopulateForm = populateForm;
+    populateForm = function(data) {
+      originalPopulateForm(data);
+      updateHeroVideoPreview();
+    };
+
+    // ============================================
+    // AUTHENTIFICATION
+    // ============================================
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('authToken');
+      if (!token) { window.location.href = '/admin/login'; return; }
+      
+      try {
+        const response = await fetch('/api/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
+        if (!response.ok) { localStorage.clear(); window.location.href = '/admin/login'; return; }
+        
+        const data = await response.json();
+        if (data.user.role !== 'admin' && !data.user.permissions?.canManageHomePage) {
+          document.body.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0a0a0f;color:#fff;text-align:center;padding:2rem;"><i class="fas fa-lock" style="font-size:4rem;color:#ef4444;margin-bottom:1.5rem;"></i><h1>Accès Refusé</h1><p style="color:#8b8b9e;margin:1rem 0 2rem;">Vous n\'avez pas la permission d\'accéder à cette page.</p><button onclick="localStorage.clear();window.location.href=\'/admin/login\'" style="padding:0.75rem 1.5rem;background:#6366f1;color:white;border:none;border-radius:10px;cursor:pointer;">Se déconnecter</button></div>';
+          return;
+        }
+        if (data.user.role !== 'admin') { const ul = document.querySelector('a[href="/admin/users"]'); if (ul) ul.style.display = 'none'; }
+      } catch (e) { window.location.href = '/admin/login'; }
+    });
+    
+    function logoutUser() { localStorage.clear(); window.location.href = '/admin/login'; }
+  </script>
+</body>
+</html>

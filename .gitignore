@@ -1,0 +1,28 @@
+# ─────────────────────────────────────────────
+#  Dépendances Node (régénérées avec « npm install »)
+# ─────────────────────────────────────────────
+node_modules/
+
+# ─────────────────────────────────────────────
+#  Vidéos volumineuses
+#  (dépassent la limite GitHub de 100 Mo → à déployer
+#   séparément sur le serveur, pas via Git)
+# ─────────────────────────────────────────────
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+
+# ─────────────────────────────────────────────
+#  Secrets / configuration sensible (ne jamais committer)
+# ─────────────────────────────────────────────
+config-stripe.php
+
+# ─────────────────────────────────────────────
+#  Logs et fichiers temporaires
+# ─────────────────────────────────────────────
+*.log
+logs/
+.DS_Store
+Thumbs.db

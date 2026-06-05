@@ -1,0 +1,43 @@
+{
+    "hero": {
+        "videoUrl": "images/1.mp4",
+        "title": "Un avenir meilleur pour tous",
+        "subtitle": "Agissons ensemble pour un changement durable",
+        "donateButtonText": "Faire un don",
+        "videoButtonText": "Voir notre vidéo"
+    },
+    "missionVision": {
+        "sectionTitle": "Notre mission & notre vision",
+        "missionTitle": "Notre mission",
+        "missionText": "La mission de la fondation THE MIRACLE KINGDOM est de mettre en œuvre des actions d’intérêt général visant à soutenir les personnes démunies et vulnérables, et à aider les populations à devenir actrices de leur propre développement, grâce à des interventions adaptées, structurées et à fort impact social.",
+        "visionTitle": "Notre vision",
+        "visionText": "Par sa vision, The Miracle Kingdom œuvre à la construction de sociétés plus justes, solidaires et résilientes, où chacun, en particulier les plus défavorisés, peut accéder à des conditions de vie dignes et à de réelles opportunités d’avenir."
+    },
+    "news": {
+        "sectionTitle": "Actualités",
+        "subtitle": "Découvrez les dernières actions et événements de la fondation THE MIRACLE KINGDOM sur le terrain.",
+        "items": [
+            {
+                "meta": "Dernière action",
+                "title": "Distribution de kits alimentaires aux familles vulnérables",
+                "text": "La fondation a organisé une campagne de solidarité pour soutenir les ménages les plus touchés par l’insécurité alimentaire, en partenariat avec des acteurs locaux engagés.",
+                "linkText": "En savoir plus",
+                "link": "#"
+            },
+            {
+                "meta": "Éducation",
+                "title": "Lancement d’un programme de soutien scolaire pour les enfants défavorisés",
+                "text": "Des séances d’appui scolaire et d’accompagnement psychologique ont été mises en place afin d’offrir aux enfants un cadre propice à la réussite et à l’épanouissement.",
+                "linkText": "Découvrir le programme",
+                "link": "#"
+            },
+            {
+                "meta": "Santé & bien-être",
+                "title": "Campagne de sensibilisation et de prévention en milieu rural",
+                "text": "Des activités de prévention et de sensibilisation ont été menées pour promouvoir la santé, l’hygiène et le bien-être des communautés les plus isolées.",
+                "linkText": "Voir les résultats",
+                "link": "#"
+            }
+        ]
+    }
+}
