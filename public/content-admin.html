@@ -676,17 +676,8 @@
         <div class="section-content">
           <div class="form-grid">
             <div class="form-group">
-              <label class="form-label">Vidéo principale</label>
-              <div class="file-upload-wrapper">
-                <div class="file-upload-zone" onclick="openMediaLibrary('heroVideo', 'video')" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'heroVideo')">
-                  <i class="fas fa-cloud-upload-alt"></i>
-                  <p><span>Cliquez pour choisir</span> ou glissez un fichier</p>
-                  <p style="font-size: 0.75rem;">MP4, WEBM (max 100MB)</p>
-                </div>
-                <input type="file" class="file-upload-input" id="heroVideoFile" accept="video/*" onchange="uploadFile(this, 'heroVideo')">
-                <div id="heroVideoPreview" class="file-preview" style="display: none;"></div>
-                <input type="hidden" id="heroVideo">
-              </div>
+              <label class="form-label">Vidéo principale (URL YouTube)</label>
+              <input type="text" class="form-input" id="heroVideo" placeholder="https://www.youtube.com/watch?v=... ou chemin de la vidéo">
             </div>
             <div class="form-group">
               <label class="form-label">Lien WhatsApp (UI/UX)</label>
@@ -769,17 +760,14 @@
             <div id="videosList"></div>
             
             <div class="add-item">
-              <h5><i class="fas fa-plus-circle"></i> Ajouter une vidéo</h5>
-              <div class="file-upload-wrapper">
-                <div class="file-upload-zone" onclick="document.getElementById('newVideoFile').click()">
-                  <i class="fas fa-cloud-upload-alt"></i>
-                  <p><span>Cliquez pour uploader</span> une vidéo</p>
-                  <p style="font-size: 0.75rem;">MP4, WEBM (max 100MB)</p>
+              <h5><i class="fas fa-plus-circle"></i> Ajouter une vidéo (URL YouTube)</h5>
+              <div class="add-item-row">
+                <div class="form-group">
+                  <input type="text" class="form-input" id="newVideoUrl" placeholder="https://www.youtube.com/watch?v=...">
                 </div>
-                <input type="file" class="file-upload-input" id="newVideoFile" accept="video/*" onchange="uploadAndAddVideo(this)">
-                <div class="upload-progress" id="newVideoProgress" style="display: none;">
-                  <div class="upload-progress-bar"></div>
-                </div>
+                <button class="btn btn-primary btn-sm" onclick="addVideo()">
+                  <i class="fas fa-plus"></i> Ajouter
+                </button>
               </div>
             </div>
           </div>
@@ -1233,63 +1221,6 @@
       }
     }
     
-    // Upload et ajouter une vidéo à la liste
-    async function uploadAndAddVideo(input) {
-      const file = input.files[0];
-      if (!file) return;
-      
-      const progressDiv = document.getElementById('newVideoProgress');
-      progressDiv.style.display = 'block';
-      
-      const formData = new FormData();
-      formData.append('file', file);
-      
-      try {
-        const response = await fetch('/api/upload/single', {
-          method: 'POST',
-          body: formData
-        });
-        
-        const result = await response.json();
-        progressDiv.style.display = 'none';
-        
-        if (result.success) {
-          // Ajouter la vidéo via l'API
-          const addResponse = await fetch(`${API_URL}/home/video`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url: result.path })
-          });
-          
-          if (addResponse.ok) {
-            contentData = await addResponse.json();
-            renderVideosList(contentData.videoSection?.videos || []);
-            showAlert('Vidéo ajoutée', 'success');
-          }
-        } else {
-          throw new Error(result.error);
-        }
-      } catch (error) {
-        progressDiv.style.display = 'none';
-        showAlert('Erreur: ' + error.message, 'error');
-      }
-      
-      input.value = '';
-    }
-    
-    // Bibliothèque de médias
-    async function openMediaLibrary(targetId, type = 'all') {
-      currentUploadTarget = targetId;
-      currentMediaType = type;
-      
-      // Ouvrir le sélecteur de fichiers directement
-      const inputId = targetId + 'File';
-      const input = document.getElementById(inputId);
-      if (input) {
-        input.click();
-      }
-    }
-    
     function formatFileSize(bytes) {
       if (bytes === 0) return '0 Bytes';
       const k = 1024;
@@ -1297,36 +1228,6 @@
       const i = Math.floor(Math.log(bytes) / Math.log(k));
       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
-    
-    // Mettre à jour la preview au chargement
-    function updateHeroVideoPreview() {
-      const videoUrl = document.getElementById('heroVideo').value;
-      const previewDiv = document.getElementById('heroVideoPreview');
-      
-      if (videoUrl && previewDiv) {
-        previewDiv.style.display = 'flex';
-        const isVideo = videoUrl.endsWith('.mp4') || videoUrl.endsWith('.webm') || videoUrl.includes('video');
-        previewDiv.innerHTML = `
-          ${isVideo 
-            ? `<video src="${videoUrl}" muted></video>` 
-            : `<img src="${videoUrl}" alt="">`}
-          <div class="file-preview-info">
-            <strong>Vidéo actuelle</strong>
-            <span>${videoUrl}</span>
-          </div>
-          <button class="file-preview-remove" onclick="removeFilePreview('heroVideo')">
-            <i class="fas fa-times"></i>
-          </button>
-        `;
-      }
-    }
-    
-    // Override populateForm pour afficher les previews
-    const originalPopulateForm = populateForm;
-    populateForm = function(data) {
-      originalPopulateForm(data);
-      updateHeroVideoPreview();
-    };
 
     // ============================================
     // AUTHENTIFICATION

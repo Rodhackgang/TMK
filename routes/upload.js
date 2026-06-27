@@ -21,15 +21,14 @@ const storage = multer.diskStorage({
   }
 });
 
-// Filtrer les types de fichiers
+// Filtrer les types de fichiers (images uniquement)
 const fileFilter = (req, file, cb) => {
   const allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
-  const allowedVideoTypes = ['video/mp4', 'video/webm', 'video/ogg', 'video/quicktime'];
   
-  if (allowedImageTypes.includes(file.mimetype) || allowedVideoTypes.includes(file.mimetype)) {
+  if (allowedImageTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Type de fichier non supporté. Utilisez JPG, PNG, GIF, WEBP pour les images ou MP4, WEBM pour les vidéos.'), false);
+    cb(new Error('Type de fichier non supporté. Utilisez JPG, PNG, GIF, WEBP pour les images.'), false);
   }
 };
 

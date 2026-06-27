@@ -5,6 +5,7 @@ const videoContentSchema = new mongoose.Schema({
     title: { type: String, default: '' },
     description: { type: String, default: '' },
     videoPath: { type: String, default: '' },
+    youtubeUrl: { type: String, default: '' },
     previewImage: { type: String, default: '' },
     category: { type: String, default: 'Vidéo' }
   }],

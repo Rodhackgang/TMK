@@ -97,37 +97,17 @@
         <label>Description</label><textarea class="v-desc">${(v.description||'').replace(/</g,'&lt;')}</textarea>
         <div class="grid2">
           <div>
-            <label>Fichier vidéo (mp4)</label>
-            <div class="file-info v-pathinfo">${esc(v.videoPath)||'aucun fichier'}</div>
-            <input type="hidden" class="v-path" value="${esc(v.videoPath)}">
-            <input type="file" accept="video/mp4,video/webm" onchange="uploadVideo(this)">
+            <label>Lien YouTube</label>
+            <input class="v-youtube" type="url" value="${esc(v.youtubeUrl)}" placeholder="https://www.youtube.com/watch?v=...">
           </div>
           <div>
-            <label>Image d'aperçu (facultatif)</label>
-            <div class="file-info v-prevdiv">${esc(v.previewImage)||'aucune'}</div>
-            <input type="hidden" class="v-preview" value="${esc(v.previewImage)}">
-            <input type="file" accept="image/*" onchange="uploadPreview(this)">
+            <label>Image d'aperçu (URL ou chemin)</label>
+            <input class="v-preview" type="text" value="${esc(v.previewImage)}" placeholder="URL de l'image d'aperçu">
           </div>
         </div>`;
       document.getElementById('list').appendChild(div);
     }
     function addVideo(){ videoRow({}); }
-
-    async function doUpload(file){
-      const fd=new FormData(); fd.append('file', file);
-      const d = await (await fetch('/api/upload/single',{method:'POST',body:fd})).json();
-      return d.path || null;
-    }
-    async function uploadVideo(input){
-      const f=input.files[0]; if(!f) return; toast('Téléversement de la vidéo…');
-      try { const p=await doUpload(f); if(p){ const it=input.closest('.item'); it.querySelector('.v-path').value=p; it.querySelector('.v-pathinfo').textContent=p; toast('✅ Vidéo téléversée'); } else toast('Échec', false); }
-      catch(e){ toast('Erreur de téléversement', false); }
-    }
-    async function uploadPreview(input){
-      const f=input.files[0]; if(!f) return; toast('Téléversement de l\'image…');
-      try { const p=await doUpload(f); if(p){ const it=input.closest('.item'); it.querySelector('.v-preview').value=p; it.querySelector('.v-prevdiv').textContent=p; toast('✅ Image téléversée'); } else toast('Échec', false); }
-      catch(e){ toast('Erreur de téléversement', false); }
-    }
 
     async function load(){
       try { const c = await (await fetch(`${API_URL}/videos`)).json(); document.getElementById('list').innerHTML=''; (c.videos||[]).forEach(videoRow); }
@@ -138,7 +118,7 @@
         title: el.querySelector('.v-title').value.trim(),
         category: el.querySelector('.v-cat').value.trim()||'Vidéo',
         description: el.querySelector('.v-desc').value.trim(),
-        videoPath: el.querySelector('.v-path').value.trim(),
+        youtubeUrl: el.querySelector('.v-youtube').value.trim(),
         previewImage: el.querySelector('.v-preview').value.trim()
       })).filter(v => v.title);
       try {
